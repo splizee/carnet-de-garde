@@ -1,0 +1,17 @@
+{
+  "name": "Carnet de garde — Urgences vétérinaires",
+  "short_name": "Carnet de garde",
+  "description": "Aide-mémoire personnel : cas, doses, protocoles et pièges des urgences canines et félines.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f7f3ec",
+  "theme_color": "#c06a38",
+  "lang": "fr",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
