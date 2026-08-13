@@ -287,6 +287,9 @@ table.doses td.d .nw{white-space:nowrap}
 
 .goto{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
 canvas.ecg{width:100%;height:auto;display:block;border-radius:8px}
+#goSearch{margin-left:auto}
+#goSearch + .tbtn{margin-left:8px}
+@media(min-width:901px){#goSearch{display:none}}
 /* ===== couche application : iPhone, zones sures, confort tactile ===== */
 html{-webkit-text-size-adjust:100%}
 body{overscroll-behavior-y:none}
@@ -362,7 +365,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
   <div class="topbar">
     <button class="menu-btn" id="menu">☰</button>
     <strong style="font-family:var(--serif)">Carnet de garde</strong>
-    <button class="tbtn" id="theme" title="Clair / sombre">🌗</button>
+    <button class="tbtn" id="goSearch" title="Rechercher" aria-label="Rechercher"><svg viewBox="0 0 24 24" stroke-width="2" width="17" height="17" style="stroke:currentColor;fill:none;vertical-align:-3px"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></button><button class="tbtn" id="theme" title="Clair / sombre">🌗</button>
   </div>
   <div class="wrap">
 
@@ -2414,6 +2417,10 @@ document.getElementById('theme').addEventListener('click',()=>{
 function closeMenu(){side.classList.remove('open');scrim.classList.remove('show');}
 document.getElementById('menu').addEventListener('click',()=>{side.classList.toggle('open');scrim.classList.toggle('show');});
 scrim.addEventListener('click',closeMenu);
+document.getElementById('goSearch').addEventListener('click',()=>{
+  side.classList.add('open');scrim.classList.add('show');
+  const c=document.getElementById('q');c.focus();c.select();
+});
 
 // scroll reveal (per active view)
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -6% 0px'});
