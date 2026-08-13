@@ -212,6 +212,81 @@ footer{border-top:1px solid var(--line);margin-top:20px;padding:22px 40px;color:
   .scrim{position:fixed;inset:0;background:rgba(20,12,4,.45);z-index:50;opacity:0;pointer-events:none;transition:.3s}
   .scrim.show{opacity:1;pointer-events:auto}
 }
+/* ================= CORRECTIFS AUDIT — 13/08/2026 ================= */
+/* colonne de lecture : ~80 caracteres, pas 111 */
+.wrap{max-width:1160px;margin-inline:auto}
+.card .body{max-width:82ch}
+
+/* en-tete de carte : le badge ne doit plus ecraser le titre (bug mobile) */
+.card > summary{flex-wrap:wrap}
+.card .head-txt{flex:1 1 240px}
+.card .dx{white-space:normal;max-width:100%}
+@media(max-width:700px){
+  .card > summary{align-items:flex-start}
+  .card .dx{order:3;flex-basis:100%;margin:9px 0 0 17px;text-align:left}
+  .card .chev{order:2;align-self:center}
+}
+
+/* encadre « proto » : la classe etait utilisee sans etre definie */
+.box.proto{background:color-mix(in srgb,var(--c-proto) 12%,transparent);
+  border-left:3px solid var(--c-proto)}
+
+/* recapitulatif : les colonnes ne s'etirent plus sur la plus haute */
+.recap-grid{align-items:start}
+
+/* doses : une dose longue ne doit plus etirer toute la table */
+table.doses td.d{white-space:normal}
+table.doses td.d .nw{white-space:nowrap}
+/* en-tete collant : il faut un conteneur qui defile vraiment */
+.tallwrap{max-height:min(72vh,760px);overflow:auto}
+
+/* ECG : lisible au doigt sur telephone (defilement horizontal) */
+.ecgwrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px}
+@media(max-width:900px){.ecgwrap canvas.ecg{width:720px;max-width:none}}
+
+/* bouton clair/sombre : il n'existait pas au-dessus de 900 px */
+@media(min-width:901px){
+  .topbar{display:flex;position:fixed;top:14px;right:18px;left:auto;width:auto;
+    padding:0;border:none;background:none;backdrop-filter:none;z-index:40}
+  .topbar .menu-btn,.topbar strong{display:none}
+  .topbar .tbtn{margin-left:0}
+}
+
+/* index des cas + filtres */
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;align-items:center}
+.filters .flab{font-size:10.5px;text-transform:uppercase;letter-spacing:1.2px;
+  color:var(--ink-soft);margin-right:4px}
+.fbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+  border-radius:20px;padding:7px 14px;font-size:12.5px;cursor:pointer;font-weight:650;
+  font-family:inherit;transition:.15s}
+.fbtn:hover{color:var(--ink)}
+.fbtn.on{background:color-mix(in srgb,var(--accent) 16%,transparent);
+  border-color:var(--accent);color:var(--accent)}
+.caslist{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.casitem{display:block;width:100%;text-align:left;cursor:pointer;font-family:inherit;
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:14px;padding:13px 16px;box-shadow:var(--shadow-sm);transition:.18s}
+.casitem:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.casitem .cdx{font-family:var(--serif);font-size:16px;color:var(--ink);
+  line-height:1.25;display:block;margin-bottom:5px}
+.casitem .cmeta{font-size:11.5px;color:var(--ink-soft);display:flex;gap:8px;flex-wrap:wrap}
+.casitem .cmeta b{font-weight:650;color:var(--accent)}
+
+/* impression : les cartes ne sont plus invisibles */
+@media print{
+  aside,.topbar,.scrim,.filters,.searchhint,footer{display:none!important}
+  .view:not(.active){display:none!important}
+  .card{opacity:1!important;transform:none!important;box-shadow:none!important;
+    break-inside:avoid;border-color:#ccc}
+  details.card > .body{display:block!important}
+  .wrap{padding:0;max-width:none}
+  .view-head{margin:0 0 16px;padding:0 0 12px;border-radius:0}
+  .view-head::before{display:none}
+  body{font-size:10.5pt;background:#fff;color:#000}
+}
+
+.goto{color:var(--accent);cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+canvas.ecg{width:100%;height:auto;display:block;border-radius:8px}
 /* ===== couche application : iPhone, zones sures, confort tactile ===== */
 html{-webkit-text-size-adjust:100%}
 body{overscroll-behavior-y:none}
@@ -268,6 +343,9 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     <a data-v="mod2" class="c-proto"><span class="ic"></span>Respiratoire <small>S5–6</small></a>
     <a data-v="mod3" class="c-comm"><span class="ic"></span>Cardio / RCP <small>S7–8</small></a>
     <a data-v="mod4" class="c-cas"><span class="ic"></span>Digestif <small>S9–10</small></a>
+    <div class="sec">Index</div>
+    <a data-v="cas" class="c-cas"><span class="ic"></span>Tous les cas <small id="navCas"></small></a>
+    <a data-v="reflexes" class="c-repere"><span class="ic"></span>Réflexes <small id="navRef"></small></a>
     <div class="sec">Aide-mémoire</div>
     <a data-v="constantes" class="c-repere"><span class="ic"></span>Constantes &amp; BRU</a>
     <a data-v="supplem" class="c-dose"><span class="ic"></span>Supplémentation &amp; énergie</a>
@@ -291,19 +369,16 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
   <!-- ============ VUE D'ENSEMBLE ============ -->
   <section class="view active c-cas" id="apercu">
     <div class="view-head">
-      <p class="eyebrow">Carnet de tutorat · au 11/08/2026</p>
+      <p class="eyebrow" id="majDate">Carnet de tutorat · au 13/08/2026</p>
       <h1>Tout ce que j'ai appris, prêt à retrouver.</h1>
       <p class="lede">Le récapitulatif de ma formation aux urgences, semaine après semaine : les cas vus, les doses, les protocoles et les pièges — à parcourir librement, année après année.</p>
       <div class="chips">
-        <div class="chip"><b>6</b><span>blocs parcourus</span></div>
-        <div class="chip"><b>31</b><span>cas cliniques</span></div>
-        <div class="chip"><b>124</b><span>doses répertoriées</span></div>
-        <div class="chip"><b>96</b><span>flashcards</span></div>
+        <div class="chip"><b id="nBlocs">—</b><span>blocs parcourus</span></div><div class="chip"><b id="nCas">—</b><span>cas cliniques</span></div><div class="chip"><b id="nDoses">—</b><span>doses répertoriées</span></div><div class="chip"><b id="nProto">—</b><span>protocoles &amp; drills</span></div>
       </div>
       <div class="disclaim">⚠︎ Aide-mémoire personnel — vérifier chaque dose avant tout usage clinique</div>
     </div>
 
-    <details class="card c-repere in" open><summary><span class="bar"></span><span class="head-txt"><span class="cat">Repère</span><h3>Où j'en suis</h3><span class="sub">Progression du plan resserré 16/06 → 31/08</span></span><span class="chev">▸</span></summary>
+    <details class="card c-repere in"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Repère</span><h3>Où j'en suis</h3><span class="sub">Progression du plan resserré 16/06 → 31/08</span></span><span class="chev">▸</span></summary>
       <div class="body">
         <ul>
           <li><b>Fondations (S1–S2)</b> — triage, muqueuses, ABCDE, RCP RECOVER 2024. <span class="src">solide</span></li>
@@ -316,7 +391,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       </div>
     </details>
 
-    <details class="card c-dose in" open><summary><span class="bar"></span><span class="head-txt"><span class="cat">Repère</span><h3>Mes points forts</h3><span class="sub">Acquis structurels à préserver</span></span><span class="chev">▸</span></summary>
+    <details class="card c-dose in"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Repère</span><h3>Mes points forts</h3><span class="sub">Acquis structurels à préserver</span></span><span class="chev">▸</span></summary>
       <div class="body"><ul>
         <li><b>Posture critique EBM</b> — challenge les évaluations à raison, exige les sources. <span class="src">solide à chaud</span></li>
         <li><b>Triage &amp; ABCDE</b> — B→C→A justifié, O₂ avant voie sur chat dyspnéique. <span class="src">§17.3 fermé</span></li>
@@ -351,7 +426,6 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>« Naya » — arrêt peropératoire (pyomètre)</li><li>Labrador 30 kg — arrêt post-hémorragie (AESP)</li></ul></div>
         <div><h4>À retenir</h4><ul><li>Muqueuses : 7 couleurs, 7 sens</li><li>ABCDE : B→C→A, AFAST/TFAST dans le C</li><li>RCP 2024 : adré 0,01, atropine dose unique</li></ul></div>
-        <div><h4>Statut</h4><ul><li>ABCDE §17.3 <span class="src">fermé</span></li><li>Asystolie/AESP <span class="src">fermés</span></li><li>Posture EBM <span class="src">solide</span></li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
@@ -399,13 +473,13 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
 
     <div class="slabel">Cas vus</div>
     <!-- BLOC: fondations naya -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Cas · S2</span><h3>« Naya »</h3><span class="sub">Arrêt peropératoire · pyomètre septique</span></span><span class="dx">Arrêt cardiaque</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Cas · S2</span><h3>« Naya »</h3><span class="sub">Arrêt peropératoire · pyomètre septique</span></span><span class="dx">Arrêt cardiaque</span></summary>
       <div class="body"><p>Arrêt peropératoire (30/04). Application du protocole RCP RECOVER 2024.</p>
       <div class="box key">Adrénaline 0,01 mg/kg /2 cycles · atropine 0,04 mg/kg dose unique · EtCO₂ ≥ 18 = qualité.</div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: fondations lab -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Cas · S2J8</span><h3>Labrador, 30 kg</h3><span class="sub">Arrêt post-choc hémorragique (AVP)</span></span><span class="dx">AESP · hypovolémie</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Cas · S2J8</span><h3>Labrador, 30 kg</h3><span class="sub">Arrêt post-choc hémorragique (AVP)</span></span><span class="dx">AESP · hypovolémie</span></summary>
       <div class="body"><p>AESP par hypovolémie reconnue à chaud + 4H/4T (T = tension/PnTx, H = hypovolémie). Filtre anti-précipitation §17.1 appliqué.</p>
       <div class="box trap"><b>Leçon fentanyl :</b> dose de charge 0,02 mg/kg hors contexte sur obtundi en choc → apnée + arrêt en 4 min. « Tableau de doses ≠ décision contextuelle. » <span class="src">§11.5</span></div></div>
     </details>
@@ -427,7 +501,6 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>Falco — hypovolémique</li><li>Border Collie — distributif</li><li>Chat OAP — cardiogénique</li><li>Golden — obstructif</li><li>Labrador AVK — intégratif</li></ul></div>
         <div><h4>À retenir</h4><ul><li>Grille muqueuses / pouls / lactate</li><li>Cardiogénique : peu ou pas de fluides</li><li>ATB sepsis dans la 1ʳᵉ heure</li><li>Trépied AVK = K-P-G</li></ul></div>
-        <div><h4>Statut</h4><ul><li>4 types de choc <span class="src">5/5 chaud</span></li><li>§11.7 TFAST <span class="src">fermé</span></li><li>Communication <span class="src">chronique</span></li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
@@ -444,30 +517,30 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
 
     <div class="slabel">Cas vus</div>
     <!-- BLOC: choc falco -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J2 · hypovolémique</span><h3>« Falco » — Bouvier, 42 kg</h3><span class="sub">Hémoabdomen sur masse splénique</span></span><span class="dx">Hémoabdomen splénique</span></summary>
+    <details data-cas data-esp="chien" data-sys="choc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J2 · hypovolémique</span><h3>« Falco » — Bouvier, 42 kg</h3><span class="sub">Hémoabdomen sur masse splénique</span></span><span class="dx">Hémoabdomen splénique</span></summary>
       <div class="body"><ul><li>Révision du DD (GDV → hypovolémique) à l'AFAST. Réa permissive <span class="pill">PAM &gt; 65</span>, aliquots 15 mL/kg, appel chir + sang total.</li></ul>
       <div class="box key">Fentanyl borne basse titrée 0,5 µg/kg sur PAM &lt; 80 / bolus en cours, avec flush. <span class="src">§11.5</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: choc border -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J3 · distributif</span><h3>Border Collie, 25 kg</h3><span class="sub">Pyomètre septique</span></span><span class="dx">Pyomètre septique</span></summary>
+    <details data-cas data-esp="chien" data-sys="choc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J3 · distributif</span><h3>Border Collie, 25 kg</h3><span class="sub">Pyomètre septique</span></span><span class="dx">Pyomètre septique</span></summary>
       <div class="body"><p>Bolus + antibiothérapie dans l'heure + recherche source.</p>
       <div class="box key"><b>Unacim 20 mg/kg IV sur 30 min, dans la 1ʳᵉ heure.</b> Sur flore mixte SC, Unacim seul suffit. Métronidazole réservé : péritonite digestive, pyomètre rompu, fasciite, aspi sévère. <span class="src">§17.4 / §11.4</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: choc chatOAP -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J4 · cardiogénique</span><h3>Chat européen, 4,5 kg</h3><span class="sub">OAP + épanchement pleural</span></span><span class="dx">OAP cardiogénique</span></summary>
+    <details data-cas data-esp="chat" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J4 · cardiogénique</span><h3>Chat européen, 4,5 kg</h3><span class="sub">OAP + épanchement pleural</span></span><span class="dx">OAP cardiogénique</span></summary>
       <div class="body"><ul><li>O₂, furosémide titré, <b>pas de bolus</b> (surcharge → aggrave l'OAP).</li><li>Plan d'hospit : redose furo + butorphanol q4–6 h + K⁺ + lactate. <span class="src">§13.14</span></li></ul></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: choc golden -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J5 · obstructif</span><h3>Golden Retriever, 34 kg</h3><span class="sub">Tamponnade péricardique (HSA suspectée)</span></span><span class="dx">Tamponnade</span></summary>
+    <details data-cas data-esp="chien" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J5 · obstructif</span><h3>Golden Retriever, 34 kg</h3><span class="sub">Tamponnade péricardique (HSA suspectée)</span></span><span class="dx">Tamponnade</span></summary>
       <div class="body"><ul><li>Reconnaissance à T+5 (swinging heart, B1/B2 assourdis, pouls paradoxal). Péricardiocentèse côté D, 5ᵉ EIC, 160 mL sang non-coagulant.</li></ul>
       <div class="box trap"><b>Manques :</b> lido locale + bolus pré-geste + opioïde. Sur tamponnade précharge-dépendante : bolus 5–10 mL/kg avant le geste. <span class="src">§11.16</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: choc avk -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J6 · intégratif</span><h3>Labrador, 30 kg (+ Beagle)</h3><span class="sub">Intoxication AVK · hémothorax bilatéral</span></span><span class="dx">Intoxication AVK</span></summary>
+    <details data-cas data-esp="chien" data-sys="coag" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S3J6 · intégratif</span><h3>Labrador, 30 kg (+ Beagle)</h3><span class="sub">Intoxication AVK · hémothorax bilatéral</span></span><span class="dx">Intoxication AVK</span></summary>
       <div class="body">
         <ul><li>DD#1 rodenticide à T+10 (hématémèse + effusion 4/4 + Htc 22 + accès grange). Coag : TP/TCA &gt; 200 s. Thoraco bilatérale (630 mL).</li></ul>
         <h4>Trépied AVK — mnémo K-P-G</h4>
@@ -495,7 +568,6 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>Chat 5,2 kg — OAP occulte (zone grise)</li><li>Border Collie 23 kg — polytrauma + transfusion</li></ul></div>
         <div><h4>À retenir</h4><ul><li>Bolus chien 10–20 / chat 10–15 mL/kg</li><li>Hypertonique 4 mL/kg chien</li><li>Transfuser sur NaCl, jamais RL</li><li>Permissive : PAM &gt; 65, petits aliquots</li></ul></div>
-        <div><h4>Statut</h4><ul><li>§19.1 fluides <span class="src">en cours 1/2</span></li><li>Réa permissive <span class="src">chaud propre</span></li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
@@ -513,13 +585,13 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     <!-- /BLOC -->
     <div class="slabel">Cas vus</div>
     <!-- BLOC: mod1 chat -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">19/06</span><h3>Chat, 5,2 kg</h3><span class="sub">OAP / cardiopathie occulte (zone grise)</span></span><span class="dx">OAP occulte</span></summary>
+    <details data-cas data-esp="chat" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">19/06</span><h3>Chat, 5,2 kg</h3><span class="sub">OAP / cardiopathie occulte (zone grise)</span></span><span class="dx">OAP occulte</span></summary>
       <div class="body"><ul><li>Piège évité : refus du bolus (galop → surcharge → aggrave l'OAP). Furosémide titré sur la FR.</li></ul>
       <div class="box key">Furosémide chat OAP <span class="pill">2 mg/kg IV</span> (0,2 mL de Dimazon 50 mg/mL). L'erreur initiale 5 mg/kg IM a été corrigée. <span class="src">Journal 19–20/06</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod1 border -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">20/06</span><h3>Border Collie, 23 kg</h3><span class="sub">Polytrauma HBC · hémoabdomen + contusions</span></span><span class="dx">Polytrauma</span></summary>
+    <details data-cas data-esp="chien" data-sys="trauma" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">20/06</span><h3>Border Collie, 23 kg</h3><span class="sub">Polytrauma HBC · hémoabdomen + contusions</span></span><span class="dx">Polytrauma</span></summary>
       <div class="body"><ul><li>Réa permissive PAM &gt; 65 + aliquots 15 mL/kg (« ne pas faire sauter le caillot »). Transfusion sang total sur NaCl, 5 mL/kg/h, démarrer lent puis titrer.</li></ul>
       <div class="box key">1ʳᵉ application chaude propre de §19.1 : permissive + Ca/citrate + débit, tout spontané.</div></div>
     </details>
@@ -540,25 +612,24 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>Pixel — pyothorax</li><li>Gnocchi — BOAS en crise</li><li>Miso — asthme félin</li><li>Ziggy — pneumothorax tension</li><li>Gus — contusion + choc</li><li>Tesla — pneumonie d'aspiration</li></ul></div>
         <div><h4>À retenir</h4><ul><li>Décompression AVANT imagerie</li><li>Asthme : terbutaline + dexa</li><li>Lignes B non spécifiques</li><li>Pneumonie septique : FQ + ampi/clinda</li></ul></div>
-        <div><h4>Statut</h4><ul><li>§13.20 lignes B <span class="src">en cours</span></li><li>§11.17 comm <span class="src">~6,5/7</span></li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
     <div class="slabel">Cas vus</div>
     <!-- BLOC: mod2 pixel -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J1</span><h3>« Pixel » — chat, 4,8 kg</h3><span class="sub">Dyspnée restrictive · épanchement pleural</span></span><span class="dx">Pyothorax</span></summary>
+    <details data-cas data-esp="chat" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J1</span><h3>« Pixel » — chat, 4,8 kg</h3><span class="sub">Dyspnée restrictive · épanchement pleural</span></span><span class="dx">Pyothorax</span></summary>
       <div class="body"><ul><li>Décompression avant radio, thoraco (150+120 mL purulent), cytologie = pyothorax.</li></ul>
       <div class="box key">Traitement de fond = ATB empirique + drains bilatéraux (pas « si ça revient »). <span class="src">§13.15</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod2 gnocchi -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J2</span><h3>« Gnocchi » — Bouledogue, 13 kg</h3><span class="sub">Dyspnée inspiratoire post-effort</span></span><span class="dx">BOAS en crise</span></summary>
+    <details data-cas data-esp="chien" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J2</span><h3>« Gnocchi » — Bouledogue, 13 kg</h3><span class="sub">Dyspnée inspiratoire post-effort</span></span><span class="dx">BOAS en crise</span></summary>
       <div class="body"><ul><li>T° 40,8, SpO₂ 89 %. O₂ + butorphanol + <b>propofol titré + intubation (5,0 mm)</b> → SpO₂ 98 %.</li></ul>
       <div class="box trap"><b>Framing :</b> brachy en détresse = hyperthermie <i>conséquence</i>, chercher l'obstruction haute d'abord. Dexaméthasone = molécule d'extubation. <span class="src">§13.16</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod2 miso -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J2</span><h3>« Miso » — chat, 5,2 kg</h3><span class="sub">Effort expiratoire + wheezes</span></span><span class="dx">Asthme félin</span></summary>
+    <details data-cas data-esp="chat" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J2</span><h3>« Miso » — chat, 5,2 kg</h3><span class="sub">Effort expiratoire + wheezes</span></span><span class="dx">Asthme félin</span></summary>
       <div class="body">
         <ul><li>Cœur propre, pas de lignes B. Cage O₂ + butorphanol. <b>OAP écarté → furosémide évité (le piège).</b></li></ul>
         <h4>Les 2 piliers</h4>
@@ -569,19 +640,19 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod2 ziggy -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J3</span><h3>« Ziggy » — Beagle, 14 kg</h3><span class="sub">Thorax en tonneau, glide absent + lung point</span></span><span class="dx">Pneumothorax sous tension</span></summary>
+    <details data-cas data-esp="chien" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J3</span><h3>« Ziggy » — Beagle, 14 kg</h3><span class="sub">Thorax en tonneau, glide absent + lung point</span></span><span class="dx">Pneumothorax sous tension</span></summary>
       <div class="body"><ul><li><b>Thoracocentèse décompressive AVANT radio</b> (350 mL D + 120 mL G) → stabilisation franche.</li></ul>
       <div class="box key">Geste : tiers dorsal, bord crânial de côte, robinet 3-voies. Cathéter sur mandrin 18–20 G &gt; aiguille rigide. <span class="src">§13.19</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod2 gus -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J4</span><h3>« Gus » — Labrador, 32 kg</h3><span class="sub">Polytrauma AVP · lignes B focales</span></span><span class="dx">Contusion + choc</span></summary>
+    <details data-cas data-esp="chien" data-sys="trauma" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J4</span><h3>« Gus » — Labrador, 32 kg</h3><span class="sub">Polytrauma AVP · lignes B focales</span></span><span class="dx">Contusion + choc</span></summary>
       <div class="body"><ul><li>Réa permissive 10 mL/kg / PAM 60–65 + surveillance resp + fentanyl.</li></ul>
       <div class="box trap"><b>Piège mordu puis rattrapé :</b> lignes B lues « OAP » → furosémide sur hypovolémique = <span class="warn">CI létale</span>. Trauma + focal + cœur sain = contusion. <b>Jamais de furosémide sur un saignant.</b> <span class="src">§13.20</span></div></div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod2 tesla -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J5 · clôture</span><h3>« Tesla » — croisé Labrador, 20 kg</h3><span class="sub">Régurgitation + toux grasse · forme septique</span></span><span class="dx">Pneumonie d'aspiration</span></summary>
+    <details data-cas data-esp="chien" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">J5 · clôture</span><h3>« Tesla » — croisé Labrador, 20 kg</h3><span class="sub">Régurgitation + toux grasse · forme septique</span></span><span class="dx">Pneumonie d'aspiration</span></summary>
       <div class="body"><ul><li>Muqueuses injectées (distributif), fièvre 40,1, cœur sain. §13.20 réussi en contexte non-trauma.</li></ul>
       <div class="box key"><b>ATB forme septique = FQ + ampi/clinda</b> (bithérapie ISCAID 2017), pas métronidazole. Réflexe « Gram négatif / fluoroquinolone ». <span class="src">§13.21</span></div></div>
     </details>
@@ -602,13 +673,13 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>Gaston (CKCS) — OAP cardiogénique</li><li>Pacha — ATE + ICC gauche (chat)</li><li>Baloo — tamponnade péricardique (chien)</li><li>Ulysse — hémoabdomen splénique + TV (chien)</li><li>Iroko — arrêt hyperkaliémique → ROSC (chien)</li><li>Volt — pneumothorax sous tension → arrêt → ROSC (chien)</li><li>Gaston (golden) — arrêt hémorragique, <b>RCP sans succès</b> + annonce de décès</li></ul></div>
         <div><h4>À venir</h4><ul><li>Cas intégratif : arrêt sur scène d'urgence inattendue</li><li>Revue de mi-parcours S1–8</li></ul></div>
-        <div><h4>Réflexes du module</h4><ul><li>QRS <b>large + rapide</b> = supprimer · <b>large + lent</b> = protéger</li><li>AESP <b>large + lent</b> → penser <b>hyperK</b> (mesurer, pas deviner)</li><li>Atropine = <b>brady</b>arythmies uniquement</li><li>VCC <b>dilatée</b> = tamponnade · <b>collabée</b> = hypovolémie</li><li>Chat + épanchement = <b>drainer</b>, pas juste diurèse</li><li>Arythmie → <b>relire l'iono</b> avant l'antiarythmique</li><li>Post-ROSC : SpO₂ <b>94–98 %</b> (pas 100), normocapnie, réchauffer <b>doucement</b></li><li>Chat / chaton : masser <b>sur le cœur</b> (pompe cardiaque), pas sur la partie large</li><li>Volume calculé <b>&lt; 0,1 mL</b> → on ne prélève pas, on <b>dilue</b></li><li>Patient froid : <b>« pas mort tant qu'il n'est pas chaud et mort »</b></li><li>Sonde en place → <b>capno branchée dans le même geste</b> (la SpO₂ n'affiche rien en arrêt)</li><li>Annonce de décès : dire <b>« il est mort »</b>, jamais « il nous a quitté »</li></ul></div>
+        <div><h4>Réflexes</h4><ul><li>Les règles opposables de ce module sont regroupées par appareil dans <b><a class="goto" data-goto="reflexes">Réflexes</a></b> — tous modules confondus.</li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
     <div class="slabel">Cas vus</div>
     <!-- BLOC: mod3 gaston -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J1</span><h3>« Gaston » — CKCS, 9 ans, 11 kg</h3><span class="sub">OAP nocturne · souffle 5/6 · OG dilatée</span></span><span class="dx">OAP cardiogénique</span></summary>
+    <details data-cas data-esp="chien" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J1</span><h3>« Gaston » — CKCS, 9 ans, 11 kg</h3><span class="sub">OAP nocturne · souffle 5/6 · OG dilatée</span></span><span class="dx">OAP cardiogénique</span></summary>
       <div class="body">
         <ul><li>Dx sur le faisceau complet (race + souffle + OG + lignes B + orthopnée), <b>pas de fluides</b>.</li></ul>
         <h4>Stabilisation</h4>
@@ -619,7 +690,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 pacha -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J2</span><h3>« Pacha » — Européen, 8 ans, 5 kg</h3><span class="sub">postérieurs plégiques/froids · pouls fémoraux absents · galop · OG dilatée</span></span><span class="dx">ATE + ICC gauche</span></summary>
+    <details data-cas data-esp="chat" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J2</span><h3>« Pacha » — Européen, 8 ans, 5 kg</h3><span class="sub">postérieurs plégiques/froids · pouls fémoraux absents · galop · OG dilatée</span></span><span class="dx">ATE + ICC gauche</span></summary>
       <div class="body">
         <ul><li>Dx <b>ATE sur cardiopathie gauche décompensée</b> rapide, faisceau complet (5 P : douleur, pâleur/cyanose coussinets, pouls absents, plégie, froid). Pas de bolus (chat en ICC).</li></ul>
         <h4>Stabilisation</h4>
@@ -635,7 +706,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 baloo -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J3</span><h3>« Baloo » — Golden Retriever, 9 ans, 32 kg</h3><span class="sub">effondré · bruits assourdis · pouls paradoxal · collabage cavités droites · VCC dilatée · ascite</span></span><span class="dx">Tamponnade péricardique</span></summary>
+    <details data-cas data-esp="chien" data-sys="cardio" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J3</span><h3>« Baloo » — Golden Retriever, 9 ans, 32 kg</h3><span class="sub">effondré · bruits assourdis · pouls paradoxal · collabage cavités droites · VCC dilatée · ascite</span></span><span class="dx">Tamponnade péricardique</span></summary>
       <div class="body">
         <ul><li>Dx <b>tamponnade + retentissement droit</b> lu vite (pattern neuf) : triade de Beck (bruits assourdis + pouls faibles + hypotension) + <b>pouls paradoxal</b> + collabage des cavités droites au TFAST + veine cave dilatée + ascite. Priorité : drainer, <b>pas de gros bolus</b>.</li></ul>
         <h4>Stabilisation</h4>
@@ -651,7 +722,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 ulysse -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J5</span><h3>« Ulysse » — Berger allemand, 9 ans, 34 kg</h3><span class="sub">effondrement brutal · muqueuses blanches · abdomen distendu, onde de flot · QRS larges à 200 avec déficits de pouls</span></span><span class="dx">Hémoabdomen sur masse splénique + TV</span></summary>
+    <details data-cas data-esp="chien" data-sys="choc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S7 J5</span><h3>« Ulysse » — Berger allemand, 9 ans, 34 kg</h3><span class="sub">effondrement brutal · muqueuses blanches · abdomen distendu, onde de flot · QRS larges à 200 avec déficits de pouls</span></span><span class="dx">Hémoabdomen sur masse splénique + TV</span></summary>
       <div class="body">
         <ul>
           <li><b>Pattern</b> : grand chien âgé, <b>effondrement brutal</b> sur fond de « un peu mou depuis 2 jours » (saignements sentinelles). Muqueuses <b>blanches</b> + TRC &gt; 3 s + pouls faible + hypothermie + abdomen <b>distendu avec onde de flot</b>, souvent <b>peu douloureux</b> (le sang n'irrite pas le péritoine).</li>
@@ -674,7 +745,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 iroko -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J2</span><h3>« Iroko » — croisé beauceron, 6 ans, 32 kg</h3><span class="sub">trouvé effondré · apnée + pouls absent · AESP à complexes larges/lents</span></span><span class="dx">Arrêt hyperkaliémique → ROSC</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J2</span><h3>« Iroko » — croisé beauceron, 6 ans, 32 kg</h3><span class="sub">trouvé effondré · apnée + pouls absent · AESP à complexes larges/lents</span></span><span class="dx">Arrêt hyperkaliémique → ROSC</span></summary>
       <div class="body">
         <ul>
           <li><b>Reconnaissance de l'arrêt</b> : pas de respiration efficace (gasps agoniques) + pouls fémoral absent = <b>ACR</b> → on masse en &lt; 10 s, on n'ausculte pas d'abord.</li>
@@ -692,7 +763,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 volt -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J3</span><h3>« Volt » — croisé berger, ~18 kg</h3><span class="sub">HBC · dyspnée restrictive · thorax « en tonneau » · bruits respiratoires diminués bilat · bruits cardiaques assourdis</span></span><span class="dx">Pneumothorax sous tension → arrêt → ROSC</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J3</span><h3>« Volt » — croisé berger, ~18 kg</h3><span class="sub">HBC · dyspnée restrictive · thorax « en tonneau » · bruits respiratoires diminués bilat · bruits cardiaques assourdis</span></span><span class="dx">Pneumothorax sous tension → arrêt → ROSC</span></summary>
       <div class="body">
         <ul>
           <li><b>Pattern</b> : traumatisé (HBC) + <b>détresse respiratoire restrictive</b> — effort inspiratoire ET expiratoire, <b>thorax distendu peu mobile</b>, <b>bruits respiratoires diminués des deux côtés</b> (dorsalement +++), muqueuses cyanosées, TRC ~4 s, <b>bruits cardiaques assourdis/lointains</b>, pouls filant.</li>
@@ -715,7 +786,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 gaston-golden -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J5</span><h3>« Gaston » — golden retriever, 13 ans, 31 kg</h3><span class="sub">effondré au jardin il y a ~20 min · apnéique · muqueuses gris-pâle · abdomen modérément distendu</span></span><span class="dx">Arrêt hémorragique — RCP sans succès</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J5</span><h3>« Gaston » — golden retriever, 13 ans, 31 kg</h3><span class="sub">effondré au jardin il y a ~20 min · apnéique · muqueuses gris-pâle · abdomen modérément distendu</span></span><span class="dx">Arrêt hémorragique — RCP sans succès</span></summary>
       <div class="body">
         <ul>
           <li><b>Reconnaissance ≤ 10 s</b> : pas de pouls fémoral + pas de mouvement thoracique + pas de gasp → RCP immédiate, sans auscultation préalable.</li>
@@ -733,7 +804,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod3 iris -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J6</span><h3>« Iris » — croisée labrador, 5 ans, 24 kg</h3><span class="sub">hospitalisée pour GEH · s'effondre en box <b>3 min après une injection IV d'amoxi-clav</b></span></span><span class="dx">Choc anaphylactique → FV</span></summary>
+    <details data-cas data-esp="chien" data-sys="rcp" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S8 J6</span><h3>« Iris » — croisée labrador, 5 ans, 24 kg</h3><span class="sub">hospitalisée pour GEH · s'effondre en box <b>3 min après une injection IV d'amoxi-clav</b></span></span><span class="dx">Choc anaphylactique → FV</span></summary>
       <div class="body">
         <ul>
           <li><b>La question qui fait le diagnostic (5 s)</b> : « <i>qu'est-ce qui a été fait à cet animal dans les dix dernières minutes ?</i> » Un <b>lien temporel drogue → collapsus</b> = anaphylaxie jusqu'à preuve du contraire. Arrêter l'administration du produit, noter drogue + heure + lot au dossier.</li>
@@ -924,56 +995,56 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Ventriculaire</span><h3>Tachycardie ventriculaire (TV) — monomorphe</h3><span class="sub">QRS larges rapides, pas de P</span></span><span class="dx">Choc / lido</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="tv" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="tv" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : origine ventriculaire — terrain <b>GDV / masse splénique post-op</b>, cardiopathie, contusion myocardique. <b>Signature</b> : complexes <b>tous identiques, larges et déformés</b>, réguliers, rapprochés, <b>aucune P</b> devant. Un « peigne » de gros complexes. <b>Conduite</b> : chien <b>lidocaïne 2 mg/kg IV</b> ; traiter si FC &gt; 180 / instable / R-sur-T. <span class="src">§16.5</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Ventriculaire</span><h3>Torsades de pointes (TV polymorphe)</h3><span class="sub">Complexes qui tournent en fuseau</span></span><span class="dx">Mg²⁺</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="torsades" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="torsades" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : TV dont la <b>forme change en permanence</b>, l'amplitude croît puis décroît (torsion autour de la ligne de base). Souvent <b>hypomagnésémie / hypokaliémie / QT long</b>. <b>Signature</b> : fuseaux de complexes larges qui « twistent ». <b>Conduite</b> : <b>sulfate de magnésium IV</b>, corriger K, traiter la cause ; instable → cardioversion. <b>Dégénère facilement en FV.</b> <span class="src">§16.3</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Arrêt · choquable</span><h3>Fibrillation ventriculaire (FV)</h3><span class="sub">Ligne anarchique, aucun complexe</span></span><span class="dx">Choc</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="fv" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="fv" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : arrêt cardiaque, rythme <b>choquable</b>. <b>Signature</b> : ondulation <b>anarchique</b>, amplitude et fréquence changeantes, <b>rien à segmenter</b> (ni P, ni QRS, ni T). Le cœur « frémit ». <b>Conduite</b> : <b>choc d'abord</b> (2–4 J/kg biphasique) → 2 min de massage sans pause → adré 0,01 mg/kg tous les 2 cycles ; amiodarone/lido si réfractaire après le 3ᵉ choc. <span class="src">§16.1 · §16.3</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Arrêt · non choquable</span><h3>Asystolie</h3><span class="sub">Ligne plate</span></span><span class="dx">RCP + adré</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="asystole" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="asystole" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : arrêt, rythme <b>NON choquable</b>. <b>Signature</b> : ligne quasi <b>plate</b> (à peine ondulée). Avant de conclure : vérifier <b>gain, dérivation, contact des électrodes</b> (une FV fine peut se cacher). <b>Conduite</b> : <b>PAS de choc</b> — RCP + <b>adré 0,01 mg/kg tous les 2 cycles</b> + causes réversibles (4H/4T). <span class="src">§16.1</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Arrêt · non choquable</span><h3>AESP — activité électrique sans pouls</h3><span class="sub">Tracé organisé, aucun pouls</span></span><span class="dx">Cause</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="aesp" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="aesp" width="880" height="150"></canvas></div>
         <div class="box trap"><b>Le piège</b> : le tracé paraît <b>presque normal / organisé</b>, mais <b>aucun pouls n'est palpable</b>. L'ECG seul ne suffit pas — c'est la <b>clinique</b> qui fait le diagnostic (dissociation électromécanique). <b>Concerne</b> : arrêt <b>non choquable</b>. <b>Conduite</b> : <b>PAS de choc</b> — RCP + adré + traiter la <b>CAUSE</b> (4H/4T : hypovolémie, hypoxie, hyper/hypoK, tamponnade, pneumothorax…). <span class="src">§16.4</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Bloc</span><h3>Bloc AV complet (3ᵉ degré)</h3><span class="sub">P et QRS dissociés</span></span><span class="dx">Pacing</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="bav" data-annot="bav" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="bav" data-annot="bav" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : syncopes + bradycardie — maladie de pacemaker. <b>Signature</b> : <b>dissociation AV</b> — les <b>P</b> (marquées en haut) défilent à leur rythme, <b>plus nombreuses</b> que les <b>QRS</b> (en bas), lents et <b>sans lien fixe</b> (la P « glisse » avant/dans/après le QRS). <b>Conduite</b> : l'échappement lent est <b>intouchable</b> ; atropine-test 0,04 mg/kg (souvent non répondeur, structurel) → <b>pacemaker</b>. <span class="src">§16.8</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Supraventriculaire</span><h3>Fibrillation atriale (FA)</h3><span class="sub">R-R irrégulier, pas de P</span></span><span class="dx">Contrôle FC</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="fa" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="fa" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : <b>cardiopathie dilatée</b> (Dobermann, Boxer, grandes races), OG très dilatée. Réponse ventriculaire rapide → décompensation. <b>Signature</b> : rythme <b>irrégulièrement irrégulier</b> (R-R anarchique), <b>aucune onde P</b>, ligne de base ondulée (ondes f). QRS <b>fins</b> (supraventriculaire). <b>Conduite</b> : <b>contrôle de fréquence</b> (diltiazem ± digoxine) + traiter l'ICC ; pas de choc en urgence sur une FA chronique. <span class="src">§16</span></div>
       </div>
     </details>
 
     <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Métabolique</span><h3>Hyperkaliémie — progression ECG</h3><span class="sub">T en tente → sinusoïdal</span></span><span class="dx">Calcium</span></summary>
       <div class="body">
-        <canvas class="ecg" data-ecg="hk" data-annot="hk" width="880" height="150" style="width:100%;height:auto;display:block;border-radius:8px"></canvas>
+        <div class="ecgwrap"><canvas class="ecg" data-ecg="hk" data-annot="hk" width="880" height="150"></canvas></div>
         <div class="box note"><b>Concerne</b> : <b>chat bloqué</b>, Addison, IRA/obstruction urinaire, syndrome de reperfusion (ATE). <b>Signature</b> (de gauche à droite, K⁺ croissant) : <b>T pointues « en tente »</b> → <b>P qui s'efface + QRS qui s'élargit</b> → <b>onde sinusoïdale</b> lente (préarrêt). C'est ton chronomètre de gravité. <b>Conduite</b> : <b>gluconate de calcium</b> d'abord (cardioprotège, ne baisse pas le K) → glucose ± insuline + β2 → <b>lever la cause</b>. <span class="src">§16.7 · §13.23</span></div>
         <h4>Les 4 paliers, avec leurs K⁺</h4>
         <div class="tablewrap"><table class="doses">
@@ -1010,13 +1081,13 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <div class="recap-grid">
         <div><h4>Cas vus</h4><ul><li>Braque de Weimar — dilatation-torsion de l'estomac (chien)</li><li>Nougat — péritonite septique par corps étranger linéaire (chat)</li><li>Berger Australien 4 mois — SDHA / diarrhée hémorragique aiguë (chiot)</li><li>Beagle 3 mois — parvovirose (chiot)</li><li>Pacha — pancréatite aiguë + lipidose hépatique (chat)</li><li>Épagneul breton — ulcère AINS perforé, péritonite septique (chien)</li><li>Caniche royal — crise addisonienne (chien)</li><li>Labrador femelle entière — pyomètre à utérus fermé, choc septique (chien)</li><li>Chat européen 2 ans — lymphome médiastinal FeLV+ &amp; chylothorax (chat)</li><li>Cocker femelle stérilisée — pyélonéphrite aiguë, azotémie rénale (chien)</li></ul></div>
         <div><h4>À venir</h4><ul><li>Hémoabdomen + décision transfusion</li><li>Stabilisation préop GDV · vomissements aigus du chat · dystocie / césarienne</li></ul></div>
-        <div><h4>Réflexes du module</h4><ul><li><b>Htc effondrant le tube + TP qui ne monte pas = SDHA.</b> La déshydratation concentre TOUT : si l'Htc monte et pas le TP, tu perds des protéines quelque part</li><li>Le parvo se prouve sur le <b>leucogramme</b> (neutropénie), pas sur le couple PCV/TP</li><li>SDHA non septique : <b>pas d'antibiotique</b> (Unterer 2011) · <b>pas de lopéramide</b> sur une diarrhée hémorragique</li><li>Estomac dilaté = <b>cave caudale écrasée</b> → voies IV <b>aux antérieurs</b>, jamais aux postérieurs</li><li>Trocardage = <b>abdominal</b>, derrière la dernière côte, tiers dorsal — <b>pas un espace intercostal</b></li><li>POCUS avant de trocarder : la <b>rate</b> est plaquée contre la paroi gauche</li><li>Le trocardage n'est pas un traitement, c'est <b>du temps acheté</b></li><li><b>Lactate en série</b> = le marqueur pronostique, pas la valeur d'admission</li><li>Différer la chirurgie n'est légitime que <b>sous conditions et avec un critère de bascule écrit</b></li><li>Salve ventriculaire pré-op : on tranche à voix haute, on ne la regarde pas</li><li>« C'est ma faute ? » → <b>non</b> : l'exercice après le repas n'est pas un facteur de risque démontré</li><li><b>Bactérie intracellulaire dans un neutrophile = septique</b>, la question est close — pas de PIF à évoquer</li><li>Tout chat qui vomit : <b>soulever la langue</b>, geste à 2 secondes</li><li>Péritonite septique = <b>contrôle de la source chirurgical</b>. Contrairement au GDV, ça ne se diffère pas</li><li>Une pompe se règle en <b>mL/h</b>. « mL/kg/h » est une consigne de calcul, jamais un débit</li><li><b>Un Htc normal chez un déshydraté est un Htc masqué</b> — il chutera sous fluides</li><li><b>Le chiot suit le registre de bolus du chien (20 mL/kg), pas celui du chat.</b> Sa fragilité est le sucre et la température, pas le volume</li><li>Épanchement : <b>glucose et lactate</b>, comparés au sang. Le <b>lactate ne vaut pas chez le chat</b>. Htc/TP = le sang, glucose/lactate = l'épanchement</li><li>Chat ictérique + liquide libre : <b>ratio bilirubine épanchement/sang &gt; 2 = biliaire</b> → bloc</li><li><b>PAL ↑ avec GGT normale = lipidose.</b> GGT &gt; PAL = cholangite</li><li><b>La nutrition entérale précoce est un traitement</b>, pas un confort — parvovirose comme lipidose. Le repos digestif est un dogme abandonné</li><li>Antibiotique : <b>non</b> en SDHA ni en pancréatite pure · <b>oui</b> en parvovirose (translocation) et devant une neutrophilie à bandes avec ictère</li><li><b>Toute anomalie biologique vue reçoit une décision verbalisée</b>, même « je ne traite pas, je recontrôle à 6 h »</li><li>Critère de bascule = <b>paramètre + seuil + délai → action</b>. Un résultat d'examen n'en est pas un</li><li><b>Un ulcère qui saigne ne remplit pas l'abdomen.</b> Liquide libre + douleur diffuse + défense = <b>perforation</b> → abdominocentèse</li><li><b>Bradycardie chez un patient en choc → chercher le potassium.</b> Un chien en choc devrait être tachycarde</li><li><b>Htc haut chez un animal qui saigne = faux normal.</b> Toujours lire le couple Htc/TP, jamais l'Htc seul</li><li><b>Femelle entière + vomissements/PU-PD + 4 à 8 semaines après les chaleurs = utérus</b>, avant toute imagerie. Le signalement est un examen complémentaire gratuit</li><li><b>Anamnèse AVANT imagerie.</b> Une radio ne répond bien qu'à une question déjà posée</li><li><b>Isosthénurie + azotémie ≠ IRA automatiquement.</b> Sur un pyomètre, l'endotoxine bloque l'ADH → <b>diabète insipide néphrogénique réversible</b>. On réhydrate et on opère</li><li><b>Muqueuses rouge brique + pouls bondissants + fièvre = choc septique hyperdynamique</b>, pas un choc « moins grave » parce qu'il n'est pas pâle</li><li><b>Utérus fermé = aucun écoulement vulvaire.</b> L'absence de pertes aggrave, elle ne rassure pas</li><li><b>Épanchement pleural : le drainage EST la réanimation.</b> Ni l'O₂ ni le bolus ne remplacent l'aiguille — et on ne couche/n'anesthésie jamais un thorax qu'on n'a pas vidé</li><li>Thoracocentèse : <b>7ᵉ–9ᵉ EIC, en avant de la côte</b> (le paquet vasculo-nerveux est sur le bord caudal) · <b>liquide = tiers ventral, air = tiers dorsal</b></li><li><b>Chat dyspnéique = butorphanol</b> (0,2–0,4 mg/kg IV, effet 2–5 min). La <b>buprénorphine</b> est un agoniste <b>partiel</b> : pic à 15–30 min et elle <b>bloque le mu complet</b> qu'on donnera après</li><li><b>Liquide blanc laiteux = chyle</b> → triglycérides épanchement vs sang. La PIF humide est <b>jaune paille visqueuse, TP 5–12 g/dL, pyogranulomateuse</b> — pas lymphoblastique</li><li><b>Chat jeune + masse médiastinale + FeLV+ = lymphome médiastinal.</b> Le SNAP FeLV est un examen diagnostique, pas un bilan de routine</li><li><b>Ne jamais proposer un traitement pour une maladie que le patient n'a pas</b> — un vrai taux de succès sur un faux diagnostic reste un consentement obtenu par erreur</li><li><b>Une obstruction ne donne pas de fièvre.</b> Fièvre + douleur sublombaire + pyélectasie <b>unilatérale</b> + azotémie = pyélonéphrite</li><li><b>Le seuil de concentration urinaire est &gt; 1,030 chien / &gt; 1,035 chat</b>, pas 1,013. Une DU à 1,018 chez un azotémique déshydraté dit <b>rénal</b></li><li><b>Cylindres leucocytaires = origine rénale.</b> Une cystite n'en donne pas</li><li>Culture urinaire sur <b>cystocentèse, AVANT le premier antibiotique</b> · pyélonéphrite = <b>4 à 6 semaines</b> de traitement, pas 10 jours</li><li><b>Réhydrater n'est pas entretenir</b> : sur un azotémique déshydraté, l'entretien seul laisse la créatinine monter</li></ul></div>
+        <div><h4>Réflexes</h4><ul><li>Les règles opposables de ce module sont regroupées par appareil dans <b><a class="goto" data-goto="reflexes">Réflexes</a></b> — tous modules confondus.</li></ul></div>
       </div>
     </div>
     <!-- /BLOC -->
     <div class="slabel">Cas vus</div>
     <!-- BLOC: mod4 weimar -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J1</span><h3>Braque de Weimar — mâle entier, 8 ans, 34 kg</h3><span class="sub">vomissements improductifs · ptyalisme · abdomen distendu tympanique · muqueuses grises, TRC 3 s · Lac 8,4</span></span><span class="dx">Dilatation-torsion de l'estomac</span></summary>
+    <details data-cas data-esp="chien" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J1</span><h3>Braque de Weimar — mâle entier, 8 ans, 34 kg</h3><span class="sub">vomissements improductifs · ptyalisme · abdomen distendu tympanique · muqueuses grises, TRC 3 s · Lac 8,4</span></span><span class="dx">Dilatation-torsion de l'estomac</span></summary>
       <div class="body">
         <ul><li>ABCDE complet et ordonné, <b>AFAST et TFAST faits</b> (et non évoqués). AFAST : fenêtre hépato-diaphragmatique inexploitable, écran gazeux total. TFAST : glide sign présent, pas de lignes B, pas d'épanchement péricardique, VG petit à parois quasi jointives.</li>
           <li><b>BRU</b> : Na 146 · K 3,5 · Ca²⁺ 1,10 · Cl 109 · Glu 122 · Créat 1,5 · BUN 28 · tCO₂ 15 · <b>Htc 55 %</b> · <b>Lac 8,4</b> · pH 7,29 · pCO₂ 33. T° 37,2 °C.</li></ul>
@@ -1028,20 +1099,18 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
           <li><b>Midazolam 1 mg/mL, 0,2 mg/kg = 6,8 mg = 6,8 mL</b> pour le sondage (le sondage sans sédation a échoué : sonde butée à ~55 cm, aucun gaz).</li>
           <li><b>Trocardage</b> flanc gauche, tiers dorsal, derrière la dernière côte, POCUS d'abord → jet de gaz, flanc affaissé. <b>Redilatation en 35 min</b> malgré un 2ᵉ trocardage.</li>
         </ul>
-        <div class="box trap"><b>Le site n'est pas intercostal.</b> Repère erroné « 3ᵉ EIC » corrigé ce jour dans la fiche et dans <span class="src">05_PROTOCOLES</span> : c'est <b>en arrière de la dernière côte, tiers dorsal, au point le plus tympanique</b>, POCUS pour exclure la rate. Le 3ᵉ EIC gauche, c'est du poumon. <span class="src">§13.26 · §4.8</span></div>
-        <div class="box trap"><b>Prescription — deux blocages d'exécution.</b> « Midazolam 6,8 mL » <b>sans voie</b> → seringue prélevée, rien d'injecté. « Bolus de NaCl » <b>sans concentration</b> → 0,9 % et 7,2 % sont dans le même placard. La formule à 6 temps avait été récitée 20 minutes plus tôt. <span class="src">§21.1</span></div>
-        <div class="box key"><b>Ce qui a tenu :</b> voie aux antérieurs · AFAST/TFAST faits · POCUS avant le trocardage · désaccord instruit sur un repère faux (il avait raison) · fentanyl complet · seuil d'alerte donné à l'ASV · joignabilité propre (« je vous rappelle », pas de numéro donné).</div>
-        <div class="box note"><b>Non fait :</b> radiographie latérale droite jamais réalisée · lactate mesuré une fois, jamais recontrôlé · TP et DU jamais demandés · <b>salves ventriculaires avec déficits de pouls et PAM 58 : jamais adressées</b>, dans aucun sens · CRI d'analgésie annoncée puis oubliée · fluides pré-op laissés à 3 mL/kg/h (102 mL/h) avec un seuil d'alerte « PAM &lt; 60 » alors que la PAM était déjà à 60.</div>
+        <div class="box trap"><b>Le site du trocardage n'est pas intercostal.</b> C'est <b>en arrière de la dernière côte, tiers dorsal, au point le plus tympanique</b> — POCUS d'abord pour exclure la rate, plaquée contre la paroi gauche. Le 3ᵉ EIC gauche, c'est du poumon. <span class="src">§13.26 · §4.8</span></div>
+        <div class="box trap"><b>Une prescription incomplète n'est pas exécutée.</b> « Midazolam 6,8 mL » <b>sans voie</b> → la seringue est prélevée et rien n'est injecté. « Bolus de NaCl » <b>sans concentration</b> → 0,9 % et 7,2 % sont dans le même placard. Molécule · dose · <b>voie</b> · <b>concentration</b> dès que deux présentations coexistent. <span class="src">§21.1</span></div>
+        <div class="box note"><b>Ce qu'un GDV réclame et qu'on saute :</b> radiographie <b>latérale droite</b> · <b>lactate en série</b>, jamais une valeur isolée · TP et densité urinaire <b>avant</b> les fluides · les <b>salves ventriculaires se tranchent</b>, dans un sens ou dans l'autre · une <b>CRI d'analgésie annoncée se prescrit</b> · un <b>seuil d'alerte se pose au-dessus de la valeur actuelle</b> (« PAM &lt; 60 » sur un patient déjà à 60 n'alerte de rien).</div>
         <div class="box key"><b>Conversation propriétaire (M. Delaunay, 47 ans).</b> Consentement obtenu vite et proprement sous contrainte de temps : gravité annoncée, alternative posée, risque admis, joignabilité conforme au terrain. <b>Point dur :</b> à « je l'ai fait courir après son repas, c'est à cause de ça ? », réponse « en effet » + mise en cause du vétérinaire traitant. <b>Les données prospectives (Glickman) ne soutiennent pas l'exercice après le repas comme facteur de risque</b> ; les facteurs établis sont race à thorax profond, apparenté au 1ᵉʳ degré ayant fait un GDV, âge, maigreur, <b>gamelle surélevée</b>, ingestion rapide, un seul gros repas par jour. Réponse utile : <i>« non — c'est surtout morphologique et génétique. Ce que vous avez bien fait, c'est de l'amener tout de suite. »</i> <span class="src">§11.17 · §13.26</span></div>
         <div class="box note"><b>Ordre d'appel du chirurgien, confirmé en scène :</b> stabilisation → <b>consentement du propriétaire</b> → <b>puis</b> appel. Le chir ne se déplace pas sur une chirurgie non confirmée. <span class="src">00_CONTEXTE_HOSPITALIER</span></div>
       </div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 nougat -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J2</span><h3>Nougat — chatte européenne stérilisée, 3 ans, 3,6 kg</h3><span class="sub">vomissements depuis 4 j · anorexie 3 j · abattue · TRC 3 s, pouls filant · FC 132 (basse pour un chat) · T° 35,8 °C · Lac 6,8 · Glu 48</span></span><span class="dx">Péritonite septique — corps étranger linéaire</span></summary>
+    <details data-cas data-esp="chat" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J2</span><h3>Nougat — chatte européenne stérilisée, 3 ans, 3,6 kg</h3><span class="sub">vomissements depuis 4 j · anorexie 3 j · abattue · TRC 3 s, pouls filant · FC 132 (basse pour un chat) · T° 35,8 °C · Lac 6,8 · Glu 48</span></span><span class="dx">Péritonite septique — corps étranger linéaire</span></summary>
       <div class="body">
         <ul>
-          <li>ABCDE complet et ordonné, sans relance — <b>2ᵉ séance consécutive</b>, le gap « E » se referme.</li>
           <li><b>BRU</b> : Na 148 · <b>K 3,1</b> · Ca²⁺ <b>1,02</b> · Cl 109 · <b>Glu 48</b> · Créat 2,8 · BUN 62 · <b>tCO₂ 12</b> · Htc 38 % · <b>Lac 6,8</b> · <b>pH 7,21</b> · pCO₂ 28. T° <b>35,8 °C</b>.</li>
           <li><b>AFAST</b> : épanchement libre, positif 3 fenêtres sur 4. <b>TFAST</b> : glide sign présent, pas de lignes B, pas d'épanchement péricardique.</li>
           <li><b>Triade féline du choc septique</b> : hypothermie + FC inappropriément basse (132 chez un chat malade, alors que le stress hospitalier donne 180–220) + hypotension. Le chat ne tachycardise pas comme le chien.</li>
@@ -1052,8 +1121,8 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
           <li><b>Cytologie</b> : hypercellulaire · neutrophiles <b>dégénérés</b> (noyaux gonflés, chromatine lysée) · <b>bactéries INTRACELLULAIRES</b>, population mixte bacilles + coques.</li>
         </ul>
         <div class="box trap"><b>Bactérie intracellulaire = septique. Question close.</b> La <b>PIF</b> a été évoquée devant ce finding — elle est exclue par le finding lui-même. Un épanchement de PIF est un <b>transsudat protéique</b> : limpide, jaune paille, <b>visqueux et filant</b>, <b>pauvre en cellules</b>, neutrophiles <b>non dégénérés</b> + macrophages, <b>jamais de bactéries</b>. Aucun test PIF n'a d'indication ici. <span class="src">§13.27</span></div>
-        <div class="box trap"><b>Le fil était visible depuis le début.</b> <b>Examen sublingual non fait</b> — geste à 2 secondes chez tout chat qui vomit. Fil de couture enroulé et incrusté à la base de la langue, frein partiellement sectionné. C'est l'<b>ancrage</b> : le reste descend, l'intestin se plisse en accordéon autour, le fil scie le <b>bord mésentérique</b> des anses → perforations multiples. <b>On ne coupe jamais le fil pour renvoyer le chat à la maison</b> quand il y a déjà un épanchement septique. <span class="src">§13.27</span></div>
-        <div class="box trap"><b>Collision dose / débit — 3ᵉ épisode.</b> « Bolus RL 10 mL/kg/h sur 15 minutes, soit <b>32 mL/h</b> » : l'ASV a réglé la pompe à 32 → <b>8 mL passés en 15 min</b> sur une chatte en choc. Deux fautes : l'arithmétique (3,6 × 10 = <b>36 mL</b>, pas 32) et l'unité. <b>Une pompe se règle en mL/h</b> : 36 mL sur 15 min = <b>144 mL/h</b>. Précédents : 26/07 « débit de 80 mL/kg », 30/07 « NaCl » sans concentration. <span class="src">§21.1 · §9.7</span></div>
+        <div class="box trap"><b>Le fil se voit sous la langue — geste à 2 secondes chez tout chat qui vomit.</b> Fil de couture enroulé et incrusté à la base de la langue, frein partiellement sectionné : c'est l'<b>ancrage</b>. Le reste descend, l'intestin se plisse en accordéon autour, le fil scie le <b>bord mésentérique</b> des anses → perforations multiples. <b>On ne coupe jamais le fil pour renvoyer le chat à la maison</b> quand il y a déjà un épanchement septique. <span class="src">§13.27</span></div>
+        <div class="box trap"><b>Une pompe se règle en mL/h.</b> « Bolus RL 10 mL/kg/h sur 15 min, soit 32 mL/h » → l'ASV règle 32 et <b>8 mL passent en 15 min</b> sur une chatte en choc. Deux fautes : l'arithmétique (3,6 × 10 = <b>36 mL</b>) et l'unité. 36 mL sur 15 min = <b>144 mL/h</b>. « mL/kg/h » est une consigne de calcul, jamais un débit. <span class="src">§21.1 · §9.7</span></div>
         <div class="box trap"><b>Le midazolam n'est pas un analgésique.</b> Proposé comme antalgique après coup — c'est une benzodiazépine, <b>zéro effet antalgique</b>, et seule chez le chat elle donne fréquemment <b>dysphorie et excitation paradoxale</b>. Et l'ordre était inversé : <b>abdominocentèse faite sur une chatte consciente qui criait et mordait, sans rien</b>. L'analgésie précède le geste. <span class="src">§21.1</span></div>
         <h4>Ce qu'il fallait prescrire</h4>
         <ul>
@@ -1065,17 +1134,16 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
           <li><b>Réchauffement passif d'abord.</b> Sur un chat en choc, un réchauffement externe agressif <b>avant</b> le remplissage vasodilate la périphérie et fait chuter la PAM. Cible <b>0,5–1 °C/h</b>, pas « le plus vite possible ».</li>
         </ul>
         <div class="box key"><b>Confirmation tankside (non demandée) :</b> <b>glucose sanguin − glucose de l'épanchement &gt; 20 mg/dL</b> = septique — chez le <b>chat</b> : 86 % sensible, 100 % spécifique (Bonczynski 2003). Le <b>lactate</b> comparé sang/épanchement marche chez le chien, <b>pas chez le chat</b> — ne pas s'appuyer dessus.</div>
-        <div class="box note"><b>Décisions non prises</b> — nouveau visage du gap d'exécution : <b>glycémie 48 jamais reprise</b> · <b>K 3,1 jamais supplémenté</b> · <b>antibiotique jamais prescrit</b>, alors qu'il a été <b>annoncé au propriétaire comme déjà administré</b> · lactate mesuré une fois, jamais recontrôlé (2ᵉ séance de suite) · TP et DU jamais demandés (et la DU perd sa valeur après les fluides).</div>
+        <div class="box note"><b>Ce qui doit être tranché sur ce tableau :</b> <b>Glu 48</b> → resucrage, puis entretien à 2,5 % et recontrôle · <b>K 3,1</b> → +30 mEq/L dans la poche · <b>antibiotique</b> → première dose immédiate, et on n'annonce jamais au propriétaire un traitement qui n'est pas passé · <b>lactate en série</b> · TP et DU <b>avant</b> les fluides — après, la DU ne vaut plus rien.</div>
         <div class="box trap"><b>Pronostic embelli = consentement invalide.</b> Annoncé : <i>« les taux de succès sont très élevés, ça reste une chirurgie classique et souvent réalisée »</i>. La mortalité d'une <b>péritonite septique féline</b> est de l'ordre de <b>30–40 %</b> (Costello 2004, 51 chats : 62 % de survie à la sortie — série de référé, donc plutôt optimiste). Formulation juste : <i>« sans chirurgie elle ne passera pas la nuit ; avec, elle a une réelle chance — mais environ un sur trois n'y survit pas. C'est une chance, pas une garantie. »</i> <span class="src">§11.17</span></div>
         <div class="box trap"><b>Culpabilité — ici la causalité est VRAIE.</b> Sur le GDV (30/07) la réponse était « non » parce que l'association est <b>scientifiquement fausse</b>. Ici c'est bien son panier de couture : répondre « non » nie un fait qu'elle sait vrai. La bonne opération est de <b>séparer le fait de la faute</b> : <i>« oui, c'est très probablement votre fil. Mais un accident domestique n'est pas une faute. Ce qui compte, c'est que vous l'ayez amenée cette nuit. Et le panier fermé règle le problème définitivement. »</i> <b>Aucun conseil de prévention donné</b> sur un risque parfaitement évitable et récidivant. <span class="src">§11.17 Q-C2</span></div>
-        <div class="box note"><b>Question esquivée.</b> « Je peux vous appeler cette nuit ? » posée <b>deux fois</b>, jamais répondue — elle l'a relevé en sortant. La règle du service se dit, elle ne s'esquive pas : <i>« non, la nuit on ne prend pas les appels, on est deux pour tout l'hôpital. C'est nous qui vous appelons : à la fin de l'opération, et si son état change. Vous nous rappelez demain à 8 h. »</i> Une esquive coûte plus de confiance qu'un refus expliqué. <span class="src">00_CONTEXTE_HOSPITALIER</span></div>
-        <div class="box key"><b>Ce qui a tenu :</b> ABCDE complet sans relance · abdominocentèse techniquement propre + cytologie spontanée · <b>erreur de fluide détectée et corrigée par lui-même</b>, avant correction externe · dé-jargonnage bon (« un fil qui a coupé l'intestin, du pus dans le ventre ») · <b>reformulation demandée au propriétaire</b> dès le premier bloc · point fixe de rappel conforme au terrain (appel post-op + lendemain matin).</div>
+        <div class="box key"><b>« Je peux vous appeler cette nuit ? » — la règle du service se dit, elle ne s'esquive pas.</b> <i>« Non, la nuit on ne prend pas les appels, on est deux pour tout l'hôpital. C'est nous qui vous appelons : à la fin de l'opération, et si son état change. Vous nous rappelez demain à 8 h. »</i> Une esquive coûte plus de confiance qu'un refus expliqué. <span class="src">00_CONTEXTE_HOSPITALIER</span></div>
         <div class="box key"><b>Traitement de fond :</b> le drainage à l'aiguille <b>ne traite rien</b> — comme le trocardage du GDV, il achète du temps. Le traitement est le <b>contrôle de la source</b> : laparotomie, retrait du fil, résection/suture des perforations, lavage abondant, fermeture ± drain aspiratif. <b>Et ici, contrairement au GDV, la chirurgie ne se diffère pas</b> : tant que la source septique est en place, la réanimation ne fait que compenser. La stabilisation sert à rendre l'anesthésie possible, pas à repousser le bloc.</div>
       </div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 chiot-sdha -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J3</span><h3>Berger Australien — mâle entier, 4 mois, 9,2 kg</h3><span class="sub">diarrhée liquide franchement sanglante depuis 10 h · 3 vomissements · effondré · TRC 3 s, pouls faibles · <b>Htc 68 %</b> · Lac 5,1 · T° 38,4 °C · vacciné (rappel il y a 3 semaines)</span></span><span class="dx">SDHA — diarrhée hémorragique aiguë</span></summary>
+    <details data-cas data-esp="chiot" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J3</span><h3>Berger Australien — mâle entier, 4 mois, 9,2 kg</h3><span class="sub">diarrhée liquide franchement sanglante depuis 10 h · 3 vomissements · effondré · TRC 3 s, pouls faibles · <b>Htc 68 %</b> · Lac 5,1 · T° 38,4 °C · vacciné (rappel il y a 3 semaines)</span></span><span class="dx">SDHA — diarrhée hémorragique aiguë</span></summary>
       <div class="body">
         <ul>
           <li><b>BRU</b> : Na 149 · K <b>3,4</b> · Ca²⁺ 2,3 · Cl 116 · Glu <b>71</b> · Créat 1,4 · BUN 38 · <b>tCO₂ 15</b> · <b>Htc 68 %</b> · <b>Lac 5,1</b> · pH 7,28 · pCO₂ 32. T° <b>38,4 °C</b>.</li>
@@ -1111,7 +1179,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 chiot-parvo -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J4</span><h3>Beagle — mâle entier, 3 mois, 4,8 kg</h3><span class="sub">vomissements 36 h · diarrhée liquide nauséabonde 12 h · prostré, ne se lève plus · TRC 4 s, pouls filants · <b>Htc 41 %</b> · <b>TP 3,8</b> · Glu 44 · Lac 7,3 · T° 36,2 °C</span></span><span class="dx">Parvovirose du chiot</span></summary>
+    <details data-cas data-esp="chiot" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J4</span><h3>Beagle — mâle entier, 3 mois, 4,8 kg</h3><span class="sub">vomissements 36 h · diarrhée liquide nauséabonde 12 h · prostré, ne se lève plus · TRC 4 s, pouls filants · <b>Htc 41 %</b> · <b>TP 3,8</b> · Glu 44 · Lac 7,3 · T° 36,2 °C</span></span><span class="dx">Parvovirose du chiot</span></summary>
       <div class="body">
         <ul>
           <li><b>BRU</b> : Na 138 · <b>K 2,8</b> · Ca²⁺ 1,08 · Cl 108 · <b>Glu 44</b> · Créat 1,4 · BUN 38 · <b>tCO₂ 11</b> · <b>Htc 41 %</b> · <b>Lac 7,3</b> · <b>pH 7,16</b> · pCO₂ 28. T° <b>36,2 °C</b>.</li>
@@ -1149,13 +1217,12 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
         <div class="box note"><b>Rythme de recontrôle.</b> « q6h » est trop lâche à Glu 44 et K 2,8 : <b>glycémie q2h en phase aiguë</b> · <b>K à 4–6 h</b> · <b>Htc/TP à 6 h</b> (l'Htc va chuter sous fluides). <b>TP &lt; 3,5 g/dL</b> → la question du plasma se pose, et le TP bas <b>limite la tolérance aux cristalloïdes</b> : plus on perfuse, plus on dilue l'albumine.</div>
         <div class="box key"><b>Pronostic à annoncer.</b> <b>Parvovirose hospitalisée en soins intensifs : 80–90 % de survie.</b> Sans traitement : <b>&gt; 90 % de mortalité</b> — d'où l'image populaire d'une maladie qui tue. Ce chiot est dans la frange sévère (hypoglycémie, hypokaliémie, hypothermie, lactate 7,3) → annoncer <b>70–80 %</b>. Le risque à nommer : <b>les 48–72 h</b>, sepsis par translocation.</div>
         <div class="box trap"><b>Le pronostic donné « au ton », faute d'avoir le chiffre — 2ᵉ fois, en sens inverse.</b> Le 09/08, un pronostic sombre embelli (péritonite septique). Le 10/08, un bon pronostic noirci (« les chances de survie sont plutôt basses »). Même cause dans les deux cas. Le <b>risque</b> est en revanche apparu pour la 1ʳᵉ fois après 3 séances. <span class="src">§11.17 Q-C4</span></div>
-        <div class="box key"><b>Ce qui a tenu :</b> pattern juste d'emblée · <b>TP demandé spontanément</b>, sur le sang déjà prélevé, et pour la bonne raison (le coupler à l'Htc) · statut vaccinal demandé · 40 mEq/L juste · poche à 2,5 % correctement fabriquée à chaud 20 min après le drill · <b>192 mL/h et 216 mL/h</b>, débits en mL/h sortis sans relance.</div>
-        <div class="box note"><b>Ce qui se répète :</b> pro/prébiotiques prescrits — <b>2ᵉ séance consécutive</b> (ne raccourcissent pas l'épisode, et per os chez un chiot qui vomit depuis 36 h) · aucune conduite après le bolus (un bolus est un <b>test</b>, il se réévalue et se répète) · densité urinaire non demandée avant les fluides.</div>
+        <div class="box trap"><b>Pro/prébiotiques : aucun effet démontré sur la durée de l'épisode</b> — et per os chez un chiot qui vomit depuis 36 h, ça ne descend pas. <b>Un bolus est un test : il se réévalue et se répète</b>, il n'a jamais de conduite implicite. <b>Densité urinaire avant les fluides</b>, sinon elle est perdue.</div>
       </div>
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 pacha-pancreatite -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J4</span><h3>Pacha — chat européen castré, 8 ans, 5,4 kg</h3><span class="sub">anorexie 4 j · −700 g en 3 semaines · 2 vomissements bilieux · ictère discret · douleur cranial droit · <b>Ca²⁺ 0,88</b> · Bili 4,2 · <b>PAL 145 / GGT 8</b> · T° 36,8 °C</span></span><span class="dx">Pancréatite aiguë + lipidose hépatique</span></summary>
+    <details data-cas data-esp="chat" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J4</span><h3>Pacha — chat européen castré, 8 ans, 5,4 kg</h3><span class="sub">anorexie 4 j · −700 g en 3 semaines · 2 vomissements bilieux · ictère discret · douleur cranial droit · <b>Ca²⁺ 0,88</b> · Bili 4,2 · <b>PAL 145 / GGT 8</b> · T° 36,8 °C</span></span><span class="dx">Pancréatite aiguë + lipidose hépatique</span></summary>
       <div class="body">
         <ul>
           <li><b>BRU</b> : Na 149 · <b>K 3,2</b> · <b>Ca²⁺ 0,88</b> · Cl 112 · Glu 178 · Créat 2,1 · BUN 42 · <b>tCO₂ 14</b> · Htc 48 % · <b>Lac 4,2</b> · pH 7,25 · pCO₂ 30. T° <b>36,8 °C</b>.</li>
@@ -1181,7 +1248,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
         <h4>Prise en charge</h4>
         <ul>
           <li>Bolus <b>RL 10 mL/kg = 54 mL IV sur 15 min → pompe à 216 mL/h</b> — registre chat correct (10–15). Fluides réchauffés + Bair Hugger (T° 36,8).</li>
-          <li><b>Fentanyl : bolus 2 µg/kg IV, PUIS CRI 2–5 µg/kg/h.</b> Une pancréatite fait mal en continu depuis 4 jours ; un bolus tient 20–30 min. <b>CRI absente pour la 3ᵉ séance consécutive.</b></li>
+          <li><b>Fentanyl : bolus 2 µg/kg IV, PUIS CRI 2–5 µg/kg/h.</b> Une pancréatite fait mal en continu depuis 4 jours ; un bolus tient 20–30 min.</li>
           <li><b>K 3,2 → 30 mEq/L</b> dans la poche (table ci-dessus), et il descendra sous fluides.</li>
           <li><b>Maropitant 1 mg/kg.</b></li>
           <li><b>Amoxicilline-clavulanate 20 mg/kg IV q8h</b> (ou ampicilline 22 mg/kg IV q8h). ⚠ <b>Ce n'est pas la pancréatite qui l'indique</b> — une pancréatite pure ne se traite pas par antibiotique, exactement comme le SDHA. L'indication vient de la <b>neutrophilie à bandes + l'ictère + la cholangite possible</b>.</li>
@@ -1189,13 +1256,13 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
         <div class="box key"><b>Critère de bascule — la structure, acquise ce jour.</b> <b>Paramètre + seuil + délai → action.</b> Version du jour : « TRC &gt; 2 s à 15 min après le bolus → je refais un bolus ». Deux serrages : la <b>FR n'est pas un marqueur de réponse volémique</b> (utiliser le <b>lactate</b>) ; chez un chat <b>hypotherme</b>, la FC est basse à cause du froid, pas du remplissage. Et ajouter le <b>critère d'arrêt</b> : après 3–4 bolus sans réponse, on arrête les bolus et on cherche autre chose.</div>
         <div class="box key"><b>Pronostic à annoncer.</b> <b>Pancréatite féline sévère : ~30 % de mortalité.</b> <b>Lipidose nourrie par sonde : 80–90 % de survie</b>, contre <b>&gt; 90 % de mortalité sans nutrition</b>. <b>Ca ionisé &lt; 1,0 = facteur défavorable indépendant.</b><br>
           Forme utilisable quand on n'a pas encore tous les éléments — <b>ce que je sais / ce qui me manque / quand je saurai</b> : <i>« son pancréas est enflammé et son foie commence à souffrir de ne plus manger. Avec l'hospitalisation, la perfusion et surtout une sonde pour le renourrir, la majorité de ces chats s'en sortent. Ce qui me manque pour être précis, c'est de voir comment il répond dans les 24 heures — et son taux de calcium est bas, ce qui est un signe de sévérité. Je vous rappelle demain matin. »</i> <b>« Plus tard » n'existe pas en garde</b> : le propriétaire attend au rez-de-chaussée. <span class="src">§11.17 Q-C4</span></div>
-        <div class="box note"><b>Non fait :</b> épanchement <b>non ponctionné</b> (décision non prise, et TP demandé au lieu du glucose) · <b>cétones urinaires</b> non demandées, Glu 178 laissée non tranchée (chez le chat, une hyperglycémie de stress monte à 300–400 ; 178 est trop bas pour un diabète non traité) · densité urinaire non demandée avant fluides, Créat 2,1 non interprétée · Ca²⁺ et K⁺ non arbitrés.</div>
+        <div class="box note"><b>Ce que ce tableau réclame :</b> <b>ponctionner l'épanchement</b> — et y demander le <b>glucose</b>, pas le TP · <b>cétones urinaires</b> : chez le chat, une hyperglycémie de stress monte à <b>300–400</b>, une Glu à 178 est trop basse pour un diabète non traité et doit être tranchée · <b>densité urinaire avant fluides</b>, Créat 2,1 à interpréter · <b>Ca²⁺ et K⁺ à arbitrer</b>, pas seulement à lire.</div>
       </div>
     </details>
     <!-- /BLOC -->
 
     <!-- BLOC: mod4 epagneul-ulcere-perfore -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J5</span><h3>Épagneul breton mâle castré, 9 ans, 17 kg</h3><span class="sub">méloxicam 3 semaines + <b>prednisolone ajoutée par le propriétaire</b> il y a 5 j · vomissements 48 h « en marc de café » · méléna · <b>douleur diffuse + défense</b> · <b>Htc 52</b> · <b>Ca²⁺ 1,08</b> · T° 37,4 °C</span></span><span class="dx">Ulcère AINS perforé → péritonite septique</span></summary>
+    <details data-cas data-esp="chien" data-sys="digestif" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J5</span><h3>Épagneul breton mâle castré, 9 ans, 17 kg</h3><span class="sub">méloxicam 3 semaines + <b>prednisolone ajoutée par le propriétaire</b> il y a 5 j · vomissements 48 h « en marc de café » · méléna · <b>douleur diffuse + défense</b> · <b>Htc 52</b> · <b>Ca²⁺ 1,08</b> · T° 37,4 °C</span></span><span class="dx">Ulcère AINS perforé → péritonite septique</span></summary>
       <div class="body">
         <ul>
           <li><b>BRU</b> : Na 141 · K 3,6 · <b>Ca²⁺ 1,08</b> · Cl 108 · Glu 62 · Créat 2,4 · <b>BUN 68</b> · <b>tCO₂ 12</b> · <b>Htc 52 %</b> · <b>Lac 6,8</b> · pH 7,21 · pCO₂ 28. FC 168 · TRC 3,5 s · T° <b>37,4 °C</b>.</li>
@@ -1227,7 +1294,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     <!-- /BLOC -->
 
     <!-- BLOC: mod4 caniche-addison -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J5</span><h3>Caniche royal femelle stérilisée, 4 ans, 21 kg</h3><span class="sub">3 semaines de troubles digestifs « en va-et-vient » · amaigrissement · effondrement brutal · <b>FC 68 en état de choc</b> · <b>Na 128 / K 7,4</b> · Glu 51 · T° 36,9 °C</span></span><span class="dx">Crise addisonienne</span></summary>
+    <details data-cas data-esp="chien" data-sys="endoc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J5</span><h3>Caniche royal femelle stérilisée, 4 ans, 21 kg</h3><span class="sub">3 semaines de troubles digestifs « en va-et-vient » · amaigrissement · effondrement brutal · <b>FC 68 en état de choc</b> · <b>Na 128 / K 7,4</b> · Glu 51 · T° 36,9 °C</span></span><span class="dx">Crise addisonienne</span></summary>
       <div class="body">
         <div class="box trap"><b>Le signal : une bradycardie relative chez un patient en choc.</b> FC <b>68</b> avec pouls faibles, TRC 3 s, extrémités froides — un chien en choc <b>devrait être tachycarde</b>. Toute fréquence basse chez un patient en choc fait chercher le <b>potassium</b>. Terrain : jeune à moyen âge, souvent femelle, <b>histoire en va-et-vient sur des semaines à des mois</b> (« patraque, puis ça repart tout seul »), amaigrissement, puis effondrement brutal.</div>
         <ul>
@@ -1259,7 +1326,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     <!-- /BLOC -->
 
     <!-- BLOC: mod4 pyometre -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J6</span><h3>Labrador <b>femelle entière</b>, 7 ans, 28 kg</h3><span class="sub">vomissements 3 j · anorexie · <b>polydipsie</b> · décubitus · <b>muqueuses rouge brique</b>, pouls bondissants · <b>T° 39,8 °C</b> · <b>chaleurs il y a 6 semaines</b></span></span><span class="dx">Pyomètre à utérus fermé — choc septique</span></summary>
+    <details data-cas data-esp="chien" data-sys="repro" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J6</span><h3>Labrador <b>femelle entière</b>, 7 ans, 28 kg</h3><span class="sub">vomissements 3 j · anorexie · <b>polydipsie</b> · décubitus · <b>muqueuses rouge brique</b>, pouls bondissants · <b>T° 39,8 °C</b> · <b>chaleurs il y a 6 semaines</b></span></span><span class="dx">Pyomètre à utérus fermé — choc septique</span></summary>
       <div class="body">
         <div class="box trap"><b>Le signalement est un examen complémentaire, et il est gratuit.</b> <b>Femelle entière</b> + <b>7 ans</b> + vomissements/anorexie/<b>PU-PD</b> = <b>utérus jusqu'à preuve du contraire</b>, avant toute imagerie. La fenêtre à retenir : <b>4 à 8 semaines après les chaleurs</b> (phase lutéale, progestérone haute). Une seule question d'anamnèse — <i>« quand ont eu lieu ses dernières chaleurs ? »</i> — ferme le diagnostic en cinq secondes. <b>Faire la radio avant d'avoir posé la question, c'est payer un examen pour une réponse qu'on avait déjà.</b></div>
         <div class="box trap"><b>Utérus fermé = pas d'écoulement vulvaire.</b> L'absence de pertes n'écarte rien : elle <b>aggrave</b> (le pus ne se draine pas, la charge endotoxinique monte, le risque de rupture existe). L'<b>examen vulvaire et périnéal</b> fait partie de l'examen d'un abdomen aigu chez une femelle entière — ouvert ou fermé change le délai, pas la décision.</div>
@@ -1288,7 +1355,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 chat-lymphome-mediastinal -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J7</span><h3>Chat européen mâle castré, <b>2 ans</b>, 4,1 kg</h3><span class="sub">dyspnée aiguë · <b>patron restrictif</b> · sternale coudes écartés · <b>bruits respiratoires assourdis ventralement</b> · <b>bruits cardiaques assourdis</b> · NEC 2/9 · <b>Htc 26 %</b></span></span><span class="dx">Lymphome médiastinal (FeLV+) — chylothorax</span></summary>
+    <details data-cas data-esp="chat" data-sys="respi" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J7</span><h3>Chat européen mâle castré, <b>2 ans</b>, 4,1 kg</h3><span class="sub">dyspnée aiguë · <b>patron restrictif</b> · sternale coudes écartés · <b>bruits respiratoires assourdis ventralement</b> · <b>bruits cardiaques assourdis</b> · NEC 2/9 · <b>Htc 26 %</b></span></span><span class="dx">Lymphome médiastinal (FeLV+) — chylothorax</span></summary>
       <div class="body">
         <div class="box key"><b>Le drainage EST la réanimation.</b> Sur un épanchement pleural abondant, ni l'O₂ (FR 68 → 62) ni le bolus de cristalloïde (aucun effet sur FC/TRC/pouls) ne font quoi que ce soit. <b>Tout ce qui retarde l'aiguille coûte de la SpO₂.</b> La thoracocentèse est à la fois le geste diagnostique et le geste thérapeutique — elle passe <b>avant</b> la radiographie.</div>
         <div class="box trap"><b>Ne pas anesthésier un thorax qu'on n'a pas vidé.</b> Induire et coucher un chat en épanchement restrictif → <b>SpO₂ 79 % en 60 s</b>, compliance effondrée, résistance au ballon. Le standard est de <b>drainer le chat éveillé</b> : contention minimale, lidocaïne locale, <b>butorphanol 0,2–0,4 mg/kg IV</b> (effet en 2–5 min). La <b>buprénorphine n'a pas sa place ici</b> : agoniste <b>partiel</b> mu, <b>pic IV à 15–30 min</b> — trop lent pour un chat à drainer maintenant, et elle <b>bloque l'agoniste mu complet</b> qu'on voudra donner ensuite (forte affinité, faible activité intrinsèque).</div>
@@ -1315,7 +1382,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     </details>
     <!-- /BLOC -->
     <!-- BLOC: mod4 cocker-pyelonephrite -->
-    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J7</span><h3>Cocker anglais femelle stérilisée, 8 ans, 14 kg</h3><span class="sub">abattement · vomissements 48 h · anorexie · <b>T° 39,7 °C</b> · <b>douleur sublombaire gauche</b> · <b>Créat 3,1 · BUN 62</b> · pyélectasie unilatérale</span></span><span class="dx">Pyélonéphrite aiguë — azotémie rénale</span></summary>
+    <details data-cas data-esp="chien" data-sys="uro" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S9 J7</span><h3>Cocker anglais femelle stérilisée, 8 ans, 14 kg</h3><span class="sub">abattement · vomissements 48 h · anorexie · <b>T° 39,7 °C</b> · <b>douleur sublombaire gauche</b> · <b>Créat 3,1 · BUN 62</b> · pyélectasie unilatérale</span></span><span class="dx">Pyélonéphrite aiguë — azotémie rénale</span></summary>
       <div class="body">
         <div class="box key"><b>Une obstruction ne donne pas de fièvre.</b> <b>Fièvre + douleur sublombaire + dilatation pyélique UNILATÉRALE + azotémie = pyélonéphrite</b>, avant toute imagerie. Devant une pyélectasie, le réflexe « calcul obstructif » est légitime — c'est la <b>température</b> qui départage, et elle est dans l'ABCDE. <i>(Ici la radio est revenue sans aucune structure radio-opaque : elle a confirmé une hypothèse que la T° 39,7 contredisait déjà.)</i></div>
         <div class="box trap"><b>La densité urinaire se prélève AVANT les fluides — sinon elle n'existe plus.</b> Demandée 4 h après le début de la perfusion, elle ne vaut rien (ici 1,012 sous fluides ; elle était à <b>1,018</b> à l'admission).<br><b>Le seuil qui compte : concentration adéquate = &gt; 1,030 chien · &gt; 1,035 chat.</b> Une DU à <b>1,018</b> chez une chienne <b>déshydratée et azotémique</b> dit que <b>le rein ne concentre pas</b> → l'azotémie est <b>rénale</b>, le diagnostic est posé à l'admission. <i>1,008–1,012 = isosthénurie ; 1,013 n'est pas un seuil de concentration, c'est le plancher de l'isosthénurie.</i> <span class="src">Densité urinaire &amp; conversions</span></div>
@@ -1345,7 +1412,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <p class="lede">Les valeurs de référence à avoir en tête : constantes physiologiques, normes biologiques du BRU, lecture des muqueuses et stadification rénale.</p>
     </div>
 
-    <details class="card c-repere" open><summary><span class="bar"></span><span class="head-txt"><span class="cat">Physio</span><h3>Constantes physiologiques chien / chat</h3><span class="sub">Valeurs au repos, animal calme</span></span><span class="chev">▸</span></summary>
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Physio</span><h3>Constantes physiologiques chien / chat</h3><span class="sub">Valeurs au repos, animal calme</span></span><span class="chev">▸</span></summary>
       <div class="body">
         <div class="tablewrap"><table class="doses">
           <thead><tr><th>Paramètre</th><th>Chien</th><th>Chat</th></tr></thead>
@@ -1832,7 +1899,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
         <li><b>Glucose 50 %</b> (couverture insuline) : <span class="pill">1–2 mL/kg</span> · <span class="pill">1 mL/kg</span> fixe.</li>
       </ul>
     </div>
-    <div class="tablewrap"><table class="doses" id="doseTable">
+    <div class="tablewrap tallwrap"><table class="doses" id="doseTable">
       <thead><tr><th data-c="0">Molécule</th><th data-c="1">Indication</th><th data-c="2">Dose (verbatim)</th><th data-c="3">Voie</th><th data-c="4">Catégorie</th><th data-c="5">Source</th></tr></thead>
       <tbody>
         <tr><td>Adrénaline</td><td>Arrêt (asystolie/AESP/choquable)</td><td class="d">0,01 mg/kg — /2 cycles</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">§3</td></tr>
@@ -1975,7 +2042,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <h1>Protocoles</h1>
       <p class="lede">Les séquences à dérouler sans hésitation. L'ordre compte autant que les actions.</p>
     </div>
-    <details class="card c-proto" open><summary><span class="bar"></span><span class="head-txt"><span class="cat">RCP</span><h3>RCP — rythme non choquable</h3><span class="sub">Asystolie / AESP</span></span><span class="chev">▸</span></summary>
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">RCP</span><h3>RCP — rythme non choquable</h3><span class="sub">Asystolie / AESP</span></span><span class="chev">▸</span></summary>
       <div class="body"><ul>
         <li>Reconnaissance &lt; 10 s : inconscient + apnéique/gasping + pouls absent → RCP. Ne pas ausculter d'abord.</li>
         <li>BLS : compressions 100–120/min (latéral 1/3–1/2, dorsal 1/4), rotation /2 min, transitions &lt;10 s. Intuber, EtCO₂ ≥ 12.</li>
@@ -2099,7 +2166,7 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
       <h1>Communication propriétaire</h1>
       <p class="lede">Le gap le plus travaillé du parcours. Se joue après stabilisation, jamais pendant la réa.</p>
     </div>
-    <details class="card c-comm" open><summary><span class="bar"></span><span class="head-txt"><span class="cat">Checklist</span><h3>Post-stabilisation — 7 items</h3><span class="sub">Coût retiré (décision 17/06)</span></span><span class="chev">▸</span></summary>
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Checklist</span><h3>Post-stabilisation — 7 items</h3><span class="sub">Coût retiré (décision 17/06)</span></span><span class="chev">▸</span></summary>
       <div class="body">
         <ul>
           <li>DD partagé par paliers d'examens (sans chiffrage monétaire).</li>
@@ -2157,6 +2224,165 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
     <!-- /BLOC -->
   </section>
 
+  <!-- ============ INDEX DES CAS ============ -->
+  <section class="view c-cas" id="cas">
+    <div class="view-head">
+      <p class="eyebrow">Index</p>
+      <h1>Tous les cas</h1>
+      <p class="lede">Les cas cliniques joués, par appareil et par espèce. Un clic ouvre le cas dans sa semaine.</p>
+    </div>
+    <div class="filters" id="fSys"><span class="flab">Appareil</span></div>
+    <div class="filters" id="fEsp"><span class="flab">Espèce</span></div>
+    <p class="searchhint" id="casCount"></p>
+    <div class="caslist" id="casList"></div>
+  </section>
+
+  <!-- ============ REFLEXES ============ -->
+  <section class="view c-repere" id="reflexes">
+    <div class="view-head">
+      <p class="eyebrow">Aide-mémoire</p>
+      <h1>Réflexes</h1>
+      <p class="lede">Une ligne = une règle opposable. Regroupées par appareil, tous modules confondus — c'est ce qu'on relit la veille d'une garde.</p>
+    </div>
+    <details class="card c-repere" data-ref="triage"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Triage &amp; ABCDE</h3><span class="sub">lecture du patient avant tout examen</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Muqueuses : 7 couleurs, 7 sens.</b> Rouge brique + pouls bondissants + fièvre = <b>choc septique hyperdynamique</b> — pas un choc « moins grave » parce qu'il n'est pas pâle.</li>
+          <li>ABCDE dans l'ordre <b>B→C→A</b> quand la détresse est respiratoire · <b>AFAST + TFAST font partie du C</b>, ils se font, ils ne s'évoquent pas.</li>
+          <li><b>Le signalement est un examen complémentaire gratuit</b> : femelle entière + vomissements/PU-PD 4 à 8 semaines après les chaleurs = utérus, <b>avant toute imagerie</b>.</li>
+          <li><b>Anamnèse AVANT imagerie.</b> Une radio ne répond bien qu'à une question déjà posée.</li>
+          <li><b>Tout chat qui vomit : soulever la langue.</b> Geste à 2 secondes, corps étranger linéaire.</li>
+          <li><b>Bradycardie chez un patient en choc → chercher le potassium.</b> Un chien en choc devrait être tachycarde.</li>
+          <li><b>Chat malade à FC 130–140 = bradycardie relative</b> : le stress hospitalier donne normalement 180–220. Hypothermie + FC basse + hypotension = triade féline du choc septique.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-cas" data-ref="choc"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Choc &amp; fluides</h3><span class="sub">remplir, combien, et quand s'arrêter</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Bolus</b> : chien 10–20 mL/kg · chat 10–15 mL/kg · <b>chiot = registre du chien (20 mL/kg)</b> — sa fragilité est le sucre et la température, pas le volume.</li>
+          <li><b>Cardiogénique : peu ou pas de fluides.</b> Hypertonique 4 mL/kg chez le chien. Transfuser sur <b>NaCl 0,9 %, jamais sur RL</b>.</li>
+          <li><b>Un bolus est un test</b> : il se réévalue et se répète. Pas de bolus sans conduite derrière.</li>
+          <li>Réanimation permissive : <b>PAM > 65</b>, petits aliquots répétés.</li>
+          <li><b>Réhydrater n'est pas entretenir</b> : sur un azotémique déshydraté, l'entretien seul laisse la créatinine monter.</li>
+          <li><b>Lactate en série</b> = le marqueur pronostique. La valeur d'admission seule ne dit rien.</li>
+          <li>Sepsis : <b>antibiotique dans la première heure</b>.</li>
+          <li><b>Chat en choc hypotherme : réchauffement passif d'abord</b>, 0,5–1 °C/h. Réchauffer avant d'avoir rempli vasodilate la périphérie et fait chuter la PAM.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-proto" data-ref="rcp"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Arrêt &amp; RCP</h3><span class="sub">RECOVER 2024, à la lettre</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Adrénaline 0,01 mg/kg tous les 2 cycles</b>, première ligne. <b>Atropine = bradyarythmies uniquement</b>, dose unique.</li>
+          <li><b>AESP à complexes larges et lents → penser hyperkaliémie.</b> Mesurer, pas deviner.</li>
+          <li><b>Chat / chaton < 5 kg : pompe cardiaque</b> — on comprime directement le cœur (3ᵉ–5ᵉ EIC), pas la partie large du thorax.</li>
+          <li><b>Pas de voie en 60 s → IO.</b> Sur un patient < 1 kg en arrêt, l'IO est le plan A. Toute drogue par IO se flushe (2–5 mL NaCl).</li>
+          <li><b>Volume calculé < 0,1 mL → on ne prélève pas, on dilue.</b> En dessous, un chiffre exact devient une dose fausse.</li>
+          <li><b>Sonde en place → capnographie branchée dans le même geste.</b> La SpO₂ n'affiche rien en arrêt.</li>
+          <li><b>Post-ROSC : SpO₂ 94–98 %</b> (pas 100), normocapnie, réchauffement doux.</li>
+          <li>Patient froid : <b>« pas mort tant qu'il n'est pas chaud et mort »</b>.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-comm" data-ref="cardio"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Cardio &amp; ECG</h3><span class="sub">trancher un tracé, pas le contempler</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>QRS large + rapide = supprimer</b> · <b>large + lent = protéger</b>.</li>
+          <li><b>Arythmie → relire l'ionogramme avant l'antiarythmique.</b></li>
+          <li><b>VCC dilatée = tamponnade · VCC collabée = hypovolémie.</b></li>
+          <li><b>Salve ventriculaire pré-op : on tranche à voix haute</b>, on ne la regarde pas passer.</li>
+          <li><b>Chat + épanchement = drainer</b>, pas seulement diurèse.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-proto" data-ref="respi"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Respiratoire &amp; épanchements</h3><span class="sub">l'aiguille avant l'image</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Décompression AVANT imagerie.</b> Le drainage <b>EST</b> la réanimation : ni l'O₂ ni le bolus ne remplacent l'aiguille, et <b>on n'anesthésie jamais un thorax qu'on n'a pas vidé</b>.</li>
+          <li><b>Thoracocentèse : 7ᵉ–9ᵉ EIC, en avant de la côte</b> (le paquet vasculo-nerveux est sur le bord caudal) · <b>liquide = tiers ventral, air = tiers dorsal</b>.</li>
+          <li><b>Chat dyspnéique = butorphanol</b> 0,2–0,4 mg/kg IV (effet 2–5 min). La <b>buprénorphine</b> est un agoniste <b>partiel</b> : pic à 15–30 min, et elle bloque le mu complet donné ensuite.</li>
+          <li><b>Lignes B ≠ OAP</b> : syndrome interstitiel non spécifique, le contexte donne le sens. <b>Jamais de furosémide sur un hypovolémique.</b></li>
+          <li>Asthme félin : <b>terbutaline + dexaméthasone</b>. Pneumonie septique : <b>fluoroquinolone + ampicilline/clindamycine</b>.</li>
+          <li><b>Chat jeune + masse médiastinale + FeLV+ = lymphome médiastinal.</b> Le SNAP FeLV est un examen diagnostique, pas un bilan de routine.</li>
+          <li><b>Liquide blanc laiteux = chyle</b> → triglycérides épanchement vs sang. La PIF humide est <b>jaune paille visqueuse, TP 5–12 g/dL, pyogranulomateuse</b> — pas lymphoblastique.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-cas" data-ref="digestif"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Abdomen aigu &amp; digestif</h3><span class="sub">ce qui va au bloc et ce qui attend</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Estomac dilaté = cave caudale écrasée</b> → voies IV <b>aux antérieurs</b>, jamais aux postérieurs.</li>
+          <li><b>Trocardage = abdominal</b>, derrière la dernière côte, tiers dorsal, au point le plus tympanique — <b>pas un espace intercostal</b>. POCUS d'abord : la rate est plaquée contre la paroi gauche.</li>
+          <li><b>Le trocardage n'est pas un traitement, c'est du temps acheté.</b> Différer la chirurgie n'est légitime que sous conditions, avec un <b>critère de bascule écrit</b>.</li>
+          <li><b>Péritonite septique = contrôle de la source chirurgical.</b> Contrairement au GDV, <b>ça ne se diffère pas</b> : tant que la source est en place, la réanimation ne fait que compenser.</li>
+          <li><b>Bactérie intracellulaire dans un neutrophile = septique</b>, la question est close — pas de PIF à évoquer.</li>
+          <li><b>Un ulcère qui saigne ne remplit pas l'abdomen.</b> Liquide libre + douleur diffuse + défense = <b>perforation</b> → abdominocentèse.</li>
+          <li><b>Corps étranger linéaire : on ne coupe jamais le fil</b> pour renvoyer le chat à la maison quand il y a déjà un épanchement septique.</li>
+          <li><b>SDHA non septique : pas d'antibiotique</b> (Unterer 2011) · <b>pas de lopéramide</b> sur une diarrhée hémorragique · <b>pro/prébiotiques inutiles</b> (et per os chez un animal qui vomit, absurde).</li>
+          <li><b>Le parvo se prouve sur le leucogramme</b> (neutropénie), pas sur le couple PCV/TP.</li>
+          <li>Antibiotique : <b>non</b> en SDHA ni en pancréatite pure · <b>oui</b> en parvovirose (translocation) et devant une neutrophilie à bandes avec ictère.</li>
+          <li><b>La nutrition entérale précoce est un traitement</b>, pas un confort. Le repos digestif est un dogme abandonné.</li>
+          <li><b>Une obstruction ne donne pas de fièvre.</b></li>
+          <li><b>Utérus fermé = aucun écoulement vulvaire.</b> L'absence de pertes aggrave, elle ne rassure pas.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-dose" data-ref="biologie"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Biologie — lire les couples</h3><span class="sub">aucune valeur ne se lit seule</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Htc qui effondre le tube + TP qui ne monte pas = SDHA.</b> La déshydratation concentre TOUT : si l'Htc monte et pas le TP, on perd des protéines quelque part.</li>
+          <li><b>Un Htc normal chez un déshydraté est un Htc masqué</b> — il chutera sous fluides. <b>Htc haut chez un animal qui saigne = faux normal.</b></li>
+          <li><b>Épanchement : glucose et lactate</b>, comparés au sang (glucose sang − épanchement > 20 mg/dL = septique). <b>Htc/TP = le sang, glucose/lactate = l'épanchement.</b> Le <b>lactate ne vaut pas chez le chat</b>.</li>
+          <li><b>Chat ictérique + liquide libre : ratio bilirubine épanchement/sang > 2 = biliaire</b> → bloc.</li>
+          <li><b>PAL ↑ avec GGT normale = lipidose.</b> GGT > PAL = cholangite.</li>
+          <li><b>Hyperglycémie de stress du chat : 300–400.</b> En dessous, ce n'est pas du stress — on tranche, cétones urinaires à l'appui.</li>
+          <li><b>Toute anomalie biologique vue reçoit une décision verbalisée</b>, même « je ne traite pas, je recontrôle à 6 h ».</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-dose" data-ref="uro"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Rein &amp; urines</h3><span class="sub">la densité se prend avant la perfusion</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Densité urinaire AVANT les fluides.</b> Après, elle ne vaut plus rien.</li>
+          <li><b>Le seuil de concentration est > 1,030 chien / > 1,035 chat</b>, pas 1,013. Une DU à 1,018 chez un azotémique déshydraté dit <b>rénal</b>.</li>
+          <li><b>Isosthénurie + azotémie ≠ IRA automatiquement.</b> Sur un pyomètre, l'endotoxine bloque l'ADH → <b>diabète insipide néphrogénique réversible</b> : on réhydrate et on opère.</li>
+          <li><b>Fièvre + douleur sublombaire + pyélectasie unilatérale + azotémie = pyélonéphrite.</b></li>
+          <li><b>Cylindres leucocytaires = origine rénale.</b> Une cystite n'en donne pas.</li>
+          <li><b>Culture urinaire sur cystocentèse, AVANT le premier antibiotique</b> · pyélonéphrite = <b>4 à 6 semaines</b> de traitement, pas 10 jours.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-piege" data-ref="prescription"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Prescription &amp; exécution</h3><span class="sub">ce qui rend un ordre exécutable</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Une prescription incomplète n'est pas exécutée.</b> Molécule, dose, <b>voie</b> — et la <b>concentration</b> dès que deux présentations coexistent (NaCl 0,9 % / 7,2 %, glucose, calcium).</li>
+          <li><b>Une pompe se règle en mL/h.</b> « mL/kg/h » est une consigne de calcul, jamais un débit : 36 mL sur 15 min = <b>144 mL/h</b>.</li>
+          <li><b>Le midazolam n'est pas un analgésique</b> : zéro effet antalgique, et seul chez le chat il donne dysphorie et excitation paradoxale.</li>
+          <li><b>L'analgésie précède le geste</b>, jamais l'inverse. Geste invasif = <b>R-A-S-C</b> : bolus pré + lidocaïne locale + benzodiazépine <b>et</b> opioïde, critères R-E-T-B.</li>
+          <li><b>Chat instable = sédatifs IM, jamais IV.</b></li>
+          <li><b>Un bolus de fentanyl tient 20 minutes</b> : une CRI annoncée se prescrit dans la foulée, ce n'est pas un raffinement.</li>
+          <li><b>K⁺</b> : 3,6–5,0 → 20 mEq/L · 3,1–3,5 → 30 · 2,6–3,0 → 40 · 2,1–2,5 → 60 · < 2,0 → 80. <b>Plafond 0,5 mEq/kg/h.</b></li>
+          <li><b>Enrofloxacine chez le chat : plafond 5 mg/kg/j</b> (rétinotoxicité au-delà).</li>
+          <li><b>Un critère de bascule = paramètre + seuil + délai → action.</b> Un résultat d'examen n'en est pas un.</li>
+          <li><b>Un seuil d'alerte se pose au-dessus de la valeur actuelle</b> : « PAM < 60 » sur un patient déjà à 60 n'alerte de rien.</li>
+        </ul>
+      </div>
+    </details>
+    <details class="card c-comm" data-ref="comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Réflexes</span><h3>Communication</h3><span class="sub">ce qui rend un consentement valide</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Pronostic jamais embelli</b> : un chiffre faux invalide le consentement. Péritonite septique féline = <b>30–40 % de mortalité</b>, on le dit.</li>
+          <li><b>Ne jamais proposer un traitement pour une maladie que le patient n'a pas</b> — un vrai taux de succès sur un faux diagnostic reste un consentement obtenu par erreur.</li>
+          <li><b>Culpabilité : séparer le fait de la faute.</b> Causalité fausse (exercice après le repas et GDV) → on dit non. Causalité vraie (le panier de couture) → on ne nie pas, on dissocie l'accident de la faute et on donne la prévention.</li>
+          <li><b>Une question se répond, même par un refus.</b> La règle du service se dit, elle ne s'esquive pas — une esquive coûte plus de confiance qu'un refus expliqué.</li>
+          <li><b>Annonce de décès : dire « il est mort »</b>, jamais « il nous a quitté ».</li>
+          <li><b>Ordre d'appel du chirurgien : stabilisation → consentement → puis appel.</b> Le chirurgien ne se déplace pas sur une chirurgie non confirmée.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
   <!-- ============ RÉSULTATS DE RECHERCHE (global) ============ -->
   <section class="view c-cas" id="results">
     <div class="view-head">
@@ -2191,7 +2417,17 @@ scrim.addEventListener('click',closeMenu);
 
 // scroll reveal (per active view)
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -6% 0px'});
-function observeCards(view){view.querySelectorAll('.card').forEach(c=>{if(!c.classList.contains('in'))io.observe(c);});}
+function observeCards(view){
+  view.querySelectorAll('.card').forEach(c=>{if(!c.classList.contains('in'))io.observe(c);});
+  // filet : au-dela de 900 ms, plus rien ne reste invisible
+  clearTimeout(view.__reveal);
+  view.__reveal=setTimeout(()=>view.querySelectorAll('.card').forEach(c=>{
+    // ce qui est deja a l'ecran ne doit jamais rester invisible ;
+    // le reste garde son fondu a l'apparition
+    const r=c.getBoundingClientRect();
+    if(r.top<innerHeight&&r.bottom>0){c.classList.add('in');c.style.opacity='1';c.style.transform='none';}
+  }),900);
+}
 
 // navigation
 const q=document.getElementById('q');
@@ -2204,8 +2440,9 @@ let lastViewId='apercu';
 const viewLabel={};
 navA.forEach(a=>{viewLabel[a.dataset.v]=a.textContent.replace(/\s+/g,' ').trim();});
 
-function show(id){
+function show(id,sansAncre){
   lastViewId=id;
+  if(!sansAncre){try{history.replaceState(null,'','#'+id);}catch(e){}}
   views.forEach(v=>v.classList.toggle('active',v.id===id));
   navA.forEach(a=>a.classList.toggle('active',a.dataset.v===id));
   const view=document.getElementById(id);
@@ -2218,13 +2455,29 @@ function show(id){
 }
 navA.forEach(a=>a.addEventListener('click',()=>{q.value='';results.classList.remove('active');show(a.dataset.v);}));
 observeCards(document.getElementById('apercu'));
+// ouverture directe sur une ancre (#mod4) — raccourci d'ecran d'accueil
+(function(){var h=(location.hash||'').replace('#','');
+  if(h&&h!=='results'&&views.some(function(v){return v.id===h;}))show(h,true);})();
 
 // ---------- Recherche GLOBALE : tout le carnet sur une seule page ----------
+/* Pli des accents SANS changer la longueur (1 caractere -> 1 caractere) :
+   les positions trouvees s'appliquent donc telles quelles au texte d'origine.
+   « peritonite » trouve « péritonite ». */
+function fold(str){
+  let o='';
+  for(const c of str){
+    let d=c.normalize('NFD')[0].toLowerCase();
+    if(d==='œ')d='o'; else if(d==='æ')d='a';
+    else if(d==='’'||d==='ʼ')d="'";
+    o+=d;
+  }
+  return o;
+}
 function highlight(node,term){
   const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
   const tx=[];let n;while(n=walk.nextNode())tx.push(n);
   tx.forEach(t=>{
-    const low=t.nodeValue.toLowerCase();
+    const low=fold(t.nodeValue);
     if(!low.includes(term))return;
     const frag=document.createDocumentFragment();let pos=0,idx;
     while((idx=low.indexOf(term,pos))>=0){
@@ -2242,19 +2495,30 @@ function enterSearch(term){
   results.classList.add('active');
   resCards.innerHTML='';resDoses.innerHTML='';
   let count=0,lastLabel='';
-  document.querySelectorAll('.view:not(#results) .card').forEach(card=>{
-    if(!card.textContent.toLowerCase().includes(term))return;
+  document.querySelectorAll('.view:not(#results):not(#cas) .card').forEach(card=>{
+    if(!fold(card.textContent).includes(term))return;
     const view=card.closest('.view'),label=viewLabel[view.id]||'';
     if(label!==lastLabel){const h=document.createElement('div');h.className='res-src';h.textContent=label;resCards.appendChild(h);lastLabel=label;}
     const clone=card.cloneNode(true);clone.classList.add('in');clone.open=true;
-    resCards.appendChild(clone);highlight(clone,term);count++;
+    clone.removeAttribute('data-cas');
+    /* pas de doublon d'identifiant : sinon les calculateurs d'origine
+       et leurs clones se disputent les memes id */
+    clone.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
+    if(clone.querySelector('input,select')){
+      const b=clone.querySelector('.body');
+      if(b)b.innerHTML='<div class="box note">Outil interactif — ouvre <b>'+label+'</b> dans le menu pour t\'en servir.</div>';
+    }
+    resCards.appendChild(clone);
+    /* un canvas clone est vide : on le redessine */
+    clone.querySelectorAll('canvas.ecg').forEach(c=>{if(window.__ecgDraw)window.__ecgDraw(c);});
+    highlight(clone,term);count++;
   });
-  const rows=[...document.querySelectorAll('#doseTable tbody tr')].filter(tr=>tr.textContent.toLowerCase().includes(term));
+  const rows=[...document.querySelectorAll('#doseTable tbody tr')].filter(tr=>fold(tr.textContent).includes(term));
   if(rows.length){
     const h=document.createElement('div');h.className='res-src';h.textContent='Doses express';resDoses.appendChild(h);
     const wrap=document.createElement('div');wrap.className='tablewrap';
     const tbl=document.createElement('table');tbl.className='doses';
-    tbl.innerHTML='<thead><tr><th>Molécule</th><th>Indication</th><th>Dose</th><th>Voie</th><th>Catégorie</th><th>Source</th></tr></thead>';
+    tbl.innerHTML='<thead><tr><th>Molécule</th><th>Indication</th><th>Dose (verbatim)</th><th>Voie</th><th>Catégorie</th><th>Source</th></tr></thead>';
     const tb=document.createElement('tbody');rows.forEach(r=>{const c=r.cloneNode(true);c.style.display='';tb.appendChild(c);});
     tbl.appendChild(tb);wrap.appendChild(tbl);resDoses.appendChild(wrap);highlight(tb,term);count+=rows.length;
   }
@@ -2263,9 +2527,9 @@ function enterSearch(term){
   window.scrollTo(0,0);
 }
 q.addEventListener('input',()=>{
-  const term=q.value.trim().toLowerCase();
+  const term=fold(q.value.trim());
   if(term)enterSearch(term);
-  else{results.classList.remove('active');show(lastViewId);}
+  else{results.classList.remove('active');resCards.innerHTML='';resDoses.innerHTML='';show(lastViewId);}
 });
 
 // sortable dose table
@@ -2412,9 +2676,9 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
   const empty=document.getElementById('doseEmpty');
   const rows=[...tb.querySelectorAll('tr')];
   dq.addEventListener('input',()=>{
-    const t=dq.value.trim().toLowerCase();
+    const t=fold(dq.value.trim());
     let n=0;
-    rows.forEach(r=>{const m=!t||r.textContent.toLowerCase().includes(t);r.style.display=m?'':'none';if(m)n++;});
+    rows.forEach(r=>{const m=!t||fold(r.textContent).includes(t);r.style.display=m?'':'none';if(m)n++;});
     empty.style.display=(t&&!n)?'block':'none';
   });
 })();
@@ -2534,10 +2798,90 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
       }
     }
   }
-  function drawAll(){canvases.forEach(drawOne);}
+  window.__ecgDraw=drawOne;
+  function drawAll(){[...document.querySelectorAll('canvas.ecg')].forEach(drawOne);}
   drawAll();
   new MutationObserver(drawAll).observe(rootEl,{attributes:true,attributeFilter:['data-theme']});
 })();
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('[data-goto]');
+  if(a){e.preventDefault();show(a.dataset.goto);}
+});
+
+// ---------- Compteurs calcules (plus jamais faux) ----------
+(function(){
+  const cas=[...document.querySelectorAll('details.card[data-cas]')];
+  const put=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  const drills=[...document.querySelectorAll('.card .cat')].filter(c=>/drill/i.test(c.textContent)).length;
+  put('nCas',cas.length);
+  put('nDoses',document.querySelectorAll('#doseTable tbody tr').length);
+  put('nBlocs',[...document.querySelectorAll('#nav a small')].filter(x=>/S\d/.test(x.textContent)).length);
+  put('nProto',document.querySelectorAll('#protocoles .card').length+drills);
+  put('navCas',cas.length);
+  put('navRef',document.querySelectorAll('#reflexes .body li').length);
+})();
+
+// ---------- Index des cas : genere depuis les cartes, jamais tenu a la main ----------
+(function(){
+  const list=document.getElementById('casList');
+  if(!list)return;
+  const SYS={rcp:'Arrêt & RCP',choc:'Choc',cardio:'Cardio',respi:'Respiratoire',
+             digestif:'Digestif',uro:'Urinaire',repro:'Repro',endoc:'Endocrino',
+             trauma:'Trauma',coag:'Coagulation'};
+  const ESP={chien:'Chien',chat:'Chat',chiot:'Chiot'};
+  const cards=[...document.querySelectorAll('details.card[data-cas]')];
+  const items=cards.map(card=>{
+    const dx=(card.querySelector('.dx')||{}).textContent||'—';
+    const cat=(card.querySelector('.cat')||{}).textContent||'';
+    const titre=(card.querySelector('h3')||{}).textContent||'';
+    const view=card.closest('.view');
+    const b=document.createElement('button');
+    b.type='button';b.className='casitem '+([...card.classList].find(c=>/^c-/.test(c))||'c-cas');
+    b.dataset.sys=card.dataset.sys||'';b.dataset.esp=card.dataset.esp||'';
+    b.innerHTML='<span class="cdx"></span><span class="cmeta"><b></b><span></span><span></span></span>';
+    b.querySelector('.cdx').textContent=dx;
+    const meta=b.querySelectorAll('.cmeta > *');
+    meta[0].textContent=SYS[card.dataset.sys]||'—';
+    meta[1].textContent='· '+(ESP[card.dataset.esp]||'')+' · '+cat;
+    meta[2].textContent='· '+titre.replace(/\s+—.*$/,'');
+    b.addEventListener('click',()=>{
+      show(view.id);
+      card.open=true;card.classList.add('in');
+      setTimeout(()=>{card.scrollIntoView({block:'start'});window.scrollBy(0,-70);},60);
+    });
+    return {el:b,sys:card.dataset.sys,esp:card.dataset.esp};
+  });
+  let fSys='',fEsp='';
+  function render(){
+    list.innerHTML='';let n=0;
+    items.forEach(it=>{
+      const ok=(!fSys||it.sys===fSys)&&(!fEsp||it.esp===fEsp);
+      if(ok){list.appendChild(it.el);n++;}
+    });
+    document.getElementById('casCount').textContent=
+      n+' cas'+(fSys||fEsp?' (sur '+items.length+')':'')+' — clic pour ouvrir le cas dans sa semaine.';
+  }
+  function chips(box,valeurs,libelles,onPick){
+    const mk=(val,txt)=>{
+      const b=document.createElement('button');
+      b.type='button';b.className='fbtn'+(val===''?' on':'');b.textContent=txt;
+      b.addEventListener('click',()=>{
+        [...box.querySelectorAll('.fbtn')].forEach(x=>x.classList.remove('on'));
+        b.classList.add('on');onPick(val);render();
+      });
+      box.appendChild(b);
+    };
+    mk('','Tous');
+    valeurs.forEach(v=>mk(v,libelles[v]||v));
+  }
+  const sysPresents=[...new Set(items.map(i=>i.sys))].filter(Boolean)
+      .sort((a,b)=>(SYS[a]||a).localeCompare(SYS[b]||b,'fr'));
+  const espPresents=['chien','chat','chiot'].filter(e=>items.some(i=>i.esp===e));
+  chips(document.getElementById('fSys'),sysPresents,SYS,v=>fSys=v);
+  chips(document.getElementById('fEsp'),espPresents,ESP,v=>fEsp=v);
+  render();
+})();
+
 </script>
 
 <script>
@@ -2566,7 +2910,8 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
         try{ localStorage.setItem(LS+'view', a.dataset.v); }catch(e){}
       });
     });
-    var last = localStorage.getItem(LS+'view');
+    /* une ancre d'URL (#mod4, raccourci d'ecran d'accueil) prime sur la memoire */
+    var last = location.hash ? null : localStorage.getItem(LS+'view');
     if(last){
       var link = links.filter(function(a){ return a.dataset.v === last; })[0];
       if(link) link.click();
