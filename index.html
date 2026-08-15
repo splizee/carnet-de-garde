@@ -336,6 +336,118 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
 #appUpd button{border:none;background:var(--accent);color:#fff;border-radius:9px;
   padding:7px 13px;font-weight:650;cursor:pointer;font-size:13.5px;white-space:nowrap}
 
+/* ===== mode garde ===== */
+#gardeFab{position:fixed;z-index:150;right:calc(14px + env(safe-area-inset-right));
+  bottom:calc(16px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;
+  border:none;background:#c0433f;color:#fff;font:800 11px/1.15 var(--sans);letter-spacing:.6px;
+  box-shadow:0 8px 26px rgba(0,0,0,.30);cursor:pointer;opacity:.94}
+#gardeFab:active{transform:scale(.94)}
+@media print{#gardeFab{display:none}}
+
+#garde{position:fixed;inset:0;z-index:200;display:none;flex-direction:column;
+  --bg:#12100e; --bg2:#171412; --surface:#1c1815; --surface2:#241f1a;
+  --ink:#f6f1e8; --ink-soft:#b0a496; --line:#342c23; --accent:#e89a63;
+  --c-repere:#d7ab54; --c-cas:#e08a56; --c-dose:#54b39c;
+  --c-proto:#7ea0d4; --c-piege:#e56b66; --c-comm:#b394d8;
+  background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px}
+#garde.on{display:flex}
+#garde[data-dim="1"]{filter:brightness(.56) sepia(.30)}
+body.garde-open{overflow:hidden}
+#garde button{font-family:inherit}
+
+#gHead{display:flex;align-items:center;gap:9px;background:var(--bg2);border-bottom:1px solid var(--line);
+  padding:calc(9px + env(safe-area-inset-top)) 13px 9px}
+#gHead .ttl{font-family:var(--serif);font-size:16.5px;font-weight:600;letter-spacing:.3px}
+#gHead .sp{margin-left:auto;display:flex;gap:7px}
+.gbtn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:11px;
+  padding:10px 12px;font-size:14px;cursor:pointer;white-space:nowrap}
+.gbtn.sm{padding:7px 10px;font-size:13px}
+.gbtn.pri{background:var(--accent);border-color:var(--accent);color:#1a1410;font-weight:700}
+.gbtn.dgr{background:#c0433f;border-color:#c0433f;color:#fff;font-weight:700}
+.gbtn:disabled{opacity:.45}
+
+#gPat{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:10px 13px;border-bottom:1px solid var(--line)}
+.gseg{display:flex;border:1px solid var(--line);border-radius:11px;overflow:hidden}
+.gseg button{border:0;background:transparent;color:var(--ink-soft);padding:10px 14px;font-size:15px;cursor:pointer}
+.gseg button.sel{background:var(--accent);color:#1a1410;font-weight:700}
+#gKg{width:86px;padding:10px 6px;font-size:20px;font-weight:700;text-align:center;
+  border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--ink);font-family:var(--mono)}
+#gPat .u{color:var(--ink-soft);font-size:14px;margin-left:-5px}
+#gPat .sp{margin-left:auto}
+#gNew{font-size:17px;line-height:1;padding:10px 12px}
+
+#gTabs{display:flex;gap:6px;padding:8px 13px;border-bottom:1px solid var(--line)}
+#gTabs button{flex:1;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+  border-radius:11px;padding:11px 6px;font-size:13.5px;cursor:pointer;white-space:nowrap}
+#gTabs button.sel{background:color-mix(in srgb,var(--accent) 20%,transparent);
+  border-color:var(--accent);color:var(--ink);font-weight:700}
+#gTabs button .b{display:block;font-size:11px;color:var(--ink-soft);font-weight:400}
+
+#gBody{flex:1;overflow:auto;-webkit-overflow-scrolling:touch;
+  padding:12px 13px calc(26px + env(safe-area-inset-bottom))}
+.gpanel{display:none}.gpanel.on{display:block}
+.gsec{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-soft);margin:18px 0 8px}
+.gsec:first-child{margin-top:2px}
+#gQ,#gQg{width:100%;padding:12px 13px;font-size:16px;border:1px solid var(--line);
+  border-radius:12px;background:var(--surface);color:var(--ink);margin-bottom:10px}
+.gnote{font-size:12.5px;color:var(--ink-soft);line-height:1.55;margin:14px 0 0}
+.gwarn{border:1px solid #c0433f;background:color-mix(in srgb,#c0433f 20%,transparent);
+  border-radius:12px;padding:11px 13px;font-size:14px;line-height:1.5;margin-bottom:12px}
+
+/* --- une dose, convertie pour le patient --- */
+.gdose{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 13px;margin-bottom:10px}
+.gdose .gh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.gdose .gh b{font-size:16.5px}
+.gcat{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);
+  border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.gdose .gi{color:var(--ink-soft);font-size:13.5px;margin-top:3px;line-height:1.4}
+.gres{font-family:var(--mono);font-size:27px;font-weight:700;letter-spacing:-.6px;
+  color:var(--accent);margin:9px 0 3px;line-height:1.15}
+.gres .v{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-soft);margin-left:7px}
+.gcalc{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+.gverb{font-size:12.5px;color:var(--ink-soft);line-height:1.5;margin-top:7px;padding-top:7px;
+  border-top:1px dashed var(--line)}
+.gflag{margin-top:9px;border-radius:10px;padding:9px 11px;font-size:13.2px;line-height:1.5;
+  border:1px solid color-mix(in srgb,#c0433f 55%,transparent);
+  background:color-mix(in srgb,#c0433f 17%,transparent)}
+.gflag.soft{border-color:color-mix(in srgb,var(--c-repere) 45%,transparent);
+  background:color-mix(in srgb,var(--c-repere) 14%,transparent)}
+.gdose .gact{display:flex;gap:8px;margin-top:10px}
+
+/* --- gestes --- */
+.gtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
+.gtile{text-align:left;border:1px solid var(--line);border-left:3px solid var(--c-proto);
+  background:var(--surface);color:var(--ink);border-radius:14px;padding:12px;cursor:pointer}
+.gtile .c{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft)}
+.gtile b{display:block;font-size:15px;line-height:1.28;margin:4px 0 3px}
+.gtile .s{font-size:12px;color:var(--ink-soft);line-height:1.35}
+.gsheet .body{font-size:15.5px;line-height:1.62}
+.gsheet .body li{margin:7px 0}
+.gsheet .body ul{padding-left:20px}
+.gcalcchip{font-family:var(--mono);font-weight:700;color:var(--accent);white-space:nowrap}
+
+/* --- chrono --- */
+.gclock{font-family:var(--mono);font-size:62px;font-weight:700;letter-spacing:-2.5px;
+  text-align:center;line-height:1.05;margin:4px 0 2px}
+.gclock.warnc{color:#e56b66}
+.gcyc{text-align:center;color:var(--ink-soft);font-size:14px;margin-bottom:11px}
+.gadre{background:#c0433f;color:#fff;border-radius:12px;padding:11px 12px;text-align:center;
+  font-weight:800;font-size:15px;margin-bottom:11px;line-height:1.4}
+.gadre small{display:block;font-weight:500;font-size:12.5px;opacity:.9;margin-top:3px;font-family:var(--mono)}
+.grow{display:flex;gap:8px;flex-wrap:wrap}
+.grow .gbtn{flex:1;text-align:center}
+.gtimer{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:12px;
+  background:var(--surface);padding:11px 12px;margin-bottom:8px;font-size:14.5px}
+.gtimer .n{font-family:var(--mono);font-size:19px;font-weight:700;margin-left:auto}
+.gtimer.due{border-color:#c0433f;background:color-mix(in srgb,#c0433f 20%,transparent)}
+.gchips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+.gchip{border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:999px;padding:8px 13px;font-size:13.5px;cursor:pointer}
+
+/* --- trace --- */
+.gtrace{font-family:var(--mono);font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;
+  border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px;min-height:90px}
+
 </style>
 
 <div class="layout">
@@ -3252,5 +3364,676 @@ document.addEventListener('click',function(e){
     }
     requestAnimationFrame(function(){ bar.classList.add('show'); });
   }
+})();
+</script>
+
+<script>
+/* ===== mode garde (genere par build_app.py) =====
+   Le contenu clinique vient du DOM de la fiche : #doseTable pour les doses,
+   les cartes de #protocoles et #reflexes pour les gestes. Rien n'est recopie. */
+(function(){
+  var LS='carnet.garde.';
+  var D=document;
+  function $(s,r){return (r||D).querySelector(s);}
+  function $$(s,r){return [].slice.call((r||D).querySelectorAll(s));}
+  function el(t,c,x){var e=D.createElement(t); if(c)e.className=c; if(x!=null)e.textContent=x; return e;}
+  function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  function get(k,d){try{var v=localStorage.getItem(LS+k); return v===null?d:v;}catch(e){return d;}}
+  function set(k,v){try{localStorage.setItem(LS+k,v);}catch(e){}}
+
+  /* ---------------------------------------------------------------- unites */
+  /* famille + facteur vers l'unite de base de la famille */
+  var U={'g':['m',1e6],'mg':['m',1e3],'\u00b5g':['m',1],'ug':['m',1],'mcg':['m',1],
+         'UI':['ui',1],'ui':['ui',1],'U':['ui',1],
+         'mEq':['eq',1],'meq':['eq',1],'mmol':['mol',1],
+         'mL':['v',1],'ml':['v',1],'J':['j',1]};
+  var UN='mcg|mg|\u00b5g|ug|mEq|meq|mmol|mL|ml|UI|ui|U|g|J';
+  var NB='([0-9]+(?:[.,][0-9]+)?)';
+  var DOSE_SRC=NB+'\\s*(?:[\u2013\u2212\\-\u00e0]\\s*'+NB+'\\s*)?('+UN+')\\s*/\\s*kg(?:\\s*/\\s*(min|h))?';
+  /* une instance neuve par appel : un /g partage entre deux boucles imbriquees
+     se marche dessus (lastIndex commun) et part en boucle infinie. */
+  function doseRe(){ return new RegExp(DOSE_SRC,'g'); }
+  var CONC_RE=new RegExp(NB+'\\s*('+UN+')\\s*/\\s*m[lL]');
+
+  function nb(s){return parseFloat(String(s).replace(',','.'));}
+  function fmt(v){
+    if(v==null||!isFinite(v)) return '\u2014';
+    var a=Math.abs(v),s;
+    if(a>=100) s=v.toFixed(0);
+    else if(a>=10) s=v.toFixed(1);
+    else if(a>=1) s=v.toFixed(2);
+    else if(a>=0.01) s=v.toFixed(3);
+    else s=v.toFixed(4);
+    return String(parseFloat(s)).replace('.',',');
+  }
+  function rng(lo,hi,u){return hi==null?fmt(lo)+' '+u:fmt(lo)+'\u2013'+fmt(hi)+' '+u;}
+
+  /* concentration : premiere occurrence « nombre unite/mL » */
+  function parseConc(txt){
+    var m=CONC_RE.exec(txt||'');
+    if(!m||!U[m[2]]) return null;
+    return {v:nb(m[1]),u:m[2],fam:U[m[2]][0],base:nb(m[1])*U[m[2]][1]};
+  }
+  /* doses : toutes les occurrences « nombre[-nombre] unite/kg[/min|/h] » */
+  function parseDoses(txt){
+    var out=[],m,re=doseRe();
+    while((m=re.exec(txt||''))!==null){
+      if(!U[m[3]]) continue;
+      out.push({lo:nb(m[1]),hi:m[2]?nb(m[2]):null,u:m[3],fam:U[m[3]][0],k:U[m[3]][1],rate:m[4]||null,raw:m[0]});
+      if(out.length>3) break;
+    }
+    return out;
+  }
+
+  /* ------------------------------------------------- calcul pour le patient */
+  function compute(t,kg,c){
+    var r={tok:t,lines:[],flags:[],head:null,vol:null};
+    var lo=t.lo*kg, hi=t.hi==null?null:t.hi*kg;
+    var per=t.rate?('/'+t.rate):'';
+
+    if(t.fam==='v'){                       /* mL/kg : deja un volume */
+      r.head=rng(lo,hi,'mL'+(t.rate?'/'+t.rate:''));
+      r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+rng(lo,hi,'mL'+per));
+      r.vol=hi==null?lo:null;
+      return r;
+    }
+    if(t.fam==='j'){                       /* J/kg : energie de defibrillation */
+      r.head=rng(lo,hi,'J');
+      r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+rng(lo,hi,'J'));
+      return r;
+    }
+    var masse=rng(lo,hi,t.u+per);
+    r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+masse);
+
+    if(!c){                                /* pas de concentration : on s'arrete la */
+      r.head=masse;
+      r.flags.push(['soft','Concentration inconnue \u2014 le carnet ne devine pas de mL. '+
+        'Lis la concentration sur le flacon, le volume c\u2019est masse \u00f7 concentration.']);
+      return r;
+    }
+    if(c.fam!==t.fam){                     /* mg vs UI/mL : on refuse de convertir */
+      r.head=masse;
+      r.flags.push(['soft','Dose en '+t.u+', concentration en '+c.u+'/mL \u2014 unit\u00e9s incompatibles, pas de volume calcul\u00e9.']);
+      return r;
+    }
+    var vlo=lo*t.k/c.base, vhi=hi==null?null:hi*t.k/c.base;
+    if(t.rate){                            /* CRI : le debit se lit en mL/h */
+      var mult=t.rate==='min'?60:1;
+      var hlo=vlo*mult, hhi=vhi==null?null:vhi*mult;
+      r.head=rng(hlo,hhi,'mL/h');
+      r.lines.push(masse+(t.rate==='min'?' \u00d7 60 = '+rng(lo*60,hi==null?null:hi*60,t.u+'/h'):'')+
+                   ' \u00f7 '+fmt(c.v)+' '+c.u+'/mL = '+rng(hlo,hhi,'mL/h'));
+      r.flags.push(['soft','D\u00e9bit \u00e0 la seringue, <b>produit pur</b>. Dilu\u00e9 en poche, passe par le calculateur CRI \u2014 et un d\u00e9bit se r\u00e8gle toujours en mL/h.']);
+      return r;
+    }
+    r.head=rng(vlo,vhi,'mL');
+    r.lines.push(masse+' \u00f7 '+fmt(c.v)+' '+c.u+'/mL = '+rng(vlo,vhi,'mL'));
+    r.vol=vhi==null?vlo:vlo;
+    return r;
+  }
+
+  /* garde-fous purement arithmetiques (aucune regle clinique invent\u00e9e ici) */
+  function safety(r){
+    var v=r.vol;
+    if(v==null||!isFinite(v)) return;
+    if(v<0.1){
+      var d=v<0.01?100:10, dl=v<0.01?'Deux dilutions au 1/10':'Une dilution au 1/10';
+      r.flags.push(['','<b>Volume plancher \u2014 '+fmt(v)+' mL ne se pr\u00e9l\u00e8ve pas.</b> '+
+        'Sous 0,1 mL on dilue : \u00e0 ~0,05 mL dans une seringue de 1 mL on est dans le bruit de mesure, '+
+        'et un chiffre exact devient une dose fausse. '+dl+' dans du <b>NaCl 0,9&nbsp;%</b> (jamais du RL) \u2192 '+
+        fmt(v*d)+' mL mesurables. Jette ou \u00e9tiquette la seringue interm\u00e9diaire.']);
+    }
+    if(v>60) r.flags.push(['soft','<b>'+fmt(v)+' mL</b> \u2014 ce n\u2019est plus une seringue. Recompte l\u2019ordre de grandeur avant de pr\u00e9lever.']);
+  }
+
+  /* ------------------------------------------------ lecture du corpus fiche */
+  var DOSES=[], TILES=[];
+  function readCorpus(){
+    $$('#doseTable tbody tr').forEach(function(tr){
+      var td=tr.children; if(td.length<7) return;
+      var d={mol:td[0].textContent.trim(), ind:td[1].textContent.trim(),
+             dose:td[2].textContent.trim(), conc:td[3].textContent.trim(),
+             voie:td[4].textContent.trim(), cat:td[5].textContent.trim(),
+             src:td[6].textContent.trim()};
+      d.c=parseConc(d.conc);
+      d.toks=parseDoses(d.dose);
+      d.key=norm(d.mol+' '+d.ind+' '+d.cat+' '+d.dose);
+      d.molKey=norm(d.mol.replace(/\(.*/,'')).trim();
+      DOSES.push(d);
+    });
+    /* ce qu'on ouvre en premier a 3 h du matin, puis l'ordre du document */
+    var ordre=['non choquable','rythme choquable','post-ros','anaphyl','hyperk','ouf',
+               'gdv','decompression','status','epilep','arret de la rcp','afast','r-a-s-c',
+               'potassium','poche','triage','choc','rcp','cardio','respi','digest','biolog','rein'];
+    $$('#protocoles .card, #reflexes .card').forEach(function(card,i){
+      var h3=$('h3',card); if(!h3) return;
+      var body=$('.body',card); if(!body) return;
+      var t={cat:($('.cat',card)||{}).textContent||'', titre:h3.textContent.trim(),
+             sub:($('.sub',card)||{}).textContent||'', html:body.innerHTML, i:i, r:99,
+             grp:card.closest('#protocoles')?0:1};
+      var k=norm(t.cat+' '+t.titre);
+      for(var j=0;j<ordre.length;j++){ if(k.indexOf(ordre[j])>=0){ t.r=j; break; } }
+      t.txt=norm(card.textContent);
+      TILES.push(t);
+    });
+    TILES.sort(function(a,b){ return a.grp-b.grp || a.r-b.r || a.i-b.i; });
+  }
+
+  /* ------------------------------------------------------------ etat patient */
+  var P={esp:get('esp','chien'), kg:parseFloat(get('kg','')) || null};
+  function kgOk(){ return P.kg && P.kg>0 && P.kg<120; }
+
+  /* --------------------------------------------------------------- squelette */
+  var G, body, tabs={}, panels={}, cur='doses';
+  function build(){
+    G=el('div'); G.id='garde'; G.setAttribute('data-dim', get('dim','0'));
+    G.innerHTML=
+      '<div id="gHead">'+
+        '<button class="gbtn sm" id="gClose">\u2715</button>'+
+        '<span class="ttl">Mode garde</span>'+
+        '<span class="sp">'+
+          '<button class="gbtn sm" id="gDim" title="Veilleuse">\u25d1</button>'+
+          '<button class="gbtn sm" id="gLock" title="\u00c9cran allum\u00e9">\u2600</button>'+
+        '</span>'+
+      '</div>'+
+      '<div id="gPat">'+
+        '<div class="gseg" id="gEsp">'+
+          '<button data-e="chien">Chien</button><button data-e="chat">Chat</button>'+
+        '</div>'+
+        '<input id="gKg" type="text" inputmode="decimal" placeholder="kg">'+
+        '<span class="u">kg</span>'+
+        '<span class="sp"><button class="gbtn sm" id="gNew" title="Nouveau patient" '+
+          'aria-label="Nouveau patient">↺</button></span>'+
+      '</div>'+
+      '<div id="gTabs">'+
+        '<button data-p="doses" class="sel">Doses</button>'+
+        '<button data-p="gestes">Gestes</button>'+
+        '<button data-p="chrono">Chrono</button>'+
+        '<button data-p="trace">Trace</button>'+
+      '</div>'+
+      '<div id="gBody">'+
+        '<div class="gpanel on" id="pDoses"></div>'+
+        '<div class="gpanel" id="pGestes"></div>'+
+        '<div class="gpanel" id="pChrono"></div>'+
+        '<div class="gpanel" id="pTrace"></div>'+
+      '</div>';
+    D.body.appendChild(G);
+    body=$('#gBody',G);
+    ['doses','gestes','chrono','trace'].forEach(function(k){
+      tabs[k]=$('#gTabs button[data-p="'+k+'"]',G);
+      panels[k]=$('#p'+k.charAt(0).toUpperCase()+k.slice(1),G);
+      tabs[k].addEventListener('click',function(){ show(k); });
+    });
+
+    $('#gClose',G).addEventListener('click',close);
+    $('#gDim',G).addEventListener('click',function(){
+      var v=G.getAttribute('data-dim')==='1'?'0':'1';
+      G.setAttribute('data-dim',v); set('dim',v);
+    });
+    $('#gLock',G).addEventListener('click',function(){ toggleLock(this); });
+    $$('#gEsp button',G).forEach(function(b){
+      b.addEventListener('click',function(){
+        P.esp=b.dataset.e; set('esp',P.esp); paintPat(); render();
+      });
+    });
+    var kgIn=$('#gKg',G);
+    kgIn.addEventListener('input',function(){
+      var v=parseFloat(kgIn.value.replace(',','.'));
+      P.kg=isFinite(v)&&v>0?v:null; set('kg',P.kg||''); render();
+    });
+    $('#gNew',G).addEventListener('click',newPatient);
+    paintPat();
+  }
+
+  function paintPat(){
+    $$('#gEsp button',G).forEach(function(b){ b.classList.toggle('sel', b.dataset.e===P.esp); });
+    var i=$('#gKg',G);
+    if(document.activeElement!==i) i.value=P.kg?String(P.kg).replace('.',','):'';
+  }
+
+  function newPatient(){
+    if(!confirm('Nouveau patient : poids, minuteurs et trace sont effac\u00e9s. Continuer ?')) return;
+    P.kg=null; set('kg','');
+    TRACE=[]; saveTrace(); TIMERS=[]; saveTimers(); rcpReset();
+    paintPat(); render(); show('doses');
+    body.scrollTop=0;
+  }
+
+  function show(k){
+    cur=k;
+    Object.keys(panels).forEach(function(x){
+      panels[x].classList.toggle('on',x===k); tabs[x].classList.toggle('sel',x===k);
+    });
+    body.scrollTop=0; render();
+  }
+
+  /* ------------------------------------------------------------ panneau doses */
+  /* l'input de recherche est construit une fois : on ne reconstruit que la liste,
+     sinon le clavier iOS se ferme a chaque frappe. */
+  var qDose='';
+  function renderDoses(){
+    var p=panels.doses;
+    if(!$('#gQ',p)){
+      p.innerHTML='';
+      var w=el('div','gwarn'); w.id='gNoKg';
+      w.innerHTML='<b>Entre le poids.</b> Sans poids, le carnet reste un tableau : '+
+        'il affiche les doses verbatim mais ne calcule rien.';
+      p.appendChild(w);
+      var q=el('input'); q.id='gQ'; q.type='search'; q.value=qDose;
+      q.placeholder='Mol\u00e9cule, indication, cat\u00e9gorie\u2026';
+      q.addEventListener('input',function(){ qDose=q.value; paintDoses(); });
+      p.appendChild(q);
+      p.appendChild(el('div',null)).id='gDoseList';
+      var f=el('p','gnote');
+      f.innerHTML='\u26a0\ufe0e Aide-m\u00e9moire personnel, non valid\u00e9 \u2014 le volume affich\u00e9 <b>v\u00e9rifie ton calcul</b>, '+
+        'il ne le remplace pas. Concentration \u00e0 relire sur le flacon avant toute injection.';
+      p.appendChild(f);
+    }
+    paintDoses();
+  }
+  function paintDoses(){
+    var nk=$('#gNoKg',G); if(nk) nk.style.display=kgOk()?'none':'block';
+    var l=$('#gDoseList',G); if(!l) return;
+    l.innerHTML='';
+    var nq=norm(qDose), n=0;
+    DOSES.forEach(function(d){
+      if(nq && d.key.indexOf(nq)<0) return;
+      n++; l.appendChild(doseCard(d));
+    });
+    if(!n) l.appendChild(el('p','gnote','Aucune dose ne correspond.'));
+  }
+
+  function doseCard(d){
+    var c=el('article','gdose');
+    var h=el('div','gh'); h.appendChild(el('b',null,d.mol));
+    if(d.cat) h.appendChild(el('span','gcat',d.cat));
+    c.appendChild(h);
+    c.appendChild(el('div','gi',d.ind));
+
+    var espFlag=null;
+    var t=norm(d.dose+' '+d.ind+' '+d.mol);
+    if(P.esp==='chat' && /\bchien\b/.test(t) && !/\bchat\b/.test(t)) espFlag='chien';
+    if(P.esp==='chien' && /\bchat\b/.test(t) && !/\bchien\b/.test(t)) espFlag='chat';
+
+    if(kgOk() && d.toks.length){
+      d.toks.forEach(function(tok){
+        var r=compute(tok,P.kg,d.c); safety(r);
+        var res=el('div','gres'); res.textContent=r.head;
+        if(d.voie && d.voie!=='\u2014'){ var v=el('span','v',d.voie); res.appendChild(v); }
+        c.appendChild(res);
+        var calc=el('div','gcalc'); calc.textContent=r.lines.join('  \u2192  ');
+        c.appendChild(calc);
+        r.flags.forEach(function(f){
+          var b=el('div','gflag'+(f[0]?' '+f[0]:'')); b.innerHTML=f[1]; c.appendChild(b);
+        });
+      });
+    }
+    var vb=el('div','gverb');
+    vb.innerHTML='<b>'+esc(d.dose)+'</b> \u00b7 '+esc(d.conc)+' \u00b7 '+esc(d.voie)+' \u00b7 '+esc(d.src);
+    c.appendChild(vb);
+    if(espFlag){
+      var e=el('div','gflag soft');
+      e.innerHTML='Cette ligne parle du <b>'+espFlag+'</b> \u2014 patient '+P.esp+'. V\u00e9rifie l\u2019esp\u00e8ce avant d\u2019appliquer.';
+      c.appendChild(e);
+    }
+    if(kgOk() && d.toks.length){
+      var act=el('div','gact');
+      var b=el('button','gbtn sm','Poser dans la trace');
+      b.addEventListener('click',function(){ traceDose(d); b.textContent='Pos\u00e9 \u2713'; setTimeout(function(){b.textContent='Poser dans la trace';},1400); });
+      act.appendChild(b);
+      var b2=el('button','gbtn sm','Copier la prescription');
+      b2.addEventListener('click',function(){ copy(presc(d)); b2.textContent='Copi\u00e9 \u2713'; setTimeout(function(){b2.textContent='Copier la prescription';},1400); });
+      act.appendChild(b2);
+      c.appendChild(act);
+    }
+    return c;
+  }
+
+  /* la phrase complete : molecule, dose, concentration, volume, voie */
+  function presc(d){
+    var t=d.toks[0]; if(!t||!kgOk()) return d.mol+' '+d.dose;
+    var r=compute(t,P.kg,d.c);
+    return d.mol+' \u2014 '+t.raw+' sur '+fmt(P.kg)+' kg'+
+           (d.c?', concentration '+d.conc:'')+' \u2192 '+r.head+
+           (d.voie&&d.voie!=='\u2014'?' '+d.voie:'');
+  }
+  function esc(s){var e=el('span'); e.textContent=s||''; return e.innerHTML;}
+
+  /* ----------------------------------------------------------- panneau gestes */
+  var qGeste='', sheet=null;
+  function renderGestes(){
+    var p=panels.gestes;
+    if(!$('#gQg',p)){
+      p.innerHTML='';
+      var q=el('input'); q.id='gQg'; q.type='search'; q.value=qGeste;
+      q.placeholder='Chercher un geste, un protocole\u2026';
+      q.addEventListener('input',function(){ qGeste=q.value; paintTiles(); });
+      p.appendChild(q);
+      p.appendChild(el('div','gtiles')).id='gGrid';
+      p.appendChild(el('div',null)).id='gSheet';
+    }
+    var open=sheet!==null;
+    $('#gQg',p).style.display=open?'none':'block';
+    $('#gGrid',p).style.display=open?'none':'grid';
+    $('#gSheet',p).style.display=open?'block':'none';
+    if(open) renderSheet($('#gSheet',p)); else paintTiles();
+  }
+  function paintTiles(){
+    var g=$('#gGrid',G); if(!g) return;
+    g.innerHTML='';
+    var nq=norm(qGeste), n=0;
+    TILES.forEach(function(t,i){
+      if(nq && t.txt.indexOf(nq)<0) return;
+      n++;
+      var b=el('button','gtile');
+      b.innerHTML='<span class="c">'+esc(t.cat)+'</span><b>'+esc(t.titre)+'</b><span class="s">'+esc(t.sub)+'</span>';
+      b.addEventListener('click',function(){ sheet=i; renderGestes(); body.scrollTop=0; });
+      g.appendChild(b);
+    });
+    if(!n) g.appendChild(el('p','gnote','Aucun geste ne correspond.'));
+  }
+
+  function renderSheet(p){
+    p.innerHTML='';
+    var t=TILES[sheet];
+    var back=el('button','gbtn sm','\u2039 Tous les gestes');
+    back.addEventListener('click',function(){ sheet=null; renderGestes(); body.scrollTop=0; });
+    p.appendChild(back);
+    var head=el('div'); head.style.margin='12px 0 4px';
+    head.innerHTML='<div class="gcat" style="display:inline-block">'+esc(t.cat)+'</div>'+
+                   '<h2 style="margin:8px 0 2px;font-size:21px;line-height:1.25">'+esc(t.titre)+'</h2>'+
+                   '<div style="color:var(--ink-soft);font-size:13.5px">'+esc(t.sub)+'</div>';
+    p.appendChild(head);
+
+    var wrap=el('div','gsheet');
+    var b=el('div','body'); b.innerHTML=t.html;
+    $$('[id]',b).forEach(function(x){ x.removeAttribute('id'); });  /* pas de doublon d'id */
+    if(kgOk()) massify(b);
+    wrap.appendChild(b); p.appendChild(wrap);
+
+    /* les doses du corpus dont la molecule est nommee dans ce protocole */
+    var hit=DOSES.filter(function(d){
+      return d.molKey.length>=5 && t.txt.indexOf(d.molKey)>=0 && d.toks.length;
+    });
+    if(hit.length && kgOk()){
+      p.appendChild(el('div','gsec','Doses cit\u00e9es \u2014 pour '+fmt(P.kg)+' kg'));
+      hit.slice(0,12).forEach(function(d){ p.appendChild(doseCard(d)); });
+    }
+  }
+
+  /* dans un protocole : « 0,01 mg/kg » devient « 0,01 mg/kg = 0,31 mg ».
+     Jamais de mL ici : la concentration n'est pas dans le texte, on ne la devine pas.
+     Et jamais dans un encadre « piege » : la dose qu'il cite est justement celle
+     qu'il faut ne PAS passer (haute dose adrenaline, etc.). */
+  function massify(root){
+    var walker=D.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false), nodes=[], n;
+    while((n=walker.nextNode())) nodes.push(n);
+    nodes.forEach(function(node){
+      var par=node.parentNode;
+      if(par && par.closest && par.closest('.trap,.warn')) return;
+      var txt=node.nodeValue, re=doseRe();
+      if(!re.test(txt)) return;
+      re.lastIndex=0;
+      var frag=D.createDocumentFragment(), last=0, m;
+      while((m=re.exec(txt))!==null){
+        var tok=parseDoses(m[0])[0];
+        frag.appendChild(D.createTextNode(txt.slice(last,m.index+m[0].length)));
+        last=m.index+m[0].length;
+        if(tok && !tok.rate){
+          var lo=tok.lo*P.kg, hi=tok.hi==null?null:tok.hi*P.kg;
+          var chip=el('span','gcalcchip',' = '+rng(lo,hi,tok.u));
+          frag.appendChild(chip);
+        }
+      }
+      frag.appendChild(D.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag,node);
+    });
+  }
+
+  /* ----------------------------------------------------------- panneau chrono */
+  var rcp={on:false,t0:0,acc:0,cycle:1,tick:null};
+  var TIMERS=[];
+  try{ TIMERS=JSON.parse(get('timers','[]'))||[]; }catch(e){ TIMERS=[]; }
+  function saveTimers(){ set('timers',JSON.stringify(TIMERS)); }
+
+  function rcpSec(){ return Math.floor((rcp.acc+(rcp.on?Date.now()-rcp.t0:0))/1000); }
+  function rcpReset(){ rcp.on=false; rcp.acc=0; rcp.cycle=1; }
+  function mmss(s){
+    var neg=s<0; s=Math.abs(s);
+    var m=Math.floor(s/60), r=s%60;
+    return (neg?'-':'')+m+':'+(r<10?'0':'')+r;
+  }
+  function hms(s){                       /* les minuteurs de recontrole vont a H+4 */
+    var neg=s<0; s=Math.abs(s);
+    var h=Math.floor(s/3600), m=Math.floor(s%3600/60), r=s%60;
+    if(!h) return (neg?'-':'')+m+':'+(r<10?'0':'')+r;
+    return (neg?'-':'')+h+' h '+(m<10?'0':'')+m;
+  }
+
+  function renderChrono(){
+    var p=panels.chrono; p.innerHTML='';
+    p.appendChild(el('div','gsec','Cycle RCP \u2014 2 min'));
+    var s=rcpSec(), left=120-(s%120);
+    var clock=el('div','gclock'+(left<=15?' warnc':''),mmss(left));
+    clock.id='gClock'; p.appendChild(clock);
+    var cyc=el('div','gcyc'); cyc.id='gCyc';
+    cyc.textContent='Cycle '+rcp.cycle+' \u00b7 '+mmss(s)+' de RCP';
+    p.appendChild(cyc);
+
+    var adre=el('div','gadre'); adre.id='gAdre';
+    p.appendChild(adre); paintAdre();
+
+    var row=el('div','grow');
+    var bs=el('button','gbtn pri',rcp.on?'Pause':(rcpSec()?'Reprendre':'D\u00e9marrer'));
+    bs.addEventListener('click',function(){
+      if(rcp.on){ rcp.acc+=Date.now()-rcp.t0; rcp.on=false; }
+      else { rcp.t0=Date.now(); rcp.on=true; beepInit(); lockOn(); }
+      renderChrono();
+    });
+    var bc=el('button','gbtn','Cycle suivant');
+    bc.addEventListener('click',function(){ nextCycle(); });
+    var br=el('button','gbtn dgr','ROSC / Stop');
+    br.addEventListener('click',function(){
+      trace('RCP arr\u00eat\u00e9e \u2014 '+mmss(rcpSec())+' de r\u00e9animation, '+rcp.cycle+' cycles');
+      rcpReset(); renderChrono();
+    });
+    row.appendChild(bs); row.appendChild(bc); row.appendChild(br);
+    p.appendChild(row);
+
+    p.appendChild(el('div','gsec','Minuteurs de recontr\u00f4le'));
+    var chips=el('div','gchips');
+    [['Lactate H+4',240],['Na H+4',240],['K H+4',240],['Glyc\u00e9mie H+1',60],
+     ['PA 5 min',5],['BRU H+2',120],['Diur\u00e8se H+2',120]].forEach(function(x){
+      var b=el('button','gchip','+ '+x[0]);
+      b.addEventListener('click',function(){ addTimer(x[0],x[1]); });
+      chips.appendChild(b);
+    });
+    var bp=el('button','gchip','+ perso\u2026');
+    bp.addEventListener('click',function(){
+      var n=prompt('Quoi recontr\u00f4ler ?'); if(!n) return;
+      var m=parseFloat(prompt('Dans combien de minutes ?','30')); if(!isFinite(m)||m<=0) return;
+      addTimer(n,m);
+    });
+    chips.appendChild(bp);
+    p.appendChild(chips);
+    var list=el('div'); list.id='gTimers'; p.appendChild(list); paintTimers();
+    if(!TIMERS.length) p.appendChild(el('p','gnote','Aucun minuteur. Un lactate qui n\u2019est pas recontr\u00f4l\u00e9 n\u2019est pas un marqueur pronostique, c\u2019est un chiffre.'));
+  }
+
+  function paintAdre(){
+    var a=$('#gAdre',G); if(!a) return;
+    var due=(rcp.cycle%2)===1;
+    a.style.display=due?'block':'none';
+    if(!due) return;
+    var d=DOSES.filter(function(x){ return x.molKey==='adrenaline' && norm(x.cat)==='rcp'; })[0];
+    var sub='';
+    if(d && kgOk() && d.toks.length){ var r=compute(d.toks[0],P.kg,d.c); sub='<small>'+r.head+' \u2014 '+esc(d.voie)+' \u00b7 flush 10\u201320 mL</small>'; }
+    a.innerHTML='ADR\u00c9NALINE ce cycle'+sub;
+  }
+  function paintTimers(){
+    var l=$('#gTimers',G); if(!l) return;
+    l.innerHTML='';
+    TIMERS.forEach(function(t,i){
+      var left=Math.round((t.due-Date.now())/1000);
+      var row=el('div','gtimer'+(left<=0?' due':''));
+      row.appendChild(el('span',null,t.n));
+      row.appendChild(el('span','n',hms(left)));
+      var x=el('button','gbtn sm','\u2715');
+      x.addEventListener('click',function(){ TIMERS.splice(i,1); saveTimers(); paintTimers(); });
+      row.appendChild(x);
+      l.appendChild(row);
+    });
+  }
+  function addTimer(n,min){
+    /* re-taper le meme minuteur le rearme, il ne s'empile pas */
+    var ex=TIMERS.filter(function(t){ return t.n===n; })[0];
+    if(ex){ ex.due=Date.now()+min*60000; ex.rung=false; }
+    else TIMERS.push({n:n,due:Date.now()+min*60000,rung:false});
+    TIMERS.sort(function(a,b){return a.due-b.due;});
+    saveTimers(); beepInit(); paintTimers();
+    trace((ex?'Minuteur r\u00e9arm\u00e9 : ':'Minuteur pos\u00e9 : ')+n);
+    var p=panels.chrono; var note=$('.gnote',p); if(note) note.remove();
+  }
+  /* \u00ab Cycle suivant \u00bb cale le chrono sur la prochaine borne de 2 min :
+     le compteur de cycles et le temps de RCP ne peuvent pas se desynchroniser. */
+  function nextCycle(){
+    rcp.acc+=(rcp.on?Date.now()-rcp.t0:0); rcp.t0=Date.now();
+    rcp.acc=Math.max(Math.ceil(rcp.acc/120000)*120000, rcp.acc+1);
+    setCycle(Math.floor(rcpSec()/120)+1);
+    if(cur==='chrono') renderChrono();
+  }
+  function setCycle(n){
+    if(n<=rcp.cycle) return;
+    rcp.cycle=n;
+    beep(2);
+    trace('Cycle '+n+((n%2)===1?' \u2014 adr\u00e9naline':''));
+    paintAdre();
+  }
+
+  /* horloge globale : 1 Hz, alimente le chrono et les minuteurs */
+  setInterval(function(){
+    if(!G || !G.classList.contains('on')) return;
+    var changed=false;
+    TIMERS.forEach(function(t){
+      if(!t.rung && t.due<=Date.now()){ t.rung=true; changed=true; beep(3); trace('\u23f0 '+t.n); }
+    });
+    if(changed) saveTimers();
+
+    /* le cycle avance quel que soit l'onglet affiche, et rattrape si l'app
+       a ete mise en veille (on recalcule depuis le temps ecoule, pas par pas) */
+    var s=rcpSec();
+    if(rcp.on) setCycle(Math.floor(s/120)+1);
+
+    if(cur!=='chrono') return;
+    var left=120-(s%120);
+    var c=$('#gClock',G), y=$('#gCyc',G);
+    if(c){ c.textContent=mmss(left); c.classList.toggle('warnc',left<=15); }
+    if(y) y.textContent='Cycle '+rcp.cycle+' \u00b7 '+mmss(s)+' de RCP';
+    paintTimers();
+  },1000);
+
+  /* ------------------------------------------------------------ panneau trace */
+  var TRACE=[];
+  try{ TRACE=JSON.parse(get('trace','[]'))||[]; }catch(e){ TRACE=[]; }
+  function saveTrace(){ set('trace',JSON.stringify(TRACE.slice(-200))); }
+  function hhmm(d){ d=new Date(d); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+  function trace(txt){ TRACE.push({t:Date.now(),x:txt}); saveTrace(); if(cur==='trace') renderTrace(); }
+  function traceDose(d){ trace(presc(d)); }
+
+  function renderTrace(){
+    var p=panels.trace; p.innerHTML='';
+    p.appendChild(el('div','gsec','Trace de la nuit'));
+    var t=el('div','gtrace');
+    t.textContent=TRACE.length
+      ? TRACE.map(function(e){ return hhmm(e.t)+'  '+e.x; }).join('\n')
+      : 'Rien de pos\u00e9. Chaque dose calcul\u00e9e peut \u00eatre pos\u00e9e ici, horodat\u00e9e \u2014 de quoi remplir la feuille d\u2019hospitalisation sans reconstruire de m\u00e9moire.';
+    p.appendChild(t);
+    var row=el('div','grow'); row.style.marginTop='10px';
+    var b1=el('button','gbtn','Copier');
+    b1.addEventListener('click',function(){
+      copy((P.esp+' '+(P.kg?fmt(P.kg)+' kg':'')+'\n')+TRACE.map(function(e){return hhmm(e.t)+'  '+e.x;}).join('\n'));
+      b1.textContent='Copi\u00e9 \u2713'; setTimeout(function(){b1.textContent='Copier';},1400);
+    });
+    var b2=el('button','gbtn','Effacer');
+    b2.addEventListener('click',function(){
+      if(!confirm('Effacer la trace ?')) return;
+      TRACE=[]; saveTrace(); renderTrace();
+    });
+    row.appendChild(b1); row.appendChild(b2); p.appendChild(row);
+  }
+  function copy(txt){
+    try{ navigator.clipboard.writeText(txt); }
+    catch(e){
+      var ta=el('textarea'); ta.value=txt; D.body.appendChild(ta); ta.select();
+      try{ D.execCommand('copy'); }catch(e2){}
+      ta.remove();
+    }
+  }
+
+  /* ------------------------------------------------------------- son + ecran */
+  var AC=null;
+  function beepInit(){ try{ if(!AC) AC=new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==='suspended') AC.resume(); }catch(e){} }
+  function beep(n){
+    try{ if(navigator.vibrate) navigator.vibrate([120,80,120]); }catch(e){}
+    if(!AC) return;
+    for(var i=0;i<(n||1);i++){
+      (function(k){
+        setTimeout(function(){
+          try{
+            var o=AC.createOscillator(), g=AC.createGain();
+            o.frequency.value=880; g.gain.value=.0001; o.connect(g); g.connect(AC.destination);
+            var t=AC.currentTime; g.gain.exponentialRampToValueAtTime(.25,t+.02);
+            g.gain.exponentialRampToValueAtTime(.0001,t+.28);
+            o.start(t); o.stop(t+.3);
+          }catch(e){}
+        },k*330);
+      })(i);
+    }
+  }
+  var wake=null;
+  function lockOn(){
+    try{ if('wakeLock' in navigator && !wake) navigator.wakeLock.request('screen').then(function(w){ wake=w; w.addEventListener('release',function(){wake=null;}); }).catch(function(){}); }catch(e){}
+    var b=$('#gLock',G); if(b) b.classList.toggle('pri',!!wake);
+  }
+  function toggleLock(b){
+    if(wake){ try{ wake.release(); }catch(e){} wake=null; b.classList.remove('pri'); }
+    else { lockOn(); setTimeout(function(){ b.classList.toggle('pri',!!wake); },300); }
+  }
+  D.addEventListener('visibilitychange',function(){
+    if(!D.hidden && G && G.classList.contains('on') && wake===null && rcp.on) lockOn();
+  });
+
+  /* ------------------------------------------------------------ ouvrir/fermer */
+  function render(){
+    if(cur==='doses') renderDoses();
+    else if(cur==='gestes') renderGestes();
+    else if(cur==='chrono') renderChrono();
+    else renderTrace();
+  }
+  function open(){
+    if(!G){ readCorpus(); build(); }
+    G.classList.add('on'); D.body.classList.add('garde-open');
+    beepInit(); paintPat(); render();
+    try{ if(location.hash!=='#garde') history.pushState({garde:1},'','#garde'); }catch(e){}
+  }
+  function close(){
+    if(!G) return;
+    G.classList.remove('on'); D.body.classList.remove('garde-open');
+    if(wake){ try{ wake.release(); }catch(e){} wake=null; }
+    try{ if(location.hash==='#garde') history.back(); }catch(e){}
+  }
+  window.addEventListener('popstate',function(){
+    if(G && G.classList.contains('on') && location.hash!=='#garde'){
+      G.classList.remove('on'); D.body.classList.remove('garde-open');
+    }
+  });
+
+  var fab=el('button',null,'GARDE'); fab.id='gardeFab'; fab.type='button';
+  fab.title='Mode garde \u2014 doses converties, gestes, chrono';
+  fab.addEventListener('click',open);
+  D.body.appendChild(fab);
+
+  /* raccourci d'ecran d'accueil : index.html?garde=1 ouvre directement */
+  if(/[?&]garde=1/.test(location.search) || location.hash==='#garde') setTimeout(open,0);
 })();
 </script>
