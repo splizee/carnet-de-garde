@@ -1989,15 +1989,16 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
               <select id="cri-cU" style="padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)"></select>
             </div>
             <div style="border-top:1px solid var(--line);margin:2px 0"></div>
+            <p style="margin:0;font-size:.85em;color:var(--ink-soft)">Laisse les deux champs vides pour la drogue <b>pure</b>. Remplis-les pour <b>diluer</b> : ils donnent les mL de drogue et de NaCl à préparer.</p>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              <label style="display:flex;align-items:center;gap:6px;min-width:110px;cursor:pointer"><input type="checkbox" id="cri-dil"> Diluer dans</label>
+              <span style="min-width:110px">Volume à préparer</span>
               <input id="cri-tvol" type="number" inputmode="decimal" placeholder="mL" style="width:70px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
-              <span style="font-size:.85em;color:var(--ink-soft)">mL total de seringue (ex. 20, 50)</span>
+              <span style="font-size:.85em;color:var(--ink-soft)">mL — seringue <b>20 / 50</b>, ou poche <b>250 / 500</b></span>
             </div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               <span style="min-width:110px">Débit de pompe voulu</span>
               <input id="cri-rate" type="number" inputmode="decimal" placeholder="mL/h" style="width:70px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
-              <span style="font-size:.85em;color:var(--ink-soft)">mL/h — vise 1 à 5 mL/h. La <b>durée</b> en sort toute seule.</span>
+              <span style="font-size:.85em;color:var(--ink-soft)">mL/h — <b>1 à 5</b> au pousse-seringue, <b>l'entretien</b> si c'est une poche. La <b>durée</b> en sort toute seule.</span>
             </div>
           </div>
           <div class="box note" id="cri-out" style="margin-top:14px">Choisis une molécule (remplit conc. + dose type), ajuste, entre le poids.</div>
@@ -2859,7 +2860,7 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
     const k=drugSel.value;if(!k){renderSimple();return;}
     const g=D[k];criConc.value=g.conc;cU.value=g.cU;criDose.value=g.d;dU.value=g.dU;renderSimple();
   });
-  const dilChk=document.getElementById('cri-dil'),tvolI=document.getElementById('cri-tvol'),rateI=document.getElementById('cri-rate');
+  const tvolI=document.getElementById('cri-tvol'),rateI=document.getElementById('cri-rate');
   const perMlToDisp=(v,u)=>u==='mg/mL'?v/1000:v; // base µg/mL → unité conc affichée
   // Une durée s'écrit « 6 h 40 », pas « 6,67 h » : c'est une autonomie qu'on lit
   // sur une pancarte de cage, pas un nombre à réinjecter dans un calcul.
@@ -2872,38 +2873,47 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
     const nativePerMl=cPerMl(conc,cU.value);if(nativePerMl<=0){criOut.innerHTML='Concentration invalide.';return;}
     const baseH=dToBase(dose,dU.value)*w; // µg/h (ou U/h) à délivrer — la quantité, elle, ne dépend d'aucun réglage
     const mlhPur=baseH/nativePerMl;
+    /* Le mode se lit sur les champs remplis, il n'y a plus de case à cocher.
+       Une case qui annule deux champs déjà saisis répond en silence à une autre
+       question que celle qu'on pose : volume + débit remplis = dilution, point. */
+    const V=num(tvolI),mlhVoulu=num(rateI);
     let html='',workPerMl=nativePerMl,mlh;
-    if(dilChk.checked){
+    if(V!==null&&V>0&&mlhVoulu!==null&&mlhVoulu>0){
       // Dilution : on choisit le DÉBIT que la pompe doit afficher, la concentration
-      // de la seringue s'y ajuste, et la durée en sort. Jamais l'inverse.
-      const V=num(tvolI),mlhVoulu=num(rateI);
-      if(V===null||V<=0){criOut.innerHTML='Diluer : indique le volume total de seringue à préparer (ex. 20 mL).';return;}
-      if(mlhVoulu===null||mlhVoulu<=0){criOut.innerHTML='Diluer : indique le <b>débit voulu</b> (mL/h) — c\'est lui qui fixe la dilution. En pur, cette dose donnerait <b>'+fmt(mlhPur)+' mL/h</b>.';return;}
+      // du contenant s'y ajuste, et la durée en sort. Jamais l'inverse.
       mlh=mlhVoulu;
-      workPerMl=baseH/mlh;                 // concentration nécessaire dans la seringue
-      const Vdrug=workPerMl*V/nativePerMl; // mL de drogue pure à mettre dedans
-      if(Vdrug>V){criOut.innerHTML='⚠ Il faudrait '+fmt(Vdrug)+' mL de '+dName+' dans une seringue de '+fmt(V)+' mL — impossible. Monte le débit voulu, ou passe en drogue pure ('+fmt(mlhPur)+' mL/h).';return;}
-      const duree=V/mlh;
-      html+='<b>Seringue de '+fmt(V)+' mL : '+fmt(Vdrug)+' mL de '+dName+' + '+fmt(V-Vdrug)+' mL de NaCl</b> '+
+      workPerMl=baseH/mlh;                 // concentration nécessaire dans le contenant
+      const Vdrug=workPerMl*V/nativePerMl; // mL de drogue pure à y mettre
+      if(Vdrug>V){criOut.innerHTML='⚠ Il faudrait <b>'+fmt(Vdrug)+' mL</b> de '+dName+' dans '+fmt(V)+' mL — impossible. Monte le débit voulu, ou passe en drogue pure ('+fmt(mlhPur)+' mL/h).';return;}
+      const duree=V/mlh, poche=V>=100;
+      html+='<b>Dans '+fmt(V)+' mL : '+fmt(Vdrug)+' mL de '+dName+' + '+fmt(V-Vdrug)+' mL de NaCl</b> '+
             '<span style="color:var(--ink-soft);font-size:.9em">(→ '+fmt(perMlToDisp(workPerMl,cU.value))+' '+cU.value+')</span>'+
+            (poche?'<br><span style="color:var(--ink-soft);font-size:.9em">Poche : <b>retirer '+fmt(Vdrug)+' mL</b> avant d\'injecter la drogue, pour rester iso-volume.</span>':'')+
             '<br><b>Pompe = '+fmt(mlh)+' mL/h</b>'+
             '<br><b>Autonomie = '+fmtDuree(duree)+'</b> <span style="color:var(--ink-soft);font-size:.9em">('+fmt(V)+' mL ÷ '+fmt(mlh)+' mL/h) — résultat, pas consigne</span>';
+      /* Le désaccord le plus fréquent : un volume de poche avec un débit de
+         pousse-seringue. Il ne se voit pas sur les mL, il se voit sur la durée. */
+      if(duree>24)html+='<br>⚠ <b>'+fmtDuree(duree)+' d\'autonomie</b> — un contenant entamé se change à <b>24 h</b>. '+
+        (poche?'À ce débit, la poche est trop grande : descends le volume, ou c\'est le débit qui doit être celui de l\'entretien (poids × 2–3 mL/kg/h) — et alors passe par le calculateur en poche ci-dessous.'
+              :'Réduis le volume préparé.');
+      if(Vdrug>V/2)html+='<br>⚠ la drogue occupe plus de la moitié du volume : ce n\'est plus une dilution. Monte le débit voulu, ou reste en pur.';
     }else{
       mlh=mlhPur;
       html+='<b>Pompe = '+fmt(mlh)+' mL/h</b> de '+dName+' pur';
-      const V=num(tvolI);
-      if(V!==null&&V>0)html+='<br><b>Autonomie d\'une seringue de '+fmt(V)+' mL = '+fmtDuree(V/mlh)+'</b>';
-      else html+=' <span style="color:var(--ink-soft);font-size:.9em">(entre un volume de seringue pour l\'autonomie, ou coche « Diluer » pour choisir le débit)</span>';
+      if(V!==null&&V>0)html+='<br><b>Autonomie de '+fmt(V)+' mL = '+fmtDuree(V/mlh)+'</b>';
+      // Ne jamais répondre « pur » en laissant croire qu'un champ rempli a servi.
+      if(mlhVoulu!==null&&mlhVoulu>0)html+='<br>⚠ débit voulu saisi sans volume à préparer : <b>indique le volume</b> pour obtenir les mL de '+dName+' et de NaCl. Sans lui, le calcul ci-dessus est celui de la drogue pure.';
+      else if(V===null||V<=0)html+=' <span style="color:var(--ink-soft);font-size:.9em">(remplis volume <b>et</b> débit voulu pour diluer)</span>';
     }
     const back=baseToD(mlh*workPerMl/w,dU.value);
     html+='<br><span style="color:var(--ink-soft);font-size:.9em">Vérif inverse : '+fmt(mlh)+' mL/h × '+fmt(perMlToDisp(workPerMl,cU.value))+' '+cU.value+' ÷ '+fmt(w)+' kg = '+fmt(back)+' '+dU.value+' ✓</span>';
     if(k&&D[k].dU===dU.value){const g=D[k];const inR=dose>=g.min&&dose<=g.max;html+='<br>'+(inR?'✓ dose dans la fourchette ('+fmt(g.min)+'–'+fmt(g.max)+' '+g.dU+')':'⚠ dose hors fourchette usuelle ('+fmt(g.min)+'–'+fmt(g.max)+' '+g.dU+')');}
-    if(mlh<0.5)html+='<br>⚠ débit &lt; 0,5 mL/h → '+(dilChk.checked?'monte le débit voulu (vise 1 à 5 mL/h).':'coche « Diluer » et choisis un débit de 1 à 5 mL/h.');
+    // Sous 0,5 mL/h la pompe n'est plus précise — c'est le motif même de diluer.
+    if(mlh<0.5)html+='<br>⚠ débit &lt; 0,5 mL/h, sous la précision de la pompe → remplis <b>volume à préparer</b> et <b>débit voulu</b> (1 à 5 mL/h) pour diluer.';
     criOut.innerHTML=html;
   }
   [criW,criDose,criConc,tvolI,rateI].forEach(el=>el.addEventListener('input',renderSimple));
   [dU,cU].forEach(el=>el.addEventListener('change',renderSimple));
-  dilChk.addEventListener('change',renderSimple);
 
   // ----- calculateur combiné (poche) -----
   const bag=document.getElementById('crc-bag'),rate=document.getElementById('crc-rate'),crcOut=document.getElementById('crc-out'),
