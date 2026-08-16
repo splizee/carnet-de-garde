@@ -92,6 +92,12 @@ nav a small{margin-left:auto;font-size:11px;opacity:.6;font-family:var(--mono)}
 nav a:hover{background:var(--surface2);color:var(--ink)}
 nav a.active{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);font-weight:650}
 nav a.active .ic{opacity:1}
+nav .sec-fold{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;border-radius:8px}
+nav .sec-fold:hover{color:var(--ink)}
+nav .sec-fold .fold-ic{font-size:10px;transition:transform .15s;opacity:.7}
+nav .sec-fold.open .fold-ic{transform:rotate(90deg)}
+nav .fold-group{display:flex;flex-direction:column;overflow:hidden}
+nav .fold-group[hidden]{display:none}
 
 /* ---------- Main ---------- */
 main{flex:1;min-width:0;padding:0}
@@ -470,16 +476,6 @@ body.garde-open{overflow:hidden}
     <a data-v="mod2" class="c-proto"><span class="ic"></span>Respiratoire <small>S5–6</small></a>
     <a data-v="mod3" class="c-comm"><span class="ic"></span>Cardio / RCP <small>S7–8</small></a>
     <a data-v="mod4" class="c-cas"><span class="ic"></span>Digestif <small>S9–10</small></a>
-    <div class="sec">Spécialités — internat</div>
-    <a data-v="sp-urgence" class="c-cas"><span class="ic"></span>Urgence &amp; soins intensifs</a>
-    <a data-v="sp-interne" class="c-repere"><span class="ic"></span>Médecine interne</a>
-    <a data-v="sp-neuro" class="c-proto"><span class="ic"></span>Neurologie</a>
-    <a data-v="sp-cardio" class="c-comm"><span class="ic"></span>Cardiologie</a>
-    <a data-v="sp-chir" class="c-dose"><span class="ic"></span>Chirurgie</a>
-    <a data-v="sp-imagerie" class="c-repere"><span class="ic"></span>Imagerie</a>
-    <a data-v="sp-onco" class="c-cas"><span class="ic"></span>Oncologie</a>
-    <a data-v="sp-dermato" class="c-proto"><span class="ic"></span>Dermatologie</a>
-    <a data-v="sp-stomato" class="c-dose"><span class="ic"></span>Stomatologie</a>
     <div class="sec">Index</div>
     <a data-v="cas" class="c-cas"><span class="ic"></span>Tous les cas <small id="navCas"></small></a>
     <a data-v="reflexes" class="c-repere"><span class="ic"></span>Réflexes <small id="navRef"></small></a>
@@ -490,6 +486,18 @@ body.garde-open{overflow:hidden}
     <a data-v="doses" class="c-dose"><span class="ic"></span>Doses express</a>
     <a data-v="protocoles" class="c-proto"><span class="ic"></span>Protocoles</a>
     <a data-v="comm" class="c-comm"><span class="ic"></span>Communication</a>
+    <div class="sec sec-fold" id="foldSpecialites"><span>Spécialités — internat</span><span class="fold-ic">▸</span></div>
+    <div class="fold-group" data-fold-group="specialites" hidden>
+      <a data-v="sp-urgence" class="c-cas"><span class="ic"></span>Urgence &amp; soins intensifs</a>
+      <a data-v="sp-interne" class="c-repere"><span class="ic"></span>Médecine interne</a>
+      <a data-v="sp-neuro" class="c-proto"><span class="ic"></span>Neurologie</a>
+      <a data-v="sp-cardio" class="c-comm"><span class="ic"></span>Cardiologie</a>
+      <a data-v="sp-chir" class="c-dose"><span class="ic"></span>Chirurgie</a>
+      <a data-v="sp-imagerie" class="c-repere"><span class="ic"></span>Imagerie</a>
+      <a data-v="sp-onco" class="c-cas"><span class="ic"></span>Oncologie</a>
+      <a data-v="sp-dermato" class="c-proto"><span class="ic"></span>Dermatologie</a>
+      <a data-v="sp-stomato" class="c-dose"><span class="ic"></span>Stomatologie</a>
+    </div>
   </nav>
 </aside>
 <div class="scrim" id="scrim"></div>
@@ -3671,9 +3679,24 @@ let lastViewId='apercu';
 const viewLabel={};
 navA.forEach(a=>{viewLabel[a.dataset.v]=a.textContent.replace(/\s+/g,' ').trim();});
 
+// groupes de nav pliables (tout ou rien)
+document.querySelectorAll('.sec-fold').forEach(sec=>{
+  const group=sec.nextElementSibling;
+  sec.addEventListener('click',()=>{
+    const open=sec.classList.toggle('open');
+    group.hidden=!open;
+  });
+});
+function openFoldFor(id){
+  const link=navA.find(a=>a.dataset.v===id);
+  const group=link&&link.closest('.fold-group');
+  if(group){group.hidden=false;const sec=group.previousElementSibling;if(sec)sec.classList.add('open');}
+}
+
 function show(id,sansAncre){
   lastViewId=id;
   if(!sansAncre){try{history.replaceState(null,'','#'+id);}catch(e){}}
+  openFoldFor(id);
   views.forEach(v=>v.classList.toggle('active',v.id===id));
   navA.forEach(a=>a.classList.toggle('active',a.dataset.v===id));
   const view=document.getElementById(id);
