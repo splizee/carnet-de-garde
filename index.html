@@ -470,6 +470,16 @@ body.garde-open{overflow:hidden}
     <a data-v="mod2" class="c-proto"><span class="ic"></span>Respiratoire <small>S5–6</small></a>
     <a data-v="mod3" class="c-comm"><span class="ic"></span>Cardio / RCP <small>S7–8</small></a>
     <a data-v="mod4" class="c-cas"><span class="ic"></span>Digestif <small>S9–10</small></a>
+    <div class="sec">Spécialités — internat</div>
+    <a data-v="sp-urgence" class="c-cas"><span class="ic"></span>Urgence &amp; soins intensifs</a>
+    <a data-v="sp-interne" class="c-repere"><span class="ic"></span>Médecine interne</a>
+    <a data-v="sp-neuro" class="c-proto"><span class="ic"></span>Neurologie</a>
+    <a data-v="sp-cardio" class="c-comm"><span class="ic"></span>Cardiologie</a>
+    <a data-v="sp-chir" class="c-dose"><span class="ic"></span>Chirurgie</a>
+    <a data-v="sp-imagerie" class="c-repere"><span class="ic"></span>Imagerie</a>
+    <a data-v="sp-onco" class="c-cas"><span class="ic"></span>Oncologie</a>
+    <a data-v="sp-dermato" class="c-proto"><span class="ic"></span>Dermatologie</a>
+    <a data-v="sp-stomato" class="c-dose"><span class="ic"></span>Stomatologie</a>
     <div class="sec">Index</div>
     <a data-v="cas" class="c-cas"><span class="ic"></span>Tous les cas <small id="navCas"></small></a>
     <a data-v="reflexes" class="c-repere"><span class="ic"></span>Réflexes <small id="navRef"></small></a>
@@ -2570,6 +2580,855 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
   </section>
 
   <!-- ============ INDEX DES CAS ============ -->
+  <!-- ============ SPÉCIALITÉ · URGENCE ============ -->
+  <section class="view c-cas" id="sp-urgence">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Urgence &amp; soins intensifs</h1>
+      <p class="lede">Le socle : trier en 30 secondes, stabiliser avant de comprendre, reconnaître les dix tableaux qui tuent dans l'heure.</p>
+    </div>
+
+    <!-- BLOC: sp-urgence motifs -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Urgence</span><h3>Les motifs qui arrivent, et ce qu'ils imposent d'emblée</h3><span class="sub">Le tri se fait sur le motif au téléphone, pas sur le diagnostic</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Motif d'appel</th><th>Ce qu'il faut redouter</th><th>Geste avant tout examen</th></tr></thead>
+          <tbody>
+            <tr><td>Détresse respiratoire</td><td>Épanchement pleural · OAP · pneumothorax · BOAS</td><td class="d">O₂ + laisser tranquille · TFAST au box</td></tr>
+            <tr><td>Abdomen distendu, tentatives de vomir</td><td>GDV</td><td class="d">2 voies IV aux <b>antérieurs</b> · radio latérale D</td></tr>
+            <tr><td>Effondrement brutal, muqueuses pâles</td><td>Hémoabdomen · épanchement péricardique</td><td class="d">AFAST</td></tr>
+            <tr><td>Chat qui « pousse » sans uriner</td><td>Obstruction urétrale + hyperkaliémie</td><td class="d">Palpation vessie · ECG · K⁺</td></tr>
+            <tr><td>Convulsions</td><td>Status epilepticus · toxique · hypoglycémie</td><td class="d">Glycémie · benzodiazépine</td></tr>
+            <tr><td>Paraplégie aiguë du chat</td><td>Thromboembolie aortique</td><td class="d">Pouls fémoraux · analgésie opioïde</td></tr>
+            <tr><td>Vomissements + abattement chien jeune</td><td>Corps étranger · parvovirose · Addison</td><td class="d">Glycémie · lactate · Na/K</td></tr>
+            <tr><td>Traumatisme (AVP, chute, morsure)</td><td>Choc hémorragique · pneumothorax · uroabdomen</td><td class="d">ABCDE · AFAST + TFAST</td></tr>
+            <tr><td>Femelle entière abattue, PU/PD</td><td>Pyomètre + sepsis</td><td class="d">Écho utérus · lactate</td></tr>
+            <tr><td>Ingestion, exposition</td><td>Anticoagulants · chocolat · AINS · lys (chat)</td><td class="d">Heure d'ingestion · dose/kg</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Le tri est un jugement sur trois systèmes seulement</b> — respiratoire, circulatoire, neurologique. Tout le reste attend. Un animal qui respire mal ne va pas sur la table de radio : il va sous oxygène, et l'écho vient à lui.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-urgence demarche -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Démarche</span><h3>ABCDE, puis les examens « 2 secondes »</h3><span class="sub">L'ordre ne se négocie pas</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>A</b> — voies aériennes libres ? stridor, stertor, cyanose.</li>
+          <li><b>B</b> — patron respiratoire (inspiratoire / expiratoire / restrictif / paradoxal), auscultation des 4 quadrants, SpO₂.</li>
+          <li><b>C</b> — pouls fémoral <i>et</i> métatarsien, TRC, FC, auscultation cardiaque, couleur des muqueuses, PAS.</li>
+          <li><b>D</b> — état mental, pupilles, posture, motricité.</li>
+          <li><b>E</b> — température, palpation abdominale, plaies, exposition complète.</li>
+        </ul>
+        <p>Puis, dans la foulée et sans attendre les résultats : <b>BRU</b> (glycémie, lactate, PCV/TP, Na/K, créatinine), <b>densité urinaire avant tout fluide</b>, <b>AFAST + TFAST</b>.</p>
+        <div class="box trap"><b>La densité urinaire prise après le premier bolus ne vaut plus rien.</b> C'est la seule mesure du parcours qu'un litre de Ringer détruit définitivement — elle se prend au sondage initial ou par cystocentèse à l'arrivée.</div>
+        <div class="box key"><b>Le lactate n'a de valeur qu'en série.</b> Une valeur isolée à 5 mmol/L ne dit rien du pronostic ; une valeur qui ne descend pas de 50 % en 6 h de réanimation dit tout.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-urgence choc -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Choc</span><h3>Quatre types, quatre traitements opposés</h3><span class="sub">Remplir un choc cardiogénique le tue</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Type</th><th>Ce qui le trahit</th><th>Traitement</th></tr></thead>
+          <tbody>
+            <tr><td><b>Hypovolémique</b></td><td>Muqueuses pâles, TRC &gt; 2 s, pouls filant, tachycardie</td><td class="d">Bolus cristalloïde 10–20 mL/kg chien · <b>5–10 mL/kg chat</b>, réévalué</td></tr>
+            <tr><td><b>Distributif</b> (septique)</td><td>Muqueuses <b>rouge brique</b>, TRC accéléré, fièvre ou hypothermie</td><td class="d">Fluides + <b>antibiotiques dans l'heure</b> + noradrénaline si PAM &lt; 65</td></tr>
+            <tr><td><b>Cardiogénique</b></td><td>Souffle/galop, crépitants ou épanchement, jugulaires distendues</td><td class="d"><b>Pas de bolus</b> · furosémide, O₂, dobutamine</td></tr>
+            <tr><td><b>Obstructif</b></td><td>GDV, tamponnade, pneumothorax sous tension, TE aortique</td><td class="d">Lever l'obstacle (décompression, péricardiocentèse, exsufflation)</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Chez le chat, l'hypothermie est un signe de choc, pas un signe de confort.</b> Un chat à 36 °C ne répond ni aux fluides ni aux catécholamines tant qu'il n'est pas réchauffé — et le réchauffement se fait <b>avant</b> ou <b>pendant</b> le remplissage, jamais après.</div>
+        <div class="box key">Cibles de réanimation : <b>PAM ≥ 70 mmHg</b>, TRC &lt; 2 s, lactate en décroissance, diurèse ≥ 1–2 mL/kg/h, état mental qui s'éclaircit. La PAM à 60 est le plancher sous lequel le rein décroche, pas un objectif.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-urgence rcp -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">RECOVER</span><h3>Arrêt cardio-respiratoire — la séquence</h3><span class="sub">Cycles de 2 min, jamais interrompus</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Compressions immédiates</b> 100–120/min, dépression d'⅓ à ½ du thorax, relâchement complet. Décubitus latéral. Cycles de <b>2 minutes</b>, on change d'opérateur à chaque cycle.</li>
+          <li><b>Ventilation</b> 10/min, intubation dès que possible ; sans intubation, 30:2.</li>
+          <li><b>Capnographie</b> : EtCO₂ &lt; 15 mmHg = compressions inefficaces. Une <b>remontée brutale au-dessus de 20</b> signe le retour de circulation spontanée.</li>
+          <li><b>Adrénaline 0,01 mg/kg IV</b> tous les 2 cycles (soit ~4 min). L'atropine 0,04 mg/kg n'est indiquée que sur asystolie/AESP à composante vagale.</li>
+          <li><b>Choc</b> uniquement sur fibrillation ventriculaire ou TV sans pouls : 2–4 J/kg biphasique, puis reprise immédiate des compressions <b>sans regarder le tracé</b>.</li>
+        </ul>
+        <div class="box trap"><b>L'adrénaline est la première ligne, pas l'atropine.</b> Et on ne lit le rythme qu'entre deux cycles, pendant le changement d'opérateur : toute pause de plus de 5 s efface la pression de perfusion coronaire reconstruite en 2 minutes.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-urgence hospit -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Soins intensifs</span><h3>Surveiller un patient instable</h3><span class="sub">Ce qui se note, et à quelle fréquence</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Constantes</b> q1–4 h selon gravité : FC, FR, T°, PAS, TRC, état mental, douleur.</li>
+          <li><b>Bilan entrées/sorties</b> : un patient anurique se démasque sur la feuille, pas à l'examen. Diurèse normale <b>1–2 mL/kg/h</b>.</li>
+          <li><b>Poids quotidien</b> — <b>1 kg gagné = 1 L retenu</b>. C'est le détecteur de surcharge le plus fiable et le moins cher.</li>
+          <li><b>Glycémie</b> q4–6 h chez le septique, le diabétique, le chiot, l'insuffisant hépatique.</li>
+          <li><b>Cathéter</b> inspecté 2×/j (chaleur, douleur, gonflement) ; toute fièvre inexpliquée chez un hospitalisé fait suspecter le cathéter.</li>
+          <li><b>Décubitus</b> retourné q4 h, yeux lubrifiés, vessie vidangée 3–4×/j chez le non-ambulatoire.</li>
+        </ul>
+        <div class="box note">Un patient qui « va mieux » sans que la FC, le lactate et la diurèse aient bougé ne va pas mieux : il est en train d'épuiser ses réserves de compensation.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · MÉDECINE INTERNE ============ -->
+  <section class="view c-repere" id="sp-interne">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Médecine interne</h1>
+      <p class="lede">Consultation et hospitalisation. La médecine interne ne se révise pas maladie par maladie mais syndrome par syndrome : chaque grand syndrome a son arbre et ses trois examens de première intention.</p>
+    </div>
+
+    <!-- BLOC: sp-interne syndromes -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Interne</span><h3>Les syndromes de consultation et leur première intention</h3><span class="sub">Ce qu'on demande avant de réfléchir</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Syndrome</th><th>Première intention</th><th>Ce qu'on cherche à trancher</th></tr></thead>
+          <tbody>
+            <tr><td>PU/PD</td><td class="d">DU · NF · biochimie · iono · Ca · ECBU (+ T4 chat)</td><td>Rein · endocrine · infection</td></tr>
+            <tr><td>Amaigrissement à appétit conservé</td><td class="d">T4 (chat) · glycémie · TLI/B12 · parasito</td><td>Hyperthyroïdie · diabète · malabsorption</td></tr>
+            <tr><td>Vomissements chroniques</td><td class="d">Radio/écho abdo · biochimie · T4 · cortisol basal</td><td>Obstruction · métabolique · Addison</td></tr>
+            <tr><td>Diarrhée chronique</td><td class="d">Coproscopie · albumine · B12/folates · TLI · écho</td><td>Grêle vs côlon · perte protéique</td></tr>
+            <tr><td>Ictère</td><td class="d">PCV + retic · ALAT/PAL/GGT · bili · écho biliaire</td><td>Pré- / hépatique / post-hépatique</td></tr>
+            <tr><td>Anémie</td><td class="d">PCV/TP · <b>réticulocytes</b> · frottis · agglutination</td><td>Régénérative vs arégénérative</td></tr>
+            <tr><td>Fièvre inexpliquée</td><td class="d">NF + frottis · écho abdo · ECBU · vectorielles</td><td>Infectieux · immun · néoplasique</td></tr>
+            <tr><td>Effort/faiblesse épisodique</td><td class="d">Glycémie · Na/K · ECG · cortisol basal</td><td>Addison · arythmie · insulinome</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Un chiffre isolé ne fait pas un syndrome.</b> Une créatinine à 200 µmol/L sur une DU à 1,045 est une déshydratation ; la même créatinine sur une DU à 1,012 est un rein. La DU se lit toujours <b>avec</b> l'azotémie, jamais après elle.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-interne pupd -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Arbre</span><h3>PU/PD — l'arbre complet</h3><span class="sub">&gt; 100 mL/kg/j bu ou &gt; 50 mL/kg/j uriné</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>DU &gt; 1,030 (chien) / 1,035 (chat)</b> → la concentration est conservée : ce n'est probablement pas une PU vraie. Revoir la mesure du propriétaire.</li>
+          <li><b>DU 1,008–1,012 (isosthénurie)</b> → rein, hypercalcémie, pyomètre, hypoadrénocorticisme, hépatopathie.</li>
+          <li><b>DU &lt; 1,008 (hyposthénurie)</b> → le rein <i>peut</i> diluer, donc il fonctionne : Cushing, diabète insipide, potomanie, pyomètre, hypercalcémie.</li>
+          <li><b>Glycosurie</b> → diabète (ou tubulopathie si glycémie normale).</li>
+        </ul>
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Cause</th><th>Le signe qui l'oriente</th></tr></thead>
+          <tbody>
+            <tr><td>IRC</td><td>Isosthénurie + azotémie + SDMA, phosphore ↑, anémie arégénérative</td></tr>
+            <tr><td>Diabète</td><td>Glycémie &gt; 11 mmol/L persistante + glycosurie (chat : fructosamines)</td></tr>
+            <tr><td>Cushing</td><td>Halètement, abdomen distendu, PAL très ↑, ALAT modérée, cholestérol ↑</td></tr>
+            <tr><td>Pyomètre</td><td>Femelle entière, chaleurs &lt; 8 sem, neutrophilie, utérus à l'écho</td></tr>
+            <tr><td>Hypercalcémie</td><td>Ca ionisé ↑ → chercher lymphome, sacs anaux, hyperPTH, vitamine D</td></tr>
+            <tr><td>Hyperthyroïdie (chat)</td><td>&gt; 8 ans, amaigrissement, tachycardie, nodule cervical, T4T ↑</td></tr>
+            <tr><td>Pyélonéphrite</td><td>Douleur rénale, ECBU positif, cylindres, fièvre</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Le Cushing ne se dépiste jamais sur un animal malade.</b> Toute maladie non thyroïdienne fausse les tests d'axe corticotrope : on stabilise, on traite l'aigu, on teste après. Le rapport cortisol/créatinine urinaire ne sert qu'à <i>exclure</i>, jamais à confirmer.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-interne endocrino -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Endocrinologie</span><h3>Les cinq endocrinopathies et leurs seuils</h3><span class="sub">Diagnostic et prise en charge de base</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Maladie</th><th>Diagnostic</th><th>Traitement de base</th></tr></thead>
+          <tbody>
+            <tr><td><b>Acidocétose diabétique</b></td><td>Glycémie &gt; 14 mmol/L + cétonurie + pH &lt; 7,3 / HCO₃⁻ &lt; 15</td><td class="d">Fluides 1–2 h d'abord · <b>K⁺ corrigé avant l'insuline</b> · insuline rapide CRI 0,05–0,1 UI/kg/h</td></tr>
+            <tr><td><b>Hypoadrénocorticisme</b></td><td>Na/K &lt; 27, K &gt; 5,5, absence de leucogramme de stress → <b>test de stimulation ACTH</b></td><td class="d">NaCl 0,9 % · dexaméthasone 0,1–0,2 mg/kg · puis DOCP/fludrocortisone</td></tr>
+            <tr><td><b>Hyperadrénocorticisme</b></td><td>LDDST ou stimulation ACTH sur animal <b>non malade</b> ; écho des surrénales pour trancher hypophysaire / surrénalien</td><td class="d">Trilostane, ajusté sur la clinique avant les chiffres</td></tr>
+            <tr><td><b>Hyperthyroïdie féline</b></td><td>T4 totale ↑ ; si normale-haute sur clinique évocatrice → T4 libre ou recontrôle</td><td class="d">Méthimazole, puis I¹³¹ ou thyroïdectomie</td></tr>
+            <tr><td><b>Hypothyroïdie canine</b></td><td>T4 <b>+ TSH</b> ; jamais sur T4 seule, jamais sur un animal malade</td><td class="d">Lévothyroxine, contrôle à 4–6 sem, 4–6 h post-prise</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Dans l'acidocétose, le potassium tue avant le sucre.</b> L'insuline fait entrer le K⁺ dans la cellule : un patient normokaliémique à l'arrivée devient hypokaliémique sévère dans l'heure. On corrige la volémie et la kaliémie, <i>puis</i> on démarre l'insuline — et la glycémie ne doit pas descendre de plus de <b>3–4 mmol/L/h</b>.</div>
+        <div class="box key"><b>L'hyperthyroïdie du chat masque une insuffisance rénale.</b> Le débit de filtration est artificiellement soutenu ; il chute dès la mise en euthyroïdie. C'est pour ça qu'on commence toujours par un traitement réversible (méthimazole) avant l'irréversible (I¹³¹, chirurgie).</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-interne hepato -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Arbres</span><h3>Ictère et anémie — les deux arbres à savoir de tête</h3><span class="sub">Trois questions chacun</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <p><b>Ictère</b> — la première question est hématologique, pas hépatique :</p>
+        <ul>
+          <li><b>PCV effondré + réticulocytes ↑</b> → <b>pré-hépatique</b> : hémolyse (IMHA, babésiose, intoxication, hémoparasites du chat).</li>
+          <li><b>PCV normal + ALAT ≫ PAL</b> → <b>hépatique</b> : lipidose (chat anorexique obèse), cholangite, hépatite chronique, toxique, lymphome.</li>
+          <li><b>PCV normal + PAL/GGT ≫ ALAT</b> → <b>post-hépatique</b> : lithiase, mucocèle, pancréatite comprimant le cholédoque, néoplasie → écho des voies biliaires.</li>
+        </ul>
+        <p><b>Anémie</b> — la première question est la régénération :</p>
+        <ul>
+          <li><b>Régénérative</b> (rétic &gt; 60 K/µL chien, &gt; 50 K/µL chat) → hémorragie <i>ou</i> hémolyse. On tranche sur : TP/protéines (basses = hémorragie), ictère, sphérocytes, auto-agglutination sur lame.</li>
+          <li><b>Arégénérative</b> → IRC (érythropoïétine), inflammation chronique, moelle, FeLV/FIV chez le chat, hypothyroïdie.</li>
+        </ul>
+        <div class="box trap"><b>Une anémie hémolytique met 3 à 5 jours à devenir régénérative.</b> Un animal vu à J1 d'une IMHA a une anémie arégénérative sur le papier — l'absence de réticulocytose n'exclut rien dans les premières 72 h.</div>
+        <div class="box note"><b>L'auto-agglutination se cherche à la goutte sur lame</b> (une goutte de sang + une goutte de sérum physiologique) : si les amas persistent après dilution, c'est une agglutination vraie, et le Coombs devient inutile.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-interne hospit -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Hospitalisation</span><h3>Le suivi quotidien d'un hospitalisé de médecine</h3><span class="sub">Les six lignes qui changent une décision</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Poids</b> tous les jours, même heure, même balance.</li>
+          <li><b>Ingesta</b> — l'anorexie de plus de <b>3 jours</b> impose une sonde d'alimentation, et chez le chat obèse, elle l'impose à <b>48 h</b> (lipidose).</li>
+          <li><b>Bilan hydrique</b> entrées/sorties, avec les pertes tierces (vomissements, drains, diarrhée).</li>
+          <li><b>Douleur</b> évaluée sur grille, pas à l'œil.</li>
+          <li><b>Perfusion</b> : besoins d'entretien <b>2–3 mL/kg/h</b> (soit ~50 mL/kg/j chien, 40 mL/kg/j chat) + déficit + pertes en cours, réévalués q12 h.</li>
+          <li><b>Réévaluation biologique</b> ciblée : on ne recontrôle que ce qui va changer une décision (K⁺ sous insuline, créatinine sous fluides, PCV sur un saignement).</li>
+        </ul>
+        <div class="box key"><b>Le besoin énergétique de repos</b> (BER) se calcule <b>70 × PV<sup>0,75</sup></b> kcal/j. On ne multiplie pas par un facteur de stress chez l'hospitalisé : la surnutrition est plus dangereuse que la sous-nutrition en phase aiguë. On démarre au tiers du BER à J1.</div>
+        <div class="box trap"><b>Syndrome de renutrition inappropriée</b> : chez l'animal anorexique depuis plus de 5 jours, la reprise alimentaire fait chuter <b>phosphore, potassium et magnésium</b> en 24–72 h. On réalimente lentement et on contrôle le phosphore.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · NEUROLOGIE ============ -->
+  <section class="view c-proto" id="sp-neuro">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Neurologie</h1>
+      <p class="lede">Une seule discipline où la démarche est entièrement contrainte : localiser d'abord, nommer ensuite. Le diagnostic différentiel ne s'ouvre qu'une fois le segment identifié.</p>
+    </div>
+
+    <!-- BLOC: sp-neuro localisation -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Neuro</span><h3>Neurolocalisation — les huit segments</h3><span class="sub">Aucun examen d'imagerie ne se demande avant cette étape</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Segment</th><th>Tableau moteur</th><th>Ce qui signe le segment</th></tr></thead>
+          <tbody>
+            <tr><td><b>Prosencéphale</b></td><td>Pas de parésie franche</td><td class="d">Crises · marche en cercle <b>vers</b> la lésion · pousser au mur · menace ↓ <b>controlatérale</b> avec PLR normal · déficits proprioceptifs controlatéraux</td></tr>
+            <tr><td><b>Tronc cérébral</b></td><td>Tétraparésie MTNC</td><td class="d">Atteinte des nerfs crâniens <b>III–XII</b> · stupeur/coma · anomalies respiratoires</td></tr>
+            <tr><td><b>Cervelet</b></td><td>Ataxie <b>hypermétrique</b>, sans parésie</td><td class="d">Tremblements intentionnels · menace absente avec <b>vision conservée</b> · ataxie tronculaire</td></tr>
+            <tr><td><b>Vestibulaire</b></td><td>Ataxie, chutes d'un côté</td><td class="d">Tête penchée · nystagmus · strabisme positionnel</td></tr>
+            <tr><td><b>C1–C5</b></td><td>Tétraparésie</td><td class="d">MTNC aux 4 membres : réflexes normaux à exagérés partout</td></tr>
+            <tr><td><b>C6–T2</b></td><td>Tétraparésie</td><td class="d">MTN<b>P</b> aux antérieurs (retrait ↓) + MTNC aux postérieurs · ± Horner · ± « root signature »</td></tr>
+            <tr><td><b>T3–L3</b></td><td>Paraparésie</td><td class="d">MTNC aux postérieurs, antérieurs normaux · ligne de coupure du <b>réflexe cutané du tronc</b> · ± Schiff-Sherrington</td></tr>
+            <tr><td><b>L4–S3</b></td><td>Paraparésie</td><td class="d">MTN<b>P</b> aux postérieurs : patellaire et retrait ↓ · ± queue, périnée, vessie flasque</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Schiff-Sherrington n'est pas une atteinte des antérieurs.</b> L'extension rigide des membres thoraciques chez un animal paraplégique signe une lésion <b>T3–L3</b> sévère : les antérieurs bougent normalement dès qu'on soutient l'animal.</div>
+        <div class="box trap"><b>Une atteinte MTNP aux antérieurs déplace la lésion à C6–T2, pas ailleurs.</b> C'est la distinction qui change tout entre « hernie cervicale haute » et « intumescence cervicale » — et donc la fenêtre d'imagerie.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-neuro vestibulaire -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Neuro</span><h3>Vestibulaire — périphérique ou central</h3><span class="sub">La question à laquelle il faut répondre avant de rassurer</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Critère</th><th>Périphérique</th><th>Central</th></tr></thead>
+          <tbody>
+            <tr><td>Nystagmus</td><td class="d">Horizontal ou rotatoire, direction <b>fixe</b></td><td class="d"><b>Vertical</b> ou changeant de direction avec la position</td></tr>
+            <tr><td>Proprioception</td><td class="d">Normale</td><td class="d"><b>Déficits</b> ipsilatéraux</td></tr>
+            <tr><td>État mental</td><td class="d">Normal</td><td class="d">Altéré possible</td></tr>
+            <tr><td>Nerfs crâniens</td><td class="d">VII et sympathique (Horner) seulement</td><td class="d">V, VI, VIII à XII possibles</td></tr>
+            <tr><td>Causes</td><td class="d">Otite moyenne/interne · idiopathique gériatrique · polype (chat) · ototoxiques</td><td class="d">Infarctus · MUE/GME · néoplasie · thiamine · métronidazole</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Le syndrome vestibulaire paradoxal</b> — tête penchée du côté <i>opposé</i> aux déficits proprioceptifs — est cérébelleux (pédoncule ou lobe floculonodulaire), donc <b>central</b>. Le côté de la tête penchée n'est jamais un argument de localisation à lui seul : c'est le côté des déficits proprioceptifs qui fait foi.</div>
+        <div class="box note"><b>Vestibulaire idiopathique gériatrique</b> : chien âgé, installation hyperaiguë, aucun déficit central, amélioration nette en <b>48–72 h</b>. Si ça ne s'améliore pas à 72 h, ce n'était pas ça.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-neuro motifs -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Motifs</span><h3>Les tableaux qui remplissent le service</h3><span class="sub">Signalement, cinétique, décision</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tableau</th><th>Signalement &amp; cinétique</th><th>Décision</th></tr></thead>
+          <tbody>
+            <tr><td><b>Hernie discale Hansen I</b></td><td>Chondrodystrophe (Teckel, Bouledogue français), 3–7 ans, aigu, douloureux, T3–L3</td><td class="d">IRM · chirurgie décompressive, d'autant plus urgente que le grade est élevé</td></tr>
+            <tr><td><b>Embolie fibrocartilagineuse</b></td><td>Grande race non chondrodystrophe, <b>hyperaigu à l'effort</b>, <b>asymétrique</b>, non douloureux passées les premières minutes, non progressif au-delà de 24 h</td><td class="d">IRM d'exclusion · <b>pas de chirurgie</b> · récupération sur semaines</td></tr>
+            <tr><td><b>Status epilepticus</b></td><td>Crise &gt; 5 min ou ≥ 2 crises sans reprise de conscience</td><td class="d">Glycémie · benzodiazépine · escalade (voir carte dédiée)</td></tr>
+            <tr><td><b>MUE / méningo-encéphalite</b></td><td>Jeune adulte, petite race (Yorkshire, Carlin, Malt), signes <b>multifocaux</b>, souvent progressif</td><td class="d">IRM + <b>ponction de LCS</b> · immunosuppression</td></tr>
+            <tr><td><b>SRMA</b></td><td>Chien &lt; 2 ans, cervicalgie intense, hyperthermie, raideur, <b>pas de déficit neurologique</b></td><td class="d">NF (neutrophilie) · CRP ↑ · LCS neutrophilique · corticoïdes prolongés</td></tr>
+            <tr><td><b>Discospondylite</b></td><td>Douleur rachidienne focale, fièvre, parfois déficits</td><td class="d">Radio (retard de 2–4 sem) / IRM · <b>hémoculture + ECBU</b> · ATB ≥ 8 sem</td></tr>
+            <tr><td><b>Myélopathie dégénérative</b></td><td>Berger allemand âgé, <b>indolore</b>, progressif sur mois, T3–L3 puis MTNP</td><td class="d">Diagnostic d'exclusion · pas de traitement curatif</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Une paraplégie aiguë du chat n'est pas neurologique jusqu'à preuve du contraire.</b> Pouls fémoraux, température des extrémités, couleur des coussinets : la thromboembolie aortique donne un tableau MTNP des postérieurs qui imite parfaitement une lésion L4–S3.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-neuro grades -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Hernie discale</span><h3>Les cinq grades et ce qu'ils imposent</h3><span class="sub">La nociception profonde est la seule variable pronostique majeure</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Grade</th><th>Clinique</th><th>Conduite</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Douleur rachidienne seule</td><td class="d">Traitement médical : <b>repos strict en cage 4 semaines</b>, analgésie</td></tr>
+            <tr><td>2</td><td>Paraparésie ambulatoire, ataxie</td><td class="d">Médical possible ; chirurgie si récidive ou aggravation</td></tr>
+            <tr><td>3</td><td>Paraparésie <b>non</b> ambulatoire, motricité volontaire conservée</td><td class="d">Chirurgie recommandée</td></tr>
+            <tr><td>4</td><td>Paraplégie, <b>nociception profonde conservée</b></td><td class="d">Chirurgie — récupération attendue &gt; 90 %</td></tr>
+            <tr><td>5</td><td>Paraplégie, <b>nociception profonde absente</b></td><td class="d">Chirurgie en urgence · récupération ~50 % · risque de <b>myélomalacie ascendante</b></td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>La nociception profonde se teste au clamp osseux, sur la phalange, et la seule réponse valable est une réponse consciente</b> — tourner la tête, vocaliser, tenter de mordre. Le retrait du membre est un réflexe médullaire : il persiste sur une moelle totalement sectionnée et n'a aucune valeur pronostique.</div>
+        <div class="box trap"><b>Pas de corticoïdes sur un trauma médullaire ou une hernie aiguë.</b> Aucun bénéfice démontré, et une surmorbidité digestive nette. Analgésie, repos strict, imagerie, chirurgie — dans cet ordre. Et jamais AINS + corticoïdes ensemble.</div>
+        <div class="box note"><b>Myélomalacie ascendante</b> : à redouter sur les grades 5. On la suspecte sur une ligne de coupure du réflexe cutané du tronc qui <b>remonte</b> jour après jour, une perte des réflexes qui devient MTNP, puis une atteinte respiratoire. Elle est fatale.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-neuro status -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Protocole</span><h3>Status epilepticus — l'escalade</h3><span class="sub">Quatre paliers, on ne saute pas de marche</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Palier 0 — toujours</b> : glycémie, température (l'hyperthermie de crise se traite activement), oxygène, voie veineuse.</li>
+          <li><b>Palier 1</b> — <b>diazépam 0,5 mg/kg IV</b> ou <b>midazolam 0,2 mg/kg IV/IM/intranasal</b>, répétable jusqu'à 3 fois.</li>
+          <li><b>Palier 2</b> — <b>lévétiracétam 20 mg/kg IV</b> (dose de charge jusqu'à 60 mg/kg), bien toléré, sans effet hépatique.</li>
+          <li><b>Palier 3</b> — <b>phénobarbital 4 mg/kg IV</b> répété jusqu'à une charge de 16–24 mg/kg fractionnée sur quelques heures. Délai d'action ~20 min : on ne le rejuge pas à 5 minutes.</li>
+          <li><b>Palier 4</b> — CRI : <b>midazolam 0,2–0,5 mg/kg/h</b> ou <b>propofol 0,1–0,6 mg/kg/min</b>, intubation, ventilation surveillée.</li>
+        </ul>
+        <div class="box trap"><b>Une crise qui ne cède à rien fait chercher une cause extra-cérébrale</b> : hypoglycémie, hypocalcémie, hyponatrémie, toxique (perméthrine chez le chat, métaldéhyde, organophosphorés), encéphalopathie hépatique. Le glucose se dose avant la première benzodiazépine, pas après la troisième.</div>
+        <div class="box key"><b>Hypertension intracrânienne</b> — état mental qui se dégrade, bradycardie avec hypertension (réflexe de Cushing), anisocorie : <b>mannitol 0,5–1 g/kg IV en 15–20 min</b> ou <b>NaCl 7,2 % 3–5 mL/kg</b>. Tête surélevée à 15–30°, <b>jamais de compression jugulaire</b> (donc pas de prise de sang à la jugulaire, pas de collier).</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-neuro examens -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Examens</span><h3>Ce que chaque examen apporte réellement</h3><span class="sub">Et ce qu'il n'apporte pas</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>IRM</b> — référence pour le parenchyme nerveux et la moelle. Seule modalité qui montre une myélopathie non compressive, une inflammation, un infarctus.</li>
+          <li><b>Scanner</b> — os, trauma vertébral, hernie extrusive calcifiée du chondrodystrophe, planification chirurgicale. Rapide, souvent suffisant en urgence.</li>
+          <li><b>Radiographie</b> — ne sert qu'à la discospondylite, aux fractures et aux malformations. <b>Une radio normale n'exclut aucune hernie.</b></li>
+          <li><b>LCS</b> (cisterne magne) — cellularité &lt; 5 cellules/µL, protéines &lt; 0,30 g/L en cisternal. Indispensable pour une MUE ou une SRMA.</li>
+          <li><b>Électrodiagnostic</b> (EMG, vitesses de conduction) — pour les atteintes neuromusculaires, pas pour la moelle.</li>
+        </ul>
+        <div class="box trap"><b>Pas de ponction de LCS sur une hypertension intracrânienne suspectée</b> : retirer du liquide sous une pression déjà élevée provoque un engagement cérébelleux. L'imagerie passe toujours avant la ponction.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+  <!-- ============ SPÉCIALITÉ · CARDIOLOGIE ============ -->
+  <section class="view c-comm" id="sp-cardio">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Cardiologie</h1>
+      <p class="lede">Deux maladies font l'essentiel du service : la valvulopathie mitrale du petit chien et la cardiomyopathie hypertrophique du chat. Le reste se raccroche à elles.</p>
+    </div>
+
+    <!-- BLOC: sp-cardio motifs -->
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Cardio</span><h3>Les motifs et le raisonnement qu'ils déclenchent</h3><span class="sub">Souffle, toux, syncope, dyspnée, paralysie</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Motif</th><th>Première question</th><th>Ce qui tranche</th></tr></thead>
+          <tbody>
+            <tr><td><b>Souffle découvert</b></td><td>Y a-t-il un remodelage ?</td><td class="d">Échocardiographie · radio thorax (VHS)</td></tr>
+            <tr><td><b>Toux du petit chien</b></td><td>Cardiaque ou collapsus trachéal ?</td><td class="d"><b>FR au repos</b> · silhouette cardiaque · réponse au furosémide</td></tr>
+            <tr><td><b>Dyspnée du chat</b></td><td>Cardiaque ou respiratoire ?</td><td class="d">TFAST (lignes B, épanchement) · <b>NT-proBNP</b> · galop</td></tr>
+            <tr><td><b>Syncope</b></td><td>Syncope ou crise convulsive ?</td><td class="d">Pas de phase post-critique, déclenchement à l'effort → syncope · Holter</td></tr>
+            <tr><td><b>Paraplégie aiguë du chat</b></td><td>Les pouls fémoraux sont-ils présents ?</td><td class="d">Coussinets cyanosés, muscles durs, extrémités froides → TE aortique</td></tr>
+            <tr><td><b>Intolérance à l'effort grande race</b></td><td>Cardiomyopathie dilatée ?</td><td class="d">Écho · Holter (Dobermann, Boxer) · taurine/carnitine si régime atypique</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>La fréquence respiratoire au repos comptée à la maison est le meilleur outil du service.</b> Un chien en stade B2 stable respire &lt; 30/min endormi. Une FR qui passe durablement au-dessus de <b>30–40/min</b> précède les signes cliniques d'œdème de plusieurs jours.</div>
+        <div class="box trap"><b>Chez le chat, l'absence de souffle n'exclut rien.</b> Un tiers des CMH n'ont pas de souffle audible ; en revanche, un <b>bruit de galop</b> ou une arythmie chez un chat est pathologique jusqu'à preuve du contraire.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-cardio mmvd -->
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Chien</span><h3>Valvulopathie mitrale — les stades ACVIM</h3><span class="sub">Le stade dicte le traitement, pas l'intensité du souffle</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Stade</th><th>Définition</th><th>Traitement</th></tr></thead>
+          <tbody>
+            <tr><td><b>A</b></td><td>Race à risque, pas de souffle</td><td class="d">Surveillance</td></tr>
+            <tr><td><b>B1</b></td><td>Souffle, <b>pas</b> de remodelage</td><td class="d">Aucun · recontrôle annuel</td></tr>
+            <tr><td><b>B2</b></td><td>Remodelage : <b>AG/Ao ≥ 1,6</b> · <b>VGDn ≥ 1,7</b> · <b>VHS &gt; 10,5</b></td><td class="d"><b>Pimobendane 0,25–0,3 mg/kg BID</b> — retarde l'insuffisance cardiaque</td></tr>
+            <tr><td><b>C</b></td><td>Insuffisance cardiaque congestive, actuelle ou passée</td><td class="d">Furosémide + pimobendane + IECA ± spironolactone</td></tr>
+            <tr><td><b>D</b></td><td>ICC réfractaire aux doses standard</td><td class="d">Majoration des diurétiques, association, torasémide</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Le passage B1 → B2 est le seul moment où un traitement change l'histoire naturelle de la maladie.</b> C'est pour ça que l'échocardiographie de mesure compte plus que le grade du souffle : un souffle 5/6 sans remodelage ne se traite pas, un souffle 3/6 avec AG/Ao à 1,8 se traite.</div>
+        <div class="box note"><b>Repères d'imagerie</b> — VHS chien &lt; 10,5 vertèbres (moyenne 9,7) ; VHS chat &lt; 8,1 ; rapport atrium gauche/aorte &lt; 1,6 en coupe petit axe.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-cardio oap -->
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Urgence</span><h3>Œdème aigu du poumon et épanchement pleural</h3><span class="sub">Les deux façons dont une ICC arrive en urgence</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <p><b>Œdème pulmonaire cardiogénique</b> — dyspnée, crépitants, lignes B diffuses à l'écho, infiltrat péri-hilaire dorso-caudal chez le chien (distribution imprévisible chez le chat).</p>
+        <ul>
+          <li><b>Furosémide 2 mg/kg IV</b>, répété toutes les 1–2 h jusqu'à réponse (jusqu'à 4 mg/kg si détresse), ou CRI 0,66–1 mg/kg/h.</li>
+          <li><b>Oxygène</b> en cage ou flow-by, <b>manipulations minimales</b>.</li>
+          <li><b>Sédation légère</b> — butorphanol 0,2 mg/kg — pour casser le cercle anxiété/consommation d'O₂.</li>
+          <li><b>Pimobendane</b> dès que la voie orale est possible.</li>
+          <li>Contrôle : FR, poids, créatinine et iono à 12–24 h.</li>
+        </ul>
+        <p><b>Épanchement pleural</b> — surtout félin. Bruits cardiaques assourdis, patron restrictif, matité déclive.</p>
+        <div class="box trap"><b>La thoracocentèse passe avant la radiographie chez un animal en détresse.</b> Coucher un chat en épanchement pour une radio est un geste qui tue. L'écho au box confirme en 20 secondes, on ponctionne, on radiographie ensuite.</div>
+        <div class="box key"><b>Le furosémide sans réponse en 2 h doit faire douter du diagnostic</b> autant que de la dose. Et il déshydrate : au-delà de 24–48 h, la créatinine et le potassium se recontrôlent systématiquement.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-cardio chat -->
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Chat</span><h3>Cardiomyopathie hypertrophique et thromboembolie aortique</h3><span class="sub">La CMH se révèle trois fois : en dyspnée, en paralysie, ou en mort subite</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Diagnostic</b> : paroi du ventricule gauche <b>&gt; 6 mm</b> en diastole, à l'échocardiographie. Races prédisposées : Maine Coon, Ragdoll, Sphynx, British.</li>
+          <li><b>Risque thromboembolique</b> : lié à la dilatation atriale gauche et au contraste spontané (« smoke ») — c'est l'atrium qu'on regarde, pas l'épaisseur de la paroi.</li>
+          <li><b>Prévention</b> : <b>clopidogrel 18,75 mg/chat/j</b> — supérieur à l'aspirine.</li>
+        </ul>
+        <p><b>Thromboembolie aortique</b> — les 5 « P » : douleur (<i>pain</i>), pâleur, absence de pouls, paralysie, poïkilothermie.</p>
+        <ul>
+          <li><b>Analgésie opioïde d'emblée</b> — méthadone 0,2–0,3 mg/kg IV. C'est une des douleurs les plus intenses de la médecine féline.</li>
+          <li><b>Pas de bolus de fluides</b> : ces chats sont presque toujours en insuffisance cardiaque congestive concomitante.</li>
+          <li><b>Réchauffement passif seulement.</b></li>
+          <li><b>Hyperkaliémie de reperfusion</b> à surveiller sur les 24–72 h — ECG et K⁺ en série.</li>
+          <li>Pronostic réservé ; la présence de motricité résiduelle et l'atteinte d'un seul membre sont les meilleurs signes.</li>
+        </ul>
+        <div class="box trap"><b>Un chat en TE aortique n'est pas paralysé au sens neurologique.</b> Chercher une lésion médullaire fait perdre les heures pendant lesquelles l'analgésie et la gestion de l'ICC comptent.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-cardio rythmes -->
+    <details class="card c-comm"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Rythme</span><h3>Les arythmies qu'il faut traiter</h3><span class="sub">Toutes ne se traitent pas — celles-ci, oui</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Rythme</th><th>Quand traiter</th><th>Quoi</th></tr></thead>
+          <tbody>
+            <tr><td><b>Tachycardie ventriculaire</b></td><td>&gt; 180/min soutenue · multiforme · phénomène R/T · syncope ou hypotension</td><td class="d">Lidocaïne <b>2 mg/kg IV</b> chien (répétable), puis CRI 25–75 µg/kg/min · chat : 0,25–0,5 mg/kg, très prudemment</td></tr>
+            <tr><td><b>Fibrillation atriale</b></td><td>Fréquence rapide avec retentissement</td><td class="d">Contrôle de fréquence (diltiazem, digoxine) — pas de cardioversion en routine</td></tr>
+            <tr><td><b>BAV de 3<sup>e</sup> degré</b></td><td>Toujours symptomatique</td><td class="d">Atropine test · <b>pacemaker</b> — les médicaments ne suffisent pas</td></tr>
+            <tr><td><b>Bradycardie sinusale sévère</b></td><td>Chercher la cause avant de traiter</td><td class="d"><b>Hyperkaliémie</b> · hypothermie · opioïdes · pression intracrânienne</td></tr>
+            <tr><td><b>Fibrillation ventriculaire</b></td><td>Toujours — c'est un arrêt</td><td class="d">Défibrillation 2–4 J/kg + RCP</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Une bradycardie avec ondes T amples et P absentes n'est pas un trouble du rythme : c'est un potassium.</b> Chat obstrué, Addison, uroabdomen — on dose le K⁺ avant de sortir l'atropine, qui ne fera rien.</div>
+        <div class="box note">Une TV chez un chien qui vient d'être opéré d'un GDV ou qui a un hémoabdomen est souvent secondaire (ischémie myocardique, douleur, hypovolémie) : on corrige la cause avant de charger en antiarythmique.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · CHIRURGIE ============ -->
+  <section class="view c-dose" id="sp-chir">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Chirurgie</h1>
+      <p class="lede">Consultation et bloc. L'essentiel de ce qui est demandé à un interne se joue avant l'incision et après la fermeture : indication, préparation, analgésie, surveillance de plaie.</p>
+    </div>
+
+    <!-- BLOC: sp-chir urgences -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Chirurgie</span><h3>Les urgences chirurgicales et leur fenêtre</h3><span class="sub">Ce qui va au bloc ce soir, et ce qui attend demain</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tableau</th><th>Ce qui confirme</th><th>Délai</th></tr></thead>
+          <tbody>
+            <tr><td><b>GDV</b></td><td>Radio latérale droite : compartimentation gastrique</td><td class="d">Stabilisation puis bloc <b>immédiat</b></td></tr>
+            <tr><td><b>Corps étranger obstructif</b></td><td>Anses dilatées, radio/écho, vomissements incoercibles</td><td class="d">&lt; 12 h (linéaire : plus tôt)</td></tr>
+            <tr><td><b>Hémoabdomen</b></td><td>AFAST positif, PCV/TP qui chutent ensemble</td><td class="d">Bloc si saignement non contrôlé après réanimation</td></tr>
+            <tr><td><b>Pyomètre fermé</b></td><td>Femelle entière, utérus à l'écho, sepsis</td><td class="d">Ovario-hystérectomie après stabilisation, &lt; 12 h</td></tr>
+            <tr><td><b>Uroabdomen</b></td><td>Créatinine <b>épanchement/sang &gt; 2</b> · K⁺ épanchement/sang &gt; 1,4</td><td class="d">Drainer et corriger le K⁺ <b>avant</b> l'anesthésie</td></tr>
+            <tr><td><b>Obstruction urétrale du chat</b></td><td>Vessie turgescente, K⁺ ↑</td><td class="d">Désobstruction après correction du K⁺ · chirurgie différée</td></tr>
+            <tr><td><b>Césarienne</b></td><td>Travail &gt; 4 h sans expulsion · &gt; 2 h entre 2 chiots · FC fœtale &lt; 180</td><td class="d">Immédiat</td></tr>
+            <tr><td><b>Plaie pénétrante / morsure</b></td><td>Lésions profondes toujours pires que la peau ne le montre</td><td class="d">Exploration chirurgicale, pas seulement suture</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Un uroabdomen n'est jamais une urgence chirurgicale : c'est une urgence métabolique.</b> On draine l'abdomen, on corrige la kaliémie et l'acidose, et on opère un patient stable — anesthésier un hyperkaliémique, c'est provoquer l'arrêt sur la table.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-chir periop -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Péri-opératoire</span><h3>Avant l'incision</h3><span class="sub">Jeûne, antibioprophylaxie, analgésie</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Jeûne</b> : 6–8 h de solide, l'eau jusqu'à 2 h avant. <b>Chiot et chaton de moins de 8 semaines : 1–2 h maximum</b> — l'hypoglycémie est plus dangereuse que le reflux.</li>
+          <li><b>Antibioprophylaxie</b> : <b>céfazoline 22 mg/kg IV, 30 à 60 min avant l'incision</b>, renouvelée toutes les 90–120 min de chirurgie. Une chirurgie propre de moins de 90 minutes n'en justifie pas.</li>
+          <li><b>Analgésie multimodale</b> : opioïde en prémédication (méthadone 0,2–0,3 mg/kg), ± kétamine 0,5 mg/kg puis 10 µg/kg/min, ± lidocaïne CRI chez le chien (<b>pas chez le chat</b>), ± bloc loco-régional.</li>
+          <li><b>AINS</b> en post-opératoire uniquement si pression artérielle, volémie et fonction rénale sont normales — et <b>jamais</b> associés aux corticoïdes.</li>
+          <li><b>Normothermie</b> : l'hypothermie per-opératoire allonge le réveil, augmente le saignement et le taux d'infection de plaie.</li>
+        </ul>
+        <div class="box trap"><b>L'antibioprophylaxie donnée après l'incision ne prophylaxe rien.</b> La fenêtre efficace est celle où la concentration tissulaire est maximale au moment de la contamination : 30 à 60 minutes avant, pas au réveil, et pas « pendant 5 jours après » — la prolongation post-opératoire d'une prophylaxie ne réduit pas les infections, elle sélectionne des résistances.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-chir plaies -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Plaies</span><h3>Classes de plaies, cicatrisation, drains</h3><span class="sub">Ce qu'on surveille et à quel jour</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Classe</th><th>Définition</th><th>Risque d'infection</th></tr></thead>
+          <tbody>
+            <tr><td>Propre</td><td>Élective, pas d'ouverture d'un organe creux</td><td class="d">~2–5 %</td></tr>
+            <tr><td>Propre-contaminée</td><td>Ouverture contrôlée digestive, respiratoire, urogénitale</td><td class="d">~5–10 %</td></tr>
+            <tr><td>Contaminée</td><td>Contamination franche, plaie récente, rupture d'asepsie</td><td class="d">~10–20 %</td></tr>
+            <tr><td>Sale</td><td>Pus, perforation, tissu dévitalisé</td><td class="d">&gt; 20 %</td></tr>
+          </tbody>
+        </table></div>
+        <p><b>Cicatrisation</b> : phase inflammatoire J0–J5 · phase de débridement/prolifération J3–J12 (bourgeonnement) · maturation à partir de la 3<sup>e</sup> semaine, pendant des mois. La résistance de la plaie ne dépasse jamais ~80 % du tissu d'origine.</p>
+        <ul>
+          <li><b>Déhiscence</b> : redoutée <b>J3–J5</b>, quand la tenue passe des sutures au tissu. Signes : écoulement séro-sanglant qui reprend, œdème, bords qui se décollent.</li>
+          <li><b>Retrait des fils</b> : J10–J14. Collerette jusque-là, sans exception.</li>
+          <li><b>Drain passif (Penrose)</b> : sortie <b>déclive</b>, jamais par l'incision, pansement absorbant refait 1–2×/j.</li>
+          <li><b>Drain aspiratif</b> : quantifie. On retire quand la production tombe sous <b>~2 mL/kg/j</b> ou plafonne.</li>
+        </ul>
+        <div class="box trap"><b>Une plaie de morsure est toujours plus grande dessous que dessus.</b> La peau se déplace au moment de la morsure : le trou cutané ne dit rien de la cavité de décollement, du muscle écrasé ni de la pénétration thoracique. Ces plaies s'explorent, elles ne se suturent pas d'emblée.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-chir ortho -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Consultation</span><h3>Orthopédie — la boiterie en consultation</h3><span class="sub">Localiser avant de radiographier</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tableau</th><th>Signalement</th><th>Test</th></tr></thead>
+          <tbody>
+            <tr><td><b>Rupture du ligament croisé crânial</b></td><td>Chien adulte, souvent en surpoids ; la boiterie postérieure la plus fréquente</td><td class="d"><b>Tiroir crânial</b> · <b>compression tibiale</b> · épaississement médial · effusion</td></tr>
+            <tr><td><b>Luxation de rotule</b></td><td>Petite race, jeune, boiterie intermittente « à sauts »</td><td class="d">Grades 1 à 4 selon réductibilité et permanence</td></tr>
+            <tr><td><b>Dysplasie coxo-fémorale</b></td><td>Grande race jeune, difficulté au lever, démarche chaloupée</td><td class="d"><b>Ortolani</b> · amplitude d'extension douloureuse</td></tr>
+            <tr><td><b>Dysplasie du coude</b></td><td>Grande race &lt; 1 an, boiterie antérieure</td><td class="d">Douleur à la flexion/extension complète · scanner</td></tr>
+            <tr><td><b>Ostéosarcome</b></td><td>Grande race âgée, gonflement métaphysaire douloureux</td><td class="d">Radio : lyse « loin du coude, près du genou »</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box key"><b>Une boiterie postérieure avec effusion du grasset chez un chien adulte est un croisé jusqu'à preuve du contraire</b> — et le tiroir peut être absent sur une rupture partielle ou un chien contracté. La compression tibiale et l'épaississement médial de la capsule sont plus fiables que le tiroir sur animal vigile.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-chir postop -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Post-opératoire</span><h3>Les 24 premières heures</h3><span class="sub">Ce qui se surveille après un abdomen</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Douleur</b> évaluée q4 h sur grille, avec réévaluation après chaque intervention analgésique.</li>
+          <li><b>Température</b> : hypothermie au réveil, puis fièvre à J2–J3 = suspicion de péritonite ou d'infection.</li>
+          <li><b>Reprise alimentaire précoce</b> — dans les 12–24 h, même après une entérotomie : le jeûne prolongé aggrave l'atrophie villositaire et la translocation bactérienne.</li>
+          <li><b>Abdomen</b> : douleur qui augmente au lieu de diminuer, épanchement à l'AFAST, tachycardie inexpliquée → suspicion de déhiscence de suture digestive, redoutée <b>J3–J5</b>.</li>
+          <li><b>Diurèse</b> ≥ 1–2 mL/kg/h, lactate en décroissance.</li>
+        </ul>
+        <div class="box trap"><b>Une déhiscence digestive se signe sur un épanchement abdominal dont le glucose est inférieur d'au moins 1,1 mmol/L à celui du sang</b>, ou dont le lactate est supérieur d'au moins 2 mmol/L. C'est le test de chevet le plus utile de la période post-opératoire, et il coûte deux bandelettes.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · IMAGERIE ============ -->
+  <section class="view c-repere" id="sp-imagerie">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Imagerie</h1>
+      <p class="lede">Savoir quelle modalité répond à quelle question, et lire soi-même les quelques signes qui changent une conduite en urgence.</p>
+    </div>
+
+    <!-- BLOC: sp-imagerie modalites -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Imagerie</span><h3>Quelle modalité pour quelle question</h3><span class="sub">Le choix se fait sur la question, pas sur la disponibilité</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Question</th><th>Modalité</th><th>Pourquoi</th></tr></thead>
+          <tbody>
+            <tr><td>Métastases pulmonaires</td><td class="d">Radio <b>3 vues</b> → scanner</td><td>Le scanner détecte des nodules de 1 mm, la radio ~7 mm</td></tr>
+            <tr><td>Épanchement libre en urgence</td><td class="d">AFAST / TFAST</td><td>Au box, en 2 min, sans mobiliser l'animal</td></tr>
+            <tr><td>Parenchyme abdominal, ganglions</td><td class="d">Échographie</td><td>Guide aussi la cytoponction</td></tr>
+            <tr><td>Moelle, encéphale</td><td class="d">IRM</td><td>Seule modalité du tissu nerveux</td></tr>
+            <tr><td>Os, trauma, planification chirurgicale</td><td class="d">Scanner</td><td>Rapide, reconstruction 3D</td></tr>
+            <tr><td>Obstruction digestive</td><td class="d">Radio + écho</td><td>La radio montre la dilatation, l'écho montre le point d'arrêt et le péristaltisme</td></tr>
+            <tr><td>Cœur</td><td class="d">Échocardiographie</td><td>La radio donne la taille, jamais la fonction</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Le bilan d'extension thoracique demande trois vues : deux latérales (droite et gauche) et une dorso-ventrale.</b> Le poumon en contact avec la table est atélectasié, donc un nodule de ce côté disparaît. Une seule latérale, c'est la moitié du thorax non lu.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-imagerie thorax -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Thorax</span><h3>Les quatre patrons pulmonaires</h3><span class="sub">Nommer le patron avant de nommer la maladie</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Patron</th><th>Aspect</th><th>Ce qu'il évoque</th></tr></thead>
+          <tbody>
+            <tr><td><b>Alvéolaire</b></td><td>Opacité qui efface les vaisseaux, <b>bronchogramme aérique</b></td><td class="d">Œdème · pneumonie · hémorragie · contusion</td></tr>
+            <tr><td><b>Bronchique</b></td><td>« Rails » et « anneaux », parois bronchiques épaissies</td><td class="d">Bronchite chronique · asthme félin</td></tr>
+            <tr><td><b>Interstitiel non structuré</b></td><td>Voile général, vaisseaux encore visibles</td><td class="d">Œdème débutant · âge · sous-exposition</td></tr>
+            <tr><td><b>Interstitiel nodulaire</b></td><td>Nodules bien délimités</td><td class="d">Métastases · granulomes · mycoses</td></tr>
+            <tr><td><b>Vasculaire</b></td><td>Artères/veines élargies ou raréfiées</td><td class="d">Surcharge · dirofilariose · hypovolémie</td></tr>
+          </tbody>
+        </table></div>
+        <ul>
+          <li><b>VHS</b> : chien &lt; 10,5 vertèbres · chat &lt; 8,1.</li>
+          <li><b>Œdème cardiogénique</b> : péri-hilaire et dorso-caudal chez le chien ; <b>distribution quelconque chez le chat</b>, souvent en plages irrégulières.</li>
+          <li><b>Pneumothorax</b> : cœur soulevé de la colonne sternale, rétraction des lobes, absence de trame vasculaire en périphérie.</li>
+        </ul>
+        <div class="box key"><b>L'échographie thoracique tranche plus vite que la radio dans l'urgence respiratoire.</b> <b>Lignes B</b> multiples et diffuses = syndrome interstitiel (œdème). <b>Glide sign absent</b> + lignes A = pneumothorax. Épanchement anéchogène = ponction. Trois signes, aucune contention.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-imagerie fast -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Écho d'urgence</span><h3>AFAST et TFAST — les sites et le score</h3><span class="sub">Cinq minutes, refait en série</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <p><b>AFAST — 4 sites</b>, animal en décubitus latéral droit :</p>
+        <ul>
+          <li><b>DH</b> — diaphragmatico-hépatique (regarde aussi le péricarde et le thorax caudal).</li>
+          <li><b>SR</b> — spléno-rénal.</li>
+          <li><b>CC</b> — cysto-colique.</li>
+          <li><b>HR</b> — hépato-rénal.</li>
+        </ul>
+        <p>Le <b>score AFS</b> compte les sites positifs (0 à 4) : un score ≥ 3 sur un traumatisé annonce une perte sanguine significative et impose de recontrôler le PCV. <b>L'AFAST se refait à 4 h</b> — un premier examen négatif ne clôt rien.</p>
+        <p><b>TFAST</b> : sites pariétaux gauche et droit (glide sign, lignes A/B), site péricardique, plus la fenêtre DH.</p>
+        <div class="box trap"><b>Un épanchement abdominal se caractérise avant d'être interprété.</b> On ponctionne et on dose sur le liquide : PCV (hémoabdomen), créatinine et K⁺ (uroabdomen), glucose et lactate (péritonite septique), bilirubine (biliaire). Un « épanchement anéchogène » sans analyse ne veut rien dire.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-imagerie abdo -->
+    <details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Abdomen</span><h3>Radiographie et échographie abdominales</h3><span class="sub">Les mesures qui décident d'une chirurgie</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Obstruction intestinale</b> : rapport <b>diamètre de l'anse / hauteur du corps de L5 &gt; 1,6</b> chez le chien = obstruction probable. Chez le chat, diamètre du grêle <b>&gt; 12 mm</b>.</li>
+          <li><b>Corps étranger linéaire</b> : anses plissées « en accordéon », bulles de gaz en virgule. Examen sublingual obligatoire chez le chat.</li>
+          <li><b>Perte de détail séreux</b> : épanchement, carcinose, ou simple maigreur/jeune âge — ça n'est pas spécifique.</li>
+          <li><b>Pneumopéritoine</b> (gaz libre sous le diaphragme, hors chirurgie récente) : perforation → laparotomie.</li>
+          <li><b>GDV</b> : radio <b>latérale droite</b>, compartimentation gastrique caractéristique.</li>
+          <li><b>Surrénale du chien</b> : pôle caudal &gt; 7,5 mm = anormal.</li>
+        </ul>
+        <div class="box note"><b>Ne jamais faire de cystocentèse sur une masse vésicale suspecte de carcinome urothélial</b> : risque d'ensemencement du trajet d'aiguille. Le diagnostic se fait sur le sédiment urinaire, le cathétérisme-aspiration ou la biopsie.</div>
+        <div class="box key"><b>Radioprotection</b> : dosimètre porté, tablier et protège-thyroïde, distance maximale, et surtout <b>sédation plutôt que contention manuelle</b>. Un cliché flou repris trois fois irradie plus que la sédation qui l'aurait évité.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+  <!-- ============ SPÉCIALITÉ · ONCOLOGIE ============ -->
+  <section class="view c-cas" id="sp-onco">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Oncologie</h1>
+      <p class="lede">Une démarche invariable : typer, stader, puis traiter. L'erreur la plus coûteuse est de retirer une masse avant de savoir ce qu'elle est.</p>
+    </div>
+
+    <!-- BLOC: sp-onco demarche -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Onco</span><h3>Typer, stader, traiter</h3><span class="sub">Dans cet ordre, sans exception</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>1 · Typer</b> — cytoponction à l'aiguille fine d'abord (rapide, peu invasive, diagnostique pour lymphome, mastocytome, tumeurs rondes). Biopsie si la cytologie ne conclut pas ou si le grade change la chirurgie.</li>
+          <li><b>2 · Stader</b> — <b>ganglion locorégional</b> (ponctionné même s'il est de taille normale), radio thorax 3 vues ou scanner, échographie abdominale, bilan sanguin.</li>
+          <li><b>3 · Traiter</b> — chirurgie, radiothérapie, chimiothérapie, ou soins de confort. Le choix se discute avec l'espérance de vie et la qualité de vie, jamais avec le seul nom de la tumeur.</li>
+        </ul>
+        <div class="box trap"><b>On ne retire jamais une masse sans savoir ce qu'elle est.</b> Un mastocytome se retire avec 2 cm de marges latérales et un plan fascial en profondeur ; un lipome se retire au ras. Une exérèse « pour voir » sur un mastocytome transforme une chirurgie curative en reprise mutilante.</div>
+        <div class="box key"><b>Le ganglion normal à la palpation n'est pas un ganglion normal.</b> Jusqu'à la moitié des métastases ganglionnaires se font dans des ganglions de taille et de consistance normales : on ponctionne sur la localisation du drainage, pas sur la taille.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-onco tumeurs -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Tumeurs</span><h3>Les tumeurs qui remplissent la consultation</h3><span class="sub">Signalement, comportement, traitement de référence</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tumeur</th><th>Ce qui l'évoque</th><th>Référence</th></tr></thead>
+          <tbody>
+            <tr><td><b>Lymphome multicentrique</b> (chien)</td><td>Adénopathies généralisées <b>indolores</b>, animal souvent en bon état · hypercalcémie dans 10–40 % des formes T</td><td class="d">Protocole CHOP 19–25 sem · rémission 80–90 % · immunophénotype B nettement meilleur que T</td></tr>
+            <tr><td><b>Lymphome digestif</b> (chat)</td><td>Amaigrissement, vomissements chroniques, épaississement des anses</td><td class="d">Petites cellules : chloraminophène + prednisolone, survie longue · grandes cellules : CHOP</td></tr>
+            <tr><td><b>Mastocytome</b></td><td>Masse cutanée d'aspect variable, <b>signe de Darier</b> (rougeur/gonflement à la manipulation)</td><td class="d">Exérèse <b>2 cm latéraux + 1 plan fascial</b> · grade Kiupel bas/haut · inhibiteurs de tyrosine kinase</td></tr>
+            <tr><td><b>Ostéosarcome</b></td><td>Grande race, gonflement métaphysaire douloureux, lyse radiographique</td><td class="d"><b>&gt; 90 % de micrométastases au diagnostic</b> · amputation + carboplatine, survie médiane ~1 an</td></tr>
+            <tr><td><b>Hémangiosarcome splénique</b></td><td>Effondrement brutal, hémoabdomen, masse splénique</td><td class="d">Splénectomie · doxorubicine · survie médiane 4–6 mois</td></tr>
+            <tr><td><b>Tumeurs mammaires</b></td><td>Chienne : ~50 % malignes · <b>chatte : 85–90 % malignes</b></td><td class="d">Chatte : <b>mastectomie unilatérale complète</b> + ganglions, jamais une nodulectomie</td></tr>
+            <tr><td><b>Mélanome buccal</b></td><td>Masse gingivale pigmentée ou non, chien âgé</td><td class="d">Très métastatique · chirurgie large ± radiothérapie</td></tr>
+            <tr><td><b>Adénocarcinome des sacs anaux</b></td><td>Masse péri-anale, ténesme, <b>hypercalcémie</b></td><td class="d">Chirurgie + ganglions sublombaires · métastases fréquentes</td></tr>
+            <tr><td><b>Carcinome urothélial</b></td><td>Hématurie et dysurie chroniques résistant aux antibiotiques, trigone</td><td class="d"><b>Pas de cystocentèse</b> · AINS (piroxicam) ± chimiothérapie</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box note"><b>Hypercalcémie chez le chien = recherche de tumeur.</b> Lymphome, adénocarcinome des sacs anaux et myélome viennent en tête, avant l'hyperparathyroïdie primaire, l'hypoadrénocorticisme et l'intoxication à la vitamine D. Un Ca<sup>2+</sup> ionisé élevé impose une palpation rectale et une exploration ganglionnaire.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-onco chimio -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Chimiothérapie</span><h3>Conduire et surveiller une chimiothérapie</h3><span class="sub">Nadir, seuils, urgences</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Doses en m² de surface corporelle</b> pour la plupart des cytotoxiques — sauf chez les très petits patients (&lt; 10 kg) où l'on repasse en mg/kg pour la doxorubicine, sous peine de surdosage.</li>
+          <li><b>Numération avant chaque séance.</b> On ne traite pas si les neutrophiles sont &lt; 1,5 G/L : on décale de 5–7 jours.</li>
+          <li><b>Nadir neutrophilique J7</b> environ (J5–J10 selon la molécule).</li>
+          <li><b>Neutropénie fébrile</b> — neutrophiles &lt; 1 G/L avec fièvre : c'est une <b>urgence</b>. Hospitalisation, hémocultures, antibiothérapie large IV immédiate.</li>
+          <li><b>Doxorubicine</b> : vésicant majeur — <b>l'extravasation est une urgence</b> (arrêter, aspirer, ne pas retirer le cathéter, avis immédiat). Cardiotoxicité cumulative : échocardiographie de suivi au-delà de ~180–240 mg/m² cumulés.</li>
+          <li><b>Vincristine</b> : vésicant également ; voie parfaitement contrôlée, jamais sur un cathéter douteux.</li>
+          <li><b>Cyclophosphamide</b> : cystite hémorragique stérile — on l'administre le matin, avec accès à l'eau et miction encouragée, ± furosémide.</li>
+          <li><b>Manipulation</b> : équipement de protection, système clos, gestion des excreta pendant 48–72 h après administration.</li>
+        </ul>
+        <div class="box key"><b>En oncologie vétérinaire, l'objectif n'est pas la guérison mais la durée de bonne vie.</b> Les protocoles sont dosés pour que l'effet secondaire reste rare et léger : un animal qui vomit et ne mange plus sous chimiothérapie n'est pas « un cas normal », c'est un protocole à réajuster.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-onco urgences -->
+    <details class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Urgences</span><h3>Les urgences oncologiques</h3><span class="sub">Ce qui décompense un patient cancéreux</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Urgence</th><th>Contexte</th><th>Conduite</th></tr></thead>
+          <tbody>
+            <tr><td><b>Neutropénie fébrile</b></td><td>J5–J10 post-chimiothérapie</td><td class="d">ATB large IV, hospitalisation, fluides</td></tr>
+            <tr><td><b>Hémoabdomen</b></td><td>Masse splénique ou hépatique qui saigne</td><td class="d">AFAST, réanimation, chirurgie</td></tr>
+            <tr><td><b>Épanchement péricardique</b></td><td>Hémangiosarcome atrial droit, chémodectome</td><td class="d"><b>Péricardiocentèse</b> — le seul geste qui sauve</td></tr>
+            <tr><td><b>Hypercalcémie maligne</b></td><td>Lymphome, sacs anaux, myélome</td><td class="d">NaCl 0,9 %, furosémide après réhydratation, traiter la tumeur</td></tr>
+            <tr><td><b>Syndrome de lyse tumorale</b></td><td>Grosse masse très chimiosensible, 24–72 h après le début</td><td class="d">K⁺ et phosphore ↑, azotémie · fluides, surveillance rapprochée</td></tr>
+            <tr><td><b>Masse médiastinale</b></td><td>Chat jeune, lymphome médiastinal</td><td class="d">Détresse par épanchement pleural → thoracocentèse avant tout</td></tr>
+            <tr><td><b>Ulcération gastro-duodénale</b></td><td>Mastocytome (libération d'histamine)</td><td class="d">Anti-H1 + oméprazole avant toute manipulation de la masse</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Une tamponnade ne s'améliore pas sous fluides.</b> Jugulaires distendues, pouls faible, alternance électrique à l'ECG, écho péricardique : le traitement est la ponction, et remplir en attendant ne fait que gagner quelques minutes.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · DERMATOLOGIE ============ -->
+  <section class="view c-proto" id="sp-dermato">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Dermatologie</h1>
+      <p class="lede">Le prurit se résout par élimination, dans un ordre fixe : parasites, puis infections, puis allergies. Sauter une étape mène à traiter une atopie qui n'existe pas.</p>
+    </div>
+
+    <!-- BLOC: sp-dermato demarche -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Dermato</span><h3>L'arbre du prurit</h3><span class="sub">Trois marches, dans l'ordre</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>1 · Exclure les parasites</b> — raclages profonds (démodécie), raclages superficiels et test otopodal (gale), peigne à puces, scotch-test. En cas de doute sur la gale : <b>traitement d'épreuve à l'isoxazoline</b>, car les raclages sont négatifs dans plus de la moitié des cas.</li>
+          <li><b>2 · Traiter les infections</b> — cytologie systématique (cocci, <i>Malassezia</i>). Une pyodermite ou une dermatite à levures suffit à expliquer un prurit intense ; on ne juge du prurit résiduel qu'<b>après</b> l'avoir traitée.</li>
+          <li><b>3 · Explorer l'allergie</b> — <b>régime d'éviction strict 8 semaines puis provocation</b> pour l'allergie alimentaire ; dermatite atopique retenue sur les critères de Favrot et l'exclusion du reste.</li>
+        </ul>
+        <div class="box trap"><b>La dermatite atopique est un diagnostic d'exclusion clinique.</b> Il n'existe pas de test sanguin qui la diagnostique : les tests allergologiques servent à composer une immunothérapie chez un animal <b>déjà</b> diagnostiqué, jamais à poser le diagnostic.</div>
+        <div class="box key"><b>Un régime d'éviction interrompu par une seule friandise est un régime raté.</b> Huit semaines, protéine et glucide nouveaux ou hydrolysat, rien d'autre — y compris médicaments aromatisés, vermifuges appétents et dentifrice.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-dermato examens -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Examens</span><h3>Les prélèvements de base et ce qu'ils montrent</h3><span class="sub">Tous se font en consultation, en quelques minutes</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Examen</th><th>Indication</th><th>Ce qu'on y voit</th></tr></thead>
+          <tbody>
+            <tr><td><b>Raclage profond</b> (jusqu'au saignement)</td><td>Alopécie, comédons, jeune animal</td><td class="d"><i>Demodex</i></td></tr>
+            <tr><td><b>Raclage superficiel large</b></td><td>Prurit intense, coudes, oreilles</td><td class="d"><i>Sarcoptes</i> (souvent négatif malgré la maladie)</td></tr>
+            <tr><td><b>Scotch-test</b></td><td>Plis, espaces interdigités</td><td class="d"><i>Malassezia</i>, <i>Cheyletiella</i></td></tr>
+            <tr><td><b>Cytologie par calque</b></td><td>Toute lésion suintante, pustuleuse, érythémateuse</td><td class="d">Cocci intracellulaires (pyodermite), levures</td></tr>
+            <tr><td><b>Trichogramme</b></td><td>Alopécie</td><td class="d">Extrémités cassées (prurit) vs télogènes (endocrinien)</td></tr>
+            <tr><td><b>Cytologie auriculaire</b></td><td>Toute otite, <b>avant</b> tout traitement</td><td class="d">Cocci · bâtonnets (<i>Pseudomonas</i>) · <i>Malassezia</i></td></tr>
+            <tr><td><b>PCR / culture fongique</b></td><td>Suspicion de dermatophytose</td><td class="d">La lampe de Wood ne fluoresce que ~50 % des <i>M. canis</i></td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Une otite ne se traite jamais sans cytologie ni examen du tympan.</b> La cytologie choisit la molécule (cocci ≠ bâtonnets), et un tympan rompu contre-indique la plupart des topiques. Une otite à bâtonnets chez un chien qui rechute est un <i>Pseudomonas</i> jusqu'à preuve du contraire.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-dermato tableaux -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Tableaux</span><h3>Les motifs et leur signature</h3><span class="sub">Topographie et âge orientent avant tout examen</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tableau</th><th>Signature</th><th>Traitement</th></tr></thead>
+          <tbody>
+            <tr><td><b>Dermatite par allergie aux piqûres de puces</b></td><td>Prurit <b>lombo-sacré</b>, base de la queue</td><td class="d">Antiparasitaire sur tous les animaux + environnement</td></tr>
+            <tr><td><b>Gale sarcoptique</b></td><td>Prurit <b>extrême</b>, bords des oreilles, coudes, jarrets · réflexe otopodal · contagieuse à l'homme</td><td class="d">Isoxazoline · traitement d'épreuve légitime</td></tr>
+            <tr><td><b>Démodécie</b></td><td>Alopécie, comédons, <b>peu prurigineuse</b> sauf surinfection · jeune (ou immunodépression si adulte)</td><td class="d">Isoxazoline · rechercher une cause sous-jacente chez l'adulte</td></tr>
+            <tr><td><b>Dermatite atopique</b></td><td>Début &lt; 3 ans · face, pieds, plis, oreilles, ventre · saisonnalité initiale</td><td class="d">Oclacitinib · lokivetmab · ciclosporine · immunothérapie</td></tr>
+            <tr><td><b>Allergie alimentaire</b></td><td>Même topographie que l'atopie, <b>non saisonnière</b>, ± signes digestifs</td><td class="d">Éviction 8 semaines puis provocation</td></tr>
+            <tr><td><b>Pyodermite superficielle</b></td><td>Papules, pustules, <b>collerettes épidermiques</b></td><td class="d">Topique chlorhexidine ≥ 3 % en 1<sup>re</sup> intention · systémique 3–4 sem, poursuivi 1 sem après guérison clinique</td></tr>
+            <tr><td><b>Dermatophytose</b></td><td>Alopécie circulaire, squames, jeune, chat</td><td class="d">Systémique (itraconazole) + topique + décontamination du milieu</td></tr>
+            <tr><td><b>Alopécie symétrique non prurigineuse</b></td><td>Bilatérale, sans prurit initial</td><td class="d">Explorer <b>endocrinien</b> : hypothyroïdie, hyperadrénocorticisme, alopécie X</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box note"><b>Chez le chat, la peau n'a que quatre façons de réagir</b> : dermatite miliaire, alopécie extensive auto-induite, complexe granulome éosinophilique, prurit de la tête et du cou. Ces quatre présentations ne sont pas des diagnostics — chacune peut être une allergie, un parasite ou une infection, et la démarche reste la même.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-dermato traitement -->
+    <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Traitement</span><h3>Antibiothérapie cutanée et gestion du prurit</h3><span class="sub">Le topique avant le systémique</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Pyodermite superficielle</b> : traitement <b>topique seul</b> (chlorhexidine 3–4 %, 2–3×/semaine) en première intention — aussi efficace que le systémique et sans pression de sélection.</li>
+          <li><b>Systémique</b> si étendue ou profonde : céfalexine 20–30 mg/kg BID, <b>3–4 semaines minimum</b>, poursuivie <b>1 semaine après la guérison clinique</b> (4–6 semaines au-delà pour une pyodermite profonde).</li>
+          <li><b>Jamais d'antibiotique de dernier recours</b> (fluoroquinolones, rifampicine) sans culture et antibiogramme.</li>
+          <li><b>Contrôle du prurit</b> : oclacitinib 0,4–0,6 mg/kg BID pendant 14 jours puis SID · lokivetmab en injection mensuelle · ciclosporine ~5 mg/kg/j, délai d'action de 4–6 semaines.</li>
+          <li><b>Corticoïdes</b> : efficaces et légitimes en cure courte, jamais en fond au long cours.</li>
+        </ul>
+        <div class="box trap"><b>Une pyodermite qui rechute après un traitement bien conduit n'est pas un échec antibiotique : c'est une maladie sous-jacente non traitée.</b> Allergie, endocrinopathie, parasites. Rallonger l'antibiotique une troisième fois ne fera que sélectionner des staphylocoques méticillino-résistants.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
+  <!-- ============ SPÉCIALITÉ · STOMATOLOGIE ============ -->
+  <section class="view c-dose" id="sp-stomato">
+    <div class="view-head">
+      <p class="eyebrow">Spécialité · internat</p>
+      <h1>Stomatologie</h1>
+      <p class="lede">Aucune bouche ne s'évalue sur animal vigile. Le diagnostic se fait sous anesthésie, sonde parodontale en main et radiographie dentaire à l'appui.</p>
+    </div>
+
+    <!-- BLOC: sp-stomato bases -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Stomato</span><h3>Le bilan bucco-dentaire</h3><span class="sub">Formules, nomenclature, ce qui se mesure</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <ul>
+          <li><b>Formule dentaire adulte</b> — chien <b>42 dents</b> : 2×(I 3/3 · C 1/1 · PM 4/4 · M 2/3). Chat <b>30 dents</b> : 2×(I 3/3 · C 1/1 · PM 3/2 · M 1/1).</li>
+          <li><b>Nomenclature Triadan</b> : quadrants 1 (maxillaire droit), 2 (maxillaire gauche), 3 (mandibulaire gauche), 4 (mandibulaire droit) chez l'adulte ; 5 à 8 en denture déciduale. La canine est toujours <b>04</b>, la carnassière maxillaire <b>08</b>, la carnassière mandibulaire <b>09</b>.</li>
+          <li><b>Sondage parodontal</b> : profondeur physiologique &lt; 3 mm chez le chien, &lt; 1 mm chez le chat.</li>
+          <li><b>Mobilité</b> (0 à 3) et <b>atteinte de furcation</b> (1 à 3) notées sur chaque dent multiradiculée.</li>
+          <li><b>Radiographie dentaire complète</b> : indispensable — la majorité des lésions (résorptions, abcès apicaux, racines résiduelles, lyse osseuse) sont invisibles à l'œil.</li>
+        </ul>
+        <div class="box key"><b>Stades de la maladie parodontale</b> — <b>0</b> sain · <b>1</b> gingivite sans perte d'attache · <b>2</b> perte d'attache &lt; 25 % · <b>3</b> 25–50 % · <b>4</b> &gt; 50 %. Seuls les stades 1 et 2 sont réversibles ; à partir du stade 3, la décision est conservation encadrée ou extraction.</div>
+        <div class="box trap"><b>Un détartrage sans radiographie ni sondage n'est pas un soin dentaire, c'est un nettoyage.</b> La plaque visible est la partie qui ne fait pas mal ; la lyse osseuse et les résorptions sont sous la gencive.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-stomato motifs -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Motifs</span><h3>Les tableaux de la consultation</h3><span class="sub">Chien et chat</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <div class="tablewrap"><table class="doses">
+          <thead><tr><th>Tableau</th><th>Signature</th><th>Conduite</th></tr></thead>
+          <tbody>
+            <tr><td><b>Maladie parodontale</b></td><td>Halitose, tartre, gingivite, mobilité — de loin le premier motif</td><td class="d">Bilan sous AG, radio, détartrage-surfaçage, extractions ciblées</td></tr>
+            <tr><td><b>Résorption dentaire féline</b></td><td>Lésion à hauteur du collet, douleur (claquement de mâchoire au sondage) · tissu de granulation</td><td class="d">Radio pour typer : <b>type 1</b> → extraction complète · <b>type 2</b> (racines fantômes) → amputation coronaire possible</td></tr>
+            <tr><td><b>Gingivostomatite chronique féline</b></td><td>Inflammation caudale intense, dysorexie, douleur majeure</td><td class="d"><b>Extractions dentaires étendues</b> (caudales ou totales) — 70–80 % d'amélioration ; le traitement médical seul échoue</td></tr>
+            <tr><td><b>Fracture dentaire compliquée</b></td><td>Pulpe exposée, point rouge/noir au centre de la fracture</td><td class="d">Toujours douloureuse et infectée → traitement endodontique ou extraction, jamais l'abstention</td></tr>
+            <tr><td><b>Abcès apical de la carnassière</b></td><td>Fistule sous l'œil, gonflement infra-orbitaire</td><td class="d">Radio dentaire · extraction ou endodontie · l'antibiotique seul récidive</td></tr>
+            <tr><td><b>Masse buccale</b></td><td>Chien : mélanome, carcinome épidermoïde, fibrosarcome, épulis · <b>chat : carcinome épidermoïde en tête</b></td><td class="d">Biopsie incisionnelle + radio/scanner avant toute exérèse</td></tr>
+            <tr><td><b>Fracture de mandibule / disjonction symphysaire</b></td><td>Traumatisme, occlusion anormale, salivation sanglante</td><td class="d">Radio, analgésie, cerclage ou fixation selon le trait</td></tr>
+            <tr><td><b>Persistance de dents déciduales</b></td><td>Deux dents pour une place, canine surtout</td><td class="d">Extraction — deux dents ne coexistent jamais dans une alvéole</td></tr>
+          </tbody>
+        </table></div>
+        <div class="box trap"><b>Un chat qui mange encore n'est pas un chat qui n'a pas mal.</b> La dysorexie n'apparaît qu'aux stades extrêmes : la douleur bucco-dentaire féline se cherche à la radiographie et au sondage, pas dans le récit du propriétaire.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+
+    <!-- BLOC: sp-stomato geste -->
+    <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Geste</span><h3>Extraction et analgésie loco-régionale</h3><span class="sub">Les quatre blocs à connaître</span></span><span class="chev">▸</span></summary>
+      <div class="body">
+        <p><b>Extraction</b> : incision du ligament parodontal, lambeau muco-périosté si chirurgicale, <b>section des racines des dents multiradiculées</b>, alvéolectomie mesurée, curetage, suture <b>sans tension</b>, <b>radiographie post-extraction</b> pour vérifier l'absence de racine résiduelle.</p>
+        <p><b>Blocs loco-régionaux</b> — ils divisent les besoins en anesthésiques généraux et couvrent le réveil :</p>
+        <ul>
+          <li><b>Infra-orbitaire</b> — arcade maxillaire rostrale (incisives, canine, prémolaires rostrales).</li>
+          <li><b>Maxillaire</b> — hémi-arcade maxillaire complète.</li>
+          <li><b>Mentonnier</b> — arcade mandibulaire rostrale.</li>
+          <li><b>Alvéolaire inférieur</b> — hémi-arcade mandibulaire complète.</li>
+        </ul>
+        <div class="box key"><b>Doses maximales des anesthésiques locaux</b> — bupivacaïne : <b>2 mg/kg chez le chien, 1 mg/kg chez le chat</b> ; lidocaïne : 6 mg/kg chien, 2–3 mg/kg chat. Ce sont des doses <b>totales</b> tous blocs confondus : sur un chat de 4 kg, la marge est de quelques dixièmes de millilitre, donc le volume se calcule avant de piquer, jamais pendant.</div>
+        <div class="box note"><b>Après extractions</b> : analgésie multimodale prolongée (opioïde puis AINS si le patient le permet), <b>alimentation molle 10–14 jours</b>, contrôle des sutures, et pas de jouet à mâcher.</div>
+        <div class="box trap"><b>L'anesthésique local est un complément, pas une anesthésie.</b> Et le bloc alvéolaire inférieur bilatéral anesthésie la langue : risque d'automutilation au réveil, à surveiller.</div>
+      </div>
+    </details>
+    <!-- /BLOC -->
+  </section>
+
   <section class="view c-cas" id="cas">
     <div class="view-head">
       <p class="eyebrow">Index</p>
