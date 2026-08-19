@@ -1,5 +1,5 @@
 /* Carnet de garde — service worker (genere par build_app.py) */
-var VERSION = 'b4a082033d92';
+var VERSION = '6df57bbd69da';
 var CACHE = 'carnet-' + VERSION;
 var SHELL = ['./', './index.html', './manifest.webmanifest',
              './apple-touch-icon.png', './icon-192.png', './icon-512.png'];
