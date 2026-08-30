@@ -420,6 +420,19 @@ body.garde-open{overflow:hidden}
   background:color-mix(in srgb,var(--c-repere) 14%,transparent)}
 .gdose .gact{display:flex;gap:8px;margin-top:10px}
 
+/* --- ajusteur de dose : une fourchette 2-5 ug/kg ne calcule rien pour 4 --- */
+.gtok+.gtok{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.gadj{display:flex;align-items:center;gap:6px;margin-top:10px}
+.gadj input{width:76px;padding:8px 6px;font-size:17px;font-weight:700;text-align:center;
+  font-family:var(--mono);border:1px solid var(--line);border-radius:10px;
+  background:var(--surface2);color:var(--ink)}
+.gadj .u{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
+.gstep{border:1px solid var(--line);background:var(--surface2);color:var(--ink);
+  border-radius:10px;width:38px;height:38px;font-size:18px;line-height:1;cursor:pointer;flex:none}
+.gstep:active{background:var(--surface)}
+.gstep.undo{margin-left:auto;font-size:15px;color:var(--ink-soft)}
+.gres.cust{color:var(--c-dose)}
+
 /* --- gestes --- */
 .gtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
 .gtile{text-align:left;border:1px solid var(--line);border-left:3px solid var(--c-proto);
@@ -5160,6 +5173,14 @@ document.addEventListener('click',function(e){
     return String(parseFloat(s)).replace('.',',');
   }
   function rng(lo,hi,u){return hi==null?fmt(lo)+' '+u:fmt(lo)+'\u2013'+fmt(hi)+' '+u;}
+  /* pas d'increment « rond » : un sixieme de l'etendue sur une fourchette,
+     un dixieme de la dose sur une valeur unique. */
+  function niceStep(x){
+    x=Math.abs(x)||1;
+    var e=Math.pow(10,Math.floor(Math.log(x)/Math.LN10)), r=x/e;
+    return (r<1.5?1:r<3.5?2:r<7.5?5:10)*e;
+  }
+  function stepOf(t){ return niceStep(t.hi==null ? t.lo/10 : (t.hi-t.lo)/6); }
 
   /* concentration : premiere occurrence « nombre unite/mL » */
   function parseConc(txt){
@@ -5252,6 +5273,7 @@ document.addEventListener('click',function(e){
       d.toks=parseDoses(d.dose);
       d.key=norm(d.mol+' '+d.ind+' '+d.cat+' '+d.dose);
       d.molKey=norm(d.mol.replace(/\(.*/,'')).trim();
+      d.idx=DOSES.length;
       DOSES.push(d);
     });
     /* ce qu'on ouvre en premier a 3 h du matin, puis l'ordre du document */
@@ -5270,6 +5292,19 @@ document.addEventListener('click',function(e){
       TILES.push(t);
     });
     TILES.sort(function(a,b){ return a.grp-b.grp || a.r-b.r || a.i-b.i; });
+  }
+
+  /* ---------------------------------------------------- dose choisie a la main */
+  /* La fiche donne des fourchettes (fenta 2\u20135 \u00b5g/kg) : sans ce reglage,
+     impossible de calculer le volume pour la valeur qu'on retient vraiment.
+     Cle = rang de la ligne dans le tableau + rang du token. Videe au patient suivant. */
+  var CUSTOM={};
+  function ckey(d,i){ return d.idx+'#'+i; }
+  function effTok(d,i){
+    var t=d.toks[i], v=CUSTOM[ckey(d,i)];
+    if(v==null||!isFinite(v)) return t;
+    return {lo:v, hi:null, u:t.u, fam:t.fam, k:t.k, rate:t.rate,
+            raw:fmt(v)+' '+t.u+'/kg'+(t.rate?'/'+t.rate:'')};
   }
 
   /* ------------------------------------------------------------ etat patient */
@@ -5347,6 +5382,7 @@ document.addEventListener('click',function(e){
   function newPatient(){
     if(!confirm('Nouveau patient : poids, minuteurs et trace sont effac\u00e9s. Continuer ?')) return;
     P.kg=null; set('kg','');
+    CUSTOM={};
     TRACE=[]; saveTrace(); TIMERS=[]; saveTimers(); rcpReset();
     paintPat(); render(); show('doses');
     body.scrollTop=0;
@@ -5409,17 +5445,7 @@ document.addEventListener('click',function(e){
     if(P.esp==='chien' && /\bchat\b/.test(t) && !/\bchien\b/.test(t)) espFlag='chat';
 
     if(kgOk() && d.toks.length){
-      d.toks.forEach(function(tok){
-        var r=compute(tok,P.kg,d.c); safety(r);
-        var res=el('div','gres'); res.textContent=r.head;
-        if(d.voie && d.voie!=='\u2014'){ var v=el('span','v',d.voie); res.appendChild(v); }
-        c.appendChild(res);
-        var calc=el('div','gcalc'); calc.textContent=r.lines.join('  \u2192  ');
-        c.appendChild(calc);
-        r.flags.forEach(function(f){
-          var b=el('div','gflag'+(f[0]?' '+f[0]:'')); b.innerHTML=f[1]; c.appendChild(b);
-        });
-      });
+      d.toks.forEach(function(tok,i){ c.appendChild(tokBlock(d,i)); });
     }
     var vb=el('div','gverb');
     vb.innerHTML='<b>'+esc(d.dose)+'</b> \u00b7 '+esc(d.conc)+' \u00b7 '+esc(d.voie)+' \u00b7 '+esc(d.src);
@@ -5442,9 +5468,73 @@ document.addEventListener('click',function(e){
     return c;
   }
 
+  /* un token de dose : son ajusteur, son resultat, son detail de calcul.
+     Le bloc se repeint seul \u2014 pas de rebuild de la liste, le clavier reste ouvert. */
+  function tokBlock(d,i){
+    var base=d.toks[i], box=el('div','gtok'), out=el('div');
+
+    var adj=el('div','gadj');
+    var minus=el('button','gstep','\u2212'); minus.type='button'; minus.title='Baisser la dose';
+    var inp=el('input'); inp.type='text'; inp.inputMode='decimal';
+    inp.placeholder=base.hi==null?fmt(base.lo):fmt(base.lo)+'\u2013'+fmt(base.hi);
+    inp.setAttribute('aria-label','Dose choisie en '+base.u+'/kg');
+    var cv0=CUSTOM[ckey(d,i)]; if(cv0!=null) inp.value=fmt(cv0);
+    var plus=el('button','gstep','+'); plus.type='button'; plus.title='Monter la dose';
+    var unit=el('span','u',base.u+'/kg'+(base.rate?'/'+base.rate:''));
+    var undo=el('button','gstep undo','\u21ba'); undo.type='button';
+    undo.title='Revenir \u00e0 la dose de la fiche';
+    adj.appendChild(minus); adj.appendChild(inp); adj.appendChild(unit);
+    adj.appendChild(plus); adj.appendChild(undo);
+    box.appendChild(adj); box.appendChild(out);
+
+    function paint(){
+      out.innerHTML='';
+      var t=effTok(d,i), custom=CUSTOM[ckey(d,i)]!=null;
+      var r=compute(t,P.kg,d.c); safety(r);
+      var res=el('div','gres'+(custom?' cust':'')); res.textContent=r.head;
+      if(d.voie && d.voie!=='\u2014') res.appendChild(el('span','v',d.voie));
+      out.appendChild(res);
+      var calc=el('div','gcalc'); calc.textContent=r.lines.join('  \u2192  ');
+      out.appendChild(calc);
+      /* rappel purement arithmetique : on compare la valeur saisie a la fiche */
+      if(custom && base.hi!=null && (t.lo<base.lo||t.lo>base.hi))
+        r.flags.push(['soft','<b>'+fmt(t.lo)+' '+base.u+'/kg</b> est <b>hors de la fourchette</b> de la fiche ('+
+          rng(base.lo,base.hi,base.u+'/kg')+').']);
+      if(custom && base.hi==null && t.lo!==base.lo)
+        r.flags.push(['soft','La fiche donne <b>'+esc(base.raw)+'</b>, le calcul tourne sur '+
+          fmt(t.lo)+' '+base.u+'/kg.']);
+      r.flags.forEach(function(f){
+        var b=el('div','gflag'+(f[0]?' '+f[0]:'')); b.innerHTML=f[1]; out.appendChild(b);
+      });
+      undo.style.visibility=custom?'visible':'hidden';
+    }
+    function setv(v){
+      if(v==null||!isFinite(v)||v<=0) delete CUSTOM[ckey(d,i)];
+      else CUSTOM[ckey(d,i)]=v;
+      paint();
+    }
+    inp.addEventListener('input',function(){
+      var s=inp.value.trim();
+      setv(s===''?null:parseFloat(s.replace(',','.')));
+    });
+    function bump(sg){
+      var s=stepOf(base), cur=CUSTOM[ckey(d,i)];
+      if(cur==null) cur=base.hi==null?base.lo:(base.lo+base.hi)/2;
+      var v=Math.max(s, Math.round((cur+sg*s)/s)*s);
+      v=parseFloat(v.toFixed(6));
+      inp.value=fmt(v); setv(v);
+    }
+    minus.addEventListener('click',function(){ bump(-1); });
+    plus.addEventListener('click',function(){ bump(1); });
+    undo.addEventListener('click',function(){ inp.value=''; setv(null); });
+    paint();
+    return box;
+  }
+
   /* la phrase complete : molecule, dose, concentration, volume, voie */
   function presc(d){
-    var t=d.toks[0]; if(!t||!kgOk()) return d.mol+' '+d.dose;
+    if(!d.toks.length||!kgOk()) return d.mol+' '+d.dose;
+    var t=effTok(d,0);
     var r=compute(t,P.kg,d.c);
     return d.mol+' \u2014 '+t.raw+' sur '+fmt(P.kg)+' kg'+
            (d.c?', concentration '+d.conc:'')+' \u2192 '+r.head+
