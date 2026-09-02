@@ -490,6 +490,7 @@ body.garde-open{overflow:hidden}
     <a data-v="mod3" class="c-comm"><span class="ic"></span>Cardio / RCP <small>S7–8</small></a>
     <a data-v="mod4" class="c-cas"><span class="ic"></span>Digestif <small>S9–10</small></a>
     <a data-v="mod5" class="c-proto"><span class="ic"></span>Neuro <small>S11–12</small></a>
+    <a data-v="mod6" class="c-proto"><span class="ic"></span>Pré-garde <small>S15</small></a>
     <div class="sec">Index</div>
     <a data-v="cas" class="c-cas"><span class="ic"></span>Tous les cas <small id="navCas"></small></a>
     <a data-v="reflexes" class="c-repere"><span class="ic"></span>Réflexes <small id="navRef"></small></a>
@@ -531,7 +532,7 @@ body.garde-open{overflow:hidden}
   <!-- ============ VUE D'ENSEMBLE ============ -->
   <section class="view active c-cas" id="apercu">
     <div class="view-head">
-      <p class="eyebrow" id="majDate">Carnet de tutorat · au 28/08/2026</p>
+      <p class="eyebrow" id="majDate">Carnet de tutorat · au 02/09/2026</p>
       <h1>Tout ce que j'ai appris, prêt à retrouver.</h1>
       <p class="lede">Le récapitulatif de ma formation aux urgences, semaine après semaine : les cas vus, les doses, les protocoles et les pièges — à parcourir librement, année après année.</p>
       <div class="chips">
@@ -1991,6 +1992,254 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
 <!-- /BLOC -->
   </section>
 
+
+  <!-- ============ MODULE 6 — PRE-GARDE ============ -->
+  <section class="view c-proto" id="mod6">
+    <div class="view-head">
+      <p class="eyebrow">Semaine 15 · 01/09/2026 → · en cours</p>
+      <h1>Pré-garde</h1>
+      <p class="lede">Bloc des quatre jours qui précèdent la première garde. Ce qui tombe une nuit et n'avait pas été joué : urologie d'urgence, systèmes vierges, et surtout la <b>suite</b> de la stabilisation — ordres d'hospitalisation, appel du chirurgien, transmission du matin. Aucun système annoncé à partir du J2.</p>
+    </div>
+    <!-- BLOC: mod6 recap -->
+    <div class="recap">
+      <h3>Récapitulatif du module</h3>
+      <p class="obj">Objectif : ne plus s'arrêter au bolus. Tout plan se termine par un relais, un débit en mL/h, un critère chiffré et une consigne exécutable par l'ASV.</p>
+      <div class="recap-grid">
+        <div><h4>Cas vus</h4><ul><li><b>S15 J1 — Chat européen 5,4 kg, 00 h 40</b> · strangurie 24 h, globe vésical dur, FC 96, K 8,9, pH 7,08, T° 36,2 → <b>obstruction urétrale hyperkaliémique</b></li><li><b>S15 J1 — Chien croisé 24 kg, 22 h 10</b> · anurie depuis 24 h, ictère, T° 39,4, créat 9,4, PLT 88, glycosurie normoglycémique → <b>insuffisance rénale aiguë leptospirosique</b></li><li><b>S15 J2 — Berger australien 19 kg, 21 h 15</b> · halètement 2 h après une longue marche, T° 41,8, muqueuses rouge brique, Htc 57, lactate 8,4, vomissement hémorragique → <b>coup de chaleur d'effort</b></li><li><b>S15 J2 — Braque allemand 24 kg, 23 h 50</b> · urines couleur coca, muqueuses pâles et subictériques, splénomégalie, Htc 19, PLT 46, inclusions érythrocytaires piriformes → <b>babésiose</b></li><li><b>S15 J2 — Golden Retriever 31 kg, 02 h 30</b> · 3 chiots nés puis arrêt depuis 3 h 15, contractions faibles, 4 fœtus restants non engagés, FCF 142 → <b>inertie utérine secondaire avec détresse fœtale</b></li><li><b>S15 J2 — Chat européen 4,2 kg, 04 h 10</b> · PU/PD 3 semaines, stupeur, plantigradie, glycémie 486, K 3,1, pH 7,08, cétonurie 3+ → <b>acidocétose diabétique</b></li></ul></div>
+        <div><h4>À venir</h4><ul><li>Garde simulée — admissions successives qui se chevauchent, sans indice</li><li>Kit de première garde — index d'entrée par signe d'appel</li></ul></div>
+        <div><h4>Réflexes</h4><ul><li>Les règles opposables de ce module sont regroupées par appareil dans <b><a class="goto" data-goto="reflexes">Réflexes</a></b> — tous modules confondus.</li></ul></div>
+      </div>
+    </div>
+    <!-- /BLOC -->
+    <div class="slabel">Cas vus</div>
+<!-- BLOC: mod6 cas-chat-obstrue -->
+<details data-cas data-esp="chat" data-sys="uro" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J1</span><h3>Chat européen mâle castré, 5,4 kg</h3><span class="sub">strangurie 24 h · FC 96 · K 8,9 · pH 7,08 · T° 36,2</span></span><span class="dx">Obstruction urétrale hyperkaliémique</span></summary>
+  <div class="body">
+    <p><b>Ce qui tue, ce n'est pas la vessie pleine</b> — c'est le potassium. FC 96 chez un chat est une <b>bradycardie</b> ; à K 8,9 elle signe déjà une atteinte de conduction.</p>
+    <div class="box key"><b>Le tracé de l'hyperkaliémie sévère</b> — dérivation II : <b>aucune onde P identifiable</b> (arrêt auriculaire), <b>QRS élargi à 0,10 s</b> (un chat est normalement sous 0,04), ondes T amples et pointues, ligne de base plate entre les complexes.</div>
+    <div class="box proto"><b>L'ordre, et il ne se réarrange pas.</b><br>1. <b>Gluconate de calcium 10 % 0,5–1 mL/kg IV lent sur 5–10 min, sous ECG</b> — stabilise le myocarde, <b>ne baisse pas le K</b>. Bouée de 20–30 min. Arrêt sur bradycardie, QT court ou arythmie ; reprise à moitié vitesse.<br>2. <b>Bolus NaCl 0,9 % 10 mL/kg</b> — un chat bloqué est post-rénal <b>et</b> hypovolémique : le fluide dilue le K et restaure la filtration. C'est un traitement de l'hyperkaliémie, pas du confort.<br>3. <b>Insuline rapide 0,1–0,25 UI/kg IV + glucose 50 % 1 mL/kg fixe dilué 50/50</b>, puis CRI glucosée 2,5–5 % pendant 4–6 h — l'insuline agit plus longtemps que le bolus de sucre.<br>4. <b>Bicarbonate 1–2 mEq/kg si pH &lt; 7,2</b>, sur une voie séparée du calcium.<br>5. <b>Déblocage.</b> Sédation <b>butorphanol 0,2–0,4 mg/kg + midazolam 0,2 mg/kg IV</b> — en <b>mg/kg</b>, jamais en mL/kg.</div>
+    <div class="box trap"><b>Le salbutamol ne fait pas partie du protocole.</b> β2 agoniste <b>inhalé</b> (jamais nasal ni oral), effet marginal et court en pratique vétérinaire. La place qu'il occupe dans une récitation est celle du bicarbonate ou du bolus.</div>
+    <div class="box note"><b>Après le déblocage : la diurèse post-obstructive.</b> Elle touche <b>46 % des chats dans les 6 premières heures</b> (seuil &gt; 2 mL/kg/h). On mesure, on compense sur les sorties, puis on <b>sèvre progressivement</b> en surveillant l'hydratation — perfuser indéfiniment sur les sorties <b>entretient</b> la polyurie.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 cas-ira-lepto -->
+<details data-cas data-esp="chien" data-sys="uro" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J1</span><h3>Chien croisé mâle entier, 24 kg</h3><span class="sub">anurie 24 h · ictère · T° 39,4 · créat 9,4 · PLT 88 · glycosurie normoglycémique</span></span><span class="dx">IRA leptospirosique</span></summary>
+  <div class="body">
+    <div class="box key"><b>Les trois signes qui font basculer vers la leptospirose</b> : <b>glycosurie avec normoglycémie</b> (atteinte tubulaire proximale) · <b>thrombopénie</b> (consommation sur vascularite, 14–73 % des séries) · <b>ictère avec azotémie</b> chez un chien non vacciné et exposé à l'eau stagnante. Les <b>cylindres granuleux</b> au culot datent l'atteinte tubulaire.</div>
+    <div class="box proto"><b>Traitement.</b> <b>Doxycycline 5 mg/kg q12h, 14 jours</b> — première ligne <b>y compris en phase aiguë</b>, en <b>IV</b> si l'animal vomit. Ampicilline ou amoxicilline <b>20–30 mg/kg IV q6–8h</b> seulement si la doxycycline est impossible. <b>Sérologie et PCR sang prélevées avant la première dose.</b></div>
+    <div class="box trap"><b>Le test rapide n'est pas celui qu'on croit.</b> Le <b>SNAP Lepto (IDEXX) détecte les anticorps anti-LipL32</b>, pas les IgM — le test IgM est le <b>WITNESS Lepto</b>, positif dès J4. Le SNAP donne des <b>faux positifs post-vaccinaux jusqu'à un an</b> : chez un chien vacciné dans l'année, un positif ne conclut rien.</div>
+    <div class="box key"><b>Zoonose, et c'est l'ASV qui vide la poche.</b> Isolement, gants <b>et protection oculaire</b>, urine et litière infectieuses, désinfection après chaque passage. La consigne se donne nommément, pas en principe général.</div>
+    <div class="box note"><b>Escalade si l'oligurie persiste après euvolémie</b> : furosémide <b>charge 2 mg/kg IV puis CRI 0,66–1 mg/kg/h</b> (le registre 0,1 mg/kg/h vient de la cardiologie) · mannitol <b>0,5–1 g/kg IV sur 10–20 min</b>. Ni l'un ni l'autre n'améliore la survie ni le débit de filtration : ils <b>convertissent un oligurique en non-oligurique</b>, ce qui rend la gestion hydrique possible. On les donne pour pouvoir perfuser.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 cas-coup-chaleur -->
+<details data-cas data-esp="chien" data-sys="choc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J2</span><h3>Berger australien mâle, 19 kg</h3><span class="sub">halètement 2 h post-effort · T° 41,8 · rouge brique · TRC &lt; 1 s · Htc 57 · lactate 8,4</span></span><span class="dx">Coup de chaleur d'effort</span></summary>
+  <div class="body">
+    <div class="box key"><b>Hyperthermie n'est pas fièvre.</b> Le point de consigne hypothalamique est <b>normal</b> : l'animal est en surcharge thermique passive. Conséquence directe — <b>aucun antipyrétique</b>. Les AINS sont inutiles par mécanisme, et délétères sur un rein hypoperfusé et une barrière digestive déjà ischémiée.</div>
+    <div class="box proto"><b>Refroidir est l'action n° 1, avant la voie veineuse.</b> <b>Eau fraîche à tiède (15–25 °C) + ventilation</b> — l'évaporation. <b>Jamais de glace ni d'immersion glacée</b> : vasoconstriction périphérique et frissons piègent la chaleur.<br><b>On arrête le refroidissement actif à 39,4 °C</b> (fourchette publiée 39,4–39,7). Descendre jusqu'à la normale fait passer en hypothermie par inertie, sur un animal qui a perdu sa thermorégulation.</div>
+    <div class="box trap"><b>Ne pas sédater le halètement.</b> C'est son seul mécanisme de refroidissement. Un opioïde donné « pour le calmer » supprime l'évaporation respiratoire.</div>
+    <div class="box note"><b>Deux chiffres.</b> Seuil définitionnel : <b>&gt; 40 °C non pyrogène</b>. <b>Hypoglycémie chez 63 % des chiens</b> en coup de chaleur, et <b>&lt; 47 mg/dL = facteur de risque de mort</b> (Bruchim 2006) — elle se traite, elle ne se constate pas.</div>
+    <div class="box key"><b>Le vomissement hémorragique n'appelle pas une radio, il appelle un bilan de coagulation.</b> La barrière digestive lâche, et la <b>CIVD est ce qui tue ces chiens</b> — délai d'apparition en heures à jours, surveillance ≥ 24–48 h. TP/TCA + plaquettes à l'admission puis à H+12–24.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 cas-babesiose -->
+<details data-cas data-esp="chien" data-sys="coag" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J2</span><h3>Braque allemand femelle, 24 kg</h3><span class="sub">urines coca · pâleur subictérique · splénomégalie · Htc 19 · PLT 46 · rétic 186</span></span><span class="dx">Babésiose</span></summary>
+  <div class="body">
+    <div class="box key"><b>Ce qui écarte l'anémie hémolytique à médiation immune, ce sont deux lignes du frottis : l'absence de sphérocytes et l'absence d'auto-agglutination.</b> Pas l'absence d'agrégats plaquettaires — ceux-ci ne parlent que de la fiabilité de la numération. L'ACVIM 2019 exige ≥ 2 marqueurs de destruction immune (sphérocytes, test d'agglutination saline, Coombs) + ≥ 1 signe d'hémolyse.</div>
+    <div class="box key"><b>Bandelette « sang » 4+ sans une seule hématie au culot = hémoglobinurie.</b> La bandelette détecte l'hème, pas le globule : elle ne distingue ni l'hématie intacte, ni l'hémoglobine libre, ni la myoglobine. <b>Le geste à 5 secondes : regarder la couleur du plasma dans le tube à microhématocrite</b> — rosé à rouge = hémolyse intravasculaire ; clair = myoglobine, on cherche une rhabdomyolyse.</div>
+    <div class="box note"><b>L'hémoglobine libre est néphrotoxique.</b> C'est la vraie indication des fluides ici : protéger un rein qui filtre du pigment. Une anémie n'est pas un choc hypovolémique — à Htc 19 %, ce qui manque est le transporteur, et un bolus dilue.</div>
+    <div class="box proto"><b>Imidocarbe — RCP français, à ne pas confondre avec la littérature américaine.</b><br><b>Carbesia® = 85 mg/mL d'imidocarbe base.</b> Traitement : <b>0,25 mL / 10 kg, IM ou SC, injection unique</b> généralement suffisante. Prophylaxie : 0,5 mL / 10 kg. <b>IV strictement interdite.</b><br>Le schéma « 6,6 mg/kg répété à 14 jours » est celui d'<b>Imizol®</b> (120 mg/mL, États-Unis) et <b>ne s'applique pas</b> au produit européen.<br><b>Prémédication atropine 0,05 mg/kg SC</b> — l'imidocarbe est un inhibiteur de cholinestérase : salivation, vomissements, diarrhée, dyspnée. Aucun délai n'est documenté entre l'atropine et l'injection.</div>
+    <div class="box trap"><b>Thrombopénie quasi constante</b> — 85 % sur <i>B. canis</i> européen, jusqu'à 99 % sur <i>B. rossi</i>. Ce n'est pas un détail du frottis, c'est un argument diagnostique. <b>Corticoïdes</b> : ni systématiques ni interdits, réservés à la composante immune secondaire, <b>jamais à la place de l'imidocarbe</b>.</div>
+    <div class="box note"><b>Forme compliquée, définie</b> : IRA, SDRA, hépatopathie, babésiose cérébrale, pancréatite, rhabdomyolyse, AHMI secondaire. En France, <i>B. canis</i> (vecteur <i>Dermacentor reticulatus</i>) domine ; <i>B. vogeli</i> (<i>Rhipicephalus sanguineus</i>) dans le Sud.</div>
+    <div class="box key"><b>Il n'existe pas de seuil transfusionnel chiffré.</b> L'ACVIM 2019 décide sur les <b>signes cliniques, le lactate au repos, la vitesse d'installation, la race et la capacité de surveillance</b> ; une partie du panel seulement retient PCV &lt; 12 % chez un chien asymptomatique. Ce qui est opposable, c'est qu'un critère ait une <b>direction</b> : « chute de plus de 4 points en 2 h », « tachycardie au repos », « lactate qui remonte ». <b>Typage et compatibilité se prélèvent pendant que l'animal va bien</b>, et la disponibilité de la banque se vérifie au téléphone à l'admission, pas à 4 h du matin.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 cas-dystocie -->
+<details data-cas data-esp="chien" data-sys="repro" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J2</span><h3>Golden Retriever, 31 kg, primipare</h3><span class="sub">3 chiots nés puis arrêt 3 h 15 · contractions faibles · 4 fœtus non engagés · FCF 142</span></span><span class="dx">Inertie utérine secondaire, détresse fœtale</span></summary>
+  <div class="body">
+    <div class="box key"><b>La fréquence cardiaque fœtale est le chiffre qui décide, pas l'obstruction.</b> Normale au terme : <b>200–240/min</b> (moyenne ~230). <b>180–220 = stress léger · &lt; 180 = stress marqué · &lt; 160 = césarienne immédiate.</b> L'absence d'obstruction dit seulement que la voie basse est possible — pas que les fœtus ont le temps de l'attendre.<br>Mesure de référence en <b>M-mode</b> ; le comptage visuel en mode B est un dépannage acceptable. <i>(Le repère « le cœur fœtal bat 2× celui de la mère » n'est documenté nulle part et ne doit pas être utilisé.)</i></div>
+    <div class="box proto"><b>Les trois horloges.</b> <b>&gt; 30 min de contractions fortes sans expulsion</b> = dystocie — c'est le critère qui déclenche en garde. <b>&gt; 2 h sans contraction</b> entre deux fœtus. <b>&gt; 4 h de travail actif sans aucun chiot produit</b> — ce délai ne se compte pas entre deux chiots.</div>
+    <div class="box key"><b>Utéroverdine — le même signe dit deux choses opposées.</b> Écoulement vert <b>AVANT la naissance du premier chiot</b> = décollement placentaire prématuré = <b>césarienne immédiate</b>. Écoulement vert <b>APRÈS qu'un chiot est né</b> = <b>normal</b> : des placentas se décollent, c'est attendu.</div>
+    <div class="box proto"><b>Traitement médical, quand il est encore permis.</b><br><b>Toucher vaginal</b> — perméabilité de la filière, et <b>feathering</b> (stimulation digitale du plafond vaginal, réflexe de Ferguson) : c'est un geste thérapeutique, pas seulement diagnostique. Une réponse faible fait doser calcémie et glycémie.<br><b>Gluconate de calcium 10 % 0,5–1,5 mL/kg IV lente sous ECG</b> — jamais SC ni IM (nécrose) — puis <b>ocytocine 10 minutes après</b>.<br><b>Le calcium augmente la force des contractions, l'ocytocine leur fréquence.</b></div>
+    <div class="box trap"><b>L'ocytocine se prescrit par animal, jamais en UI/kg — et la dose se titre.</b> Dose de pratique retenue : <b>0,5–2 UI par chien</b>, quel que soit le poids, q30–60 min, <b>cumul max ~4 UI</b>. La littérature large donne 2–5 UI/animal q20–30 min, 3 doses max (Merck) ; l'école bas-dosage est retenue parce que les doses hautes donnent des <b>contractions tétaniques</b>, écrasent la perfusion placentaire et exposent à la rupture utérine. Un essai médical n'est un plan que s'il porte sa <b>fin</b> : trois doses, puis on ouvre.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 cas-dac-chat -->
+<details data-cas data-esp="chat" data-sys="endoc" class="card c-cas"><summary><span class="bar"></span><span class="head-txt"><span class="cat">S15 J2</span><h3>Chat européen mâle castré, 4,2 kg</h3><span class="sub">PU/PD 3 sem · stupeur · plantigradie · Glu 486 · K 3,1 · pH 7,08 · cétonurie 3+</span></span><span class="dx">Acidocétose diabétique</span></summary>
+  <div class="body">
+    <div class="box key"><b>« Chat diabétique » est un diagnostic de consultation. À 4 h du matin, ce qu'on a devant soi c'est pH 7,08, tCO₂ 9, cétones 3+, stupeur et 36,8 °C.</b> La respiration ample et profonde est la compensation respiratoire — la pCO₂ à 22 le confirme : il souffle son acide.</div>
+    <div class="box trap"><b>« Si glucosurie alors insuline » tue ce chat.</b> L'insuline fait entrer le potassium dans les cellules. <b>On la retient tant que K &lt; 3,5 mmol/L</b>, le temps de perfuser des fluides potassés — en général 2 à 4 h. Sinon : hypokaliémie sévère, arythmies, paralysie des muscles respiratoires.</div>
+    <div class="box proto"><b>L'ordre.</b><br>1. <b>Voie + remplissage vasculaire, priorité de rang 1</b> — NaCl 0,9 % <b>10–20 mL/kg sur 15–30 min</b> chez le chat, en boli itératifs titrés sur FC, TRC et muqueuses.<br>2. <b>Correction du potassium</b> — plafond <b>0,5 mEq/kg/h</b>, jamais de bolus, poche retournée 5–6 fois, étiquetée, ECG.<br>3. <b>Réchauffement passif</b> — 36,8 °C chez le chat est un signe de gravité.<br>4. <b>Insuline seulement ensuite</b>, idéalement <b>dans les 6 h suivant l'admission</b> : démarrer dans cette fenêtre accélère la résolution des corps cétoniques et de l'acidémie.<br>5. <b>Sonde naso-œsophagienne dès l'admission.</b><br>6. <b>Chercher la cause</b> — infection urinaire chez <b>12–13 % des chats diabétiques, majoritairement muette</b> ; pancréatite chez 50–73 % des chiens en acidocétose.</div>
+    <div class="box key"><b>Ce qui conditionne le départ de l'insuline : le volume et le potassium. Pas le pH.</b> Une acidémie sévère induit bien une résistance périphérique à l'insuline — mais l'insuline <b>est</b> le traitement de l'acidocétose : le pH remonte parce qu'on l'a donnée. Attendre pH &gt; 7,2 pour la démarrer, c'est attendre un résultat que seul le traitement retenu peut produire. Le pH a un seuil pour décider d'un <b>bicarbonate</b>, pas pour l'insuline.</div>
+    <div class="box proto"><b>Protocole CRI d'insuline rapide (Macintire) — les doses ne sont PAS les mêmes chien et chat.</b><br><b>Insuline ordinaire 2,2 UI/kg chez le chien · 1,1 UI/kg chez le chat</b>, dans <b>250 mL de NaCl 0,9 %</b> (jamais de RL), tubulure bien purgée. Équivalent ≈ 0,05–0,1 UI/kg/h.<br>Débit selon la glycémie : <b>&gt; 350 mg/dL → 10 mL/h · 250–350 → 7 · 150–250 → 5 (+ dextrose 2,5 %) · 100–150 → 3–5 (+ 5 %) · ≤ 100 → arrêt de la CRI</b>. Glycémie mesurée <b>q1–2 h</b>.<br><b>Descente ≤ 50–100 mg/dL/h</b>, cible pratique 50–75. <b>La cible n'est pas la normoglycémie</b> : on maintient <b>150–300 mg/dL pendant 24–48 h</b>.</div>
+    <div class="box note"><b>Œdème cérébral</b> : documenté par cas isolés seulement chez le chien et le chat, aucune fréquence établie — c'est une extrapolation de la pédiatrie humaine (0,5–1 % des acidocétoses de l'enfant). Il reste le <b>risque théorique qui justifie la limite de vitesse glycémique</b>, pas une complication attendue.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+    <div class="slabel">Aide-mémoire &amp; protocoles</div>
+<!-- BLOC: mod6 osmo-calc -->
+<details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Diabète · calculateur</span><h3>Natrémie corrigée &amp; osmolarité efficace</h3><span class="sub">Na / K / glycémie → Na corrigée, osmolarité, seuil d'espèce</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <div class="box key" style="padding:15px">
+      <div style="display:grid;gap:11px">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="min-width:150px">Espèce</span>
+          <select id="osm-esp" style="padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+            <option value="chien">Chien (seuil 325)</option>
+            <option value="chat" selected>Chat (seuil 350)</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="min-width:150px">Natrémie mesurée</span>
+          <input id="osm-na" type="number" inputmode="decimal" placeholder="mmol/L" style="width:110px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="min-width:150px">Kaliémie</span>
+          <input id="osm-k" type="number" inputmode="decimal" placeholder="mmol/L" style="width:110px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+          <span style="min-width:150px">Glycémie</span>
+          <input id="osm-glu" type="number" inputmode="decimal" placeholder="valeur" style="width:110px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+          <select id="osm-gu" style="padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+            <option value="mgdl" selected>mg/dL</option>
+            <option value="mmol">mmol/L</option>
+          </select>
+        </div>
+      </div>
+      <div class="box note" id="osm-out" style="margin-top:14px">Entre la natrémie, la kaliémie et la glycémie.</div>
+    </div>
+    <div class="box trap"><b>Le signe de la correction va vers le HAUT.</b> Le glucose est osmotiquement actif dans le secteur extracellulaire : l'hyperglycémie <b>tire l'eau des cellules vers le plasma</b> et <b>dilue</b> le sodium mesuré — c'est l'hyponatrémie translocationnelle. Le sodium mesuré est donc <b>plus bas que la réalité</b>, et la correction lui rend ce que la dilution lui a pris.<br><b>Na corrigée = Na mesurée + 1,6 × (Glu mg/dL − 100) / 100</b>, coefficient porté à <b>2,4–2,6 au-dessus de 400 mg/dL</b>. Toute formule qui <b>retranche</b> est fausse, et elle se trompe toujours dans le sens rassurant : elle fait rater un état hyperosmolaire.</div>
+    <div class="box note"><b>Osmolarité efficace = 2 × (Na corrigée + K) + Glu (mmol/L).</b> L'urée est <b>volontairement exclue</b> : c'est une osmole inefficace, elle traverse les membranes et ne déplace pas d'eau. Normale féline 290–330 mOsm/kg. <b>État hyperosmolaire : &gt; 350 chez le chat, &gt; 325 chez le chien.</b> Conversion glycémie : mg/dL ÷ 18 = mmol/L.</div>
+  </div>
+</details>
+<script>(function(){
+  var esp=document.getElementById('osm-esp'), na=document.getElementById('osm-na'),
+      k=document.getElementById('osm-k'), glu=document.getElementById('osm-glu'),
+      gu=document.getElementById('osm-gu'), out=document.getElementById('osm-out');
+  if(!out) return;
+  function n(el){ var v=parseFloat(String(el.value).replace(',','.')); return isFinite(v)?v:null; }
+  function calc(){
+    var Na=n(na), K=n(k), G=n(glu);
+    if(Na===null||K===null||G===null){ out.innerHTML='Entre la natrémie, la kaliémie et la glycémie.'; return; }
+    var gMg = (gu.value==='mmol') ? G*18 : G;
+    var gMm = gMg/18;
+    var f = gMg>400 ? 2.4 : 1.6;
+    var corr = Na + f*(gMg-100)/100;
+    var osm = 2*(corr+K) + gMm;
+    var seuil = esp.value==='chat' ? 350 : 325;
+    var alt='';
+    if(gMg>400){
+      var corr26 = Na + 2.6*(gMg-100)/100;
+      alt = '<br><span style="opacity:.8">Variante coefficient 2,6 (&gt; 400 mg/dL) : Na corrigée <b>'+corr26.toFixed(1)+'</b> · osmolarité <b>'+(2*(corr26+K)+gMm).toFixed(1)+'</b></span>';
+    }
+    var verdict = osm>seuil
+      ? '<b style="color:var(--danger,#c0392b)">Osmolarité au-dessus du seuil '+esp.value+' ('+seuil+') — état hyperosmolaire : réhydratation lente sur 24–72 h, natrémie qui ne varie pas de plus de 0,5–1 mmol/L/h.</b>'
+      : '<b>Sous le seuil '+esp.value+' ('+seuil+')</b> — pas d’état hyperosmolaire. La cétonurie et le pH tranchent l’acidocétose.';
+    out.innerHTML =
+      'Glycémie <b>'+gMg.toFixed(0)+' mg/dL</b> = <b>'+gMm.toFixed(1)+' mmol/L</b> · coefficient appliqué <b>'+f.toFixed(1)+'</b><br>'+
+      'Natrémie corrigée <b>'+corr.toFixed(1)+' mmol/L</b> (mesurée '+Na.toFixed(1)+', +'+(corr-Na).toFixed(1)+')<br>'+
+      'Osmolarité efficace <b>'+osm.toFixed(1)+' mOsm/kg</b><br>'+verdict+alt;
+  }
+  [esp,na,k,glu,gu].forEach(function(el){ el.addEventListener('input',calc); el.addEventListener('change',calc); });
+})();</script>
+<!-- /BLOC -->
+<!-- BLOC: mod6 dac-dho -->
+<details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Diabète · discrimination</span><h3>Acidocétose et hyperosmolaire</h3><span class="sub">ce qui les sépare, et pourquoi ça change le rythme</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <p><b>Les deux sont des décompensations aiguës du diabète, avec hyperglycémie et déshydratation majeure. Ce qui les sépare est l'insuline résiduelle.</b></p>
+    <div class="box key"><b>Acidocétose</b> — carence <b>quasi totale</b> en insuline. Le glucose n'entre plus, l'organisme bascule sur les lipides : <b>lipolyse massive → corps cétoniques</b> (β-hydroxybutyrate, acétoacétate) → acides → <b>acidose métabolique à trou anionique élargi</b>. C'est <b>l'acide</b> qui tue.<br><b>Hyperosmolaire</b> — il reste <b>assez d'insuline pour freiner la lipolyse</b> (elle y est très sensible), pas assez pour faire entrer le glucose. Donc <b>pas de cétogenèse significative</b> : cétones absentes ou traces, pH normal ou peu abaissé. La glycémie monte bien plus haut, la diurèse osmotique vide le patient, et c'est <b>l'osmolarité</b> qui tue.</div>
+    <div class="tablewrap"><table class="doses">
+      <thead><tr><th></th><th>Acidocétose</th><th>Hyperosmolaire</th></tr></thead>
+      <tbody>
+        <tr><td>Cétones</td><td class="d">présentes, souvent 2–3+</td><td>absentes ou traces</td></tr>
+        <tr><td>pH / tCO₂</td><td class="d">abaissés</td><td>normaux ou peu abaissés</td></tr>
+        <tr><td>Glycémie</td><td>souvent 300–600 mg/dL</td><td>souvent &gt; 600 mg/dL</td></tr>
+        <tr><td>Osmolarité efficace</td><td>&lt; seuil d'espèce</td><td class="d">&gt; 350 chat · &gt; 325 chien</td></tr>
+        <tr><td>Tableau dominant</td><td>respiration ample, vomissements, déshydratation</td><td class="d">ataxie, stupeur, coma, hypotension</td></tr>
+        <tr><td>Pronostic</td><td>meilleur</td><td>moins bon — souvent l'affection intercurrente</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box trap"><b>Pourquoi le rythme change.</b> Dans l'hyperosmolaire, l'hyperosmolarité est <b>installée</b> et le cerveau s'y est adapté en fabriquant des osmoles idiogéniques. La corriger vite provoque un <b>appel d'eau intracellulaire</b> — œdème cérébral. D'où : réhydratation <b>lente, 24–72 h</b>, <b>natrémie qui ne varie pas de plus de 0,5–1 mmol/L par heure</b>, et un soluté <b>pauvre en sodium</b> (RL privilégié ; les hypotoniques vrais comme le G5 pur sont à éviter en première intention).</div>
+    <div class="box note"><b>Au chevet, en 30 secondes</b> : bandelette urinaire (cétones) + BRU (pH, tCO₂) + le calcul d'osmolarité. Cétones + et pH bas → acidocétose. Cétones négatives, pH normal, osmolarité au-dessus du seuil, signes neurologiques → hyperosmolaire. <b>Les formes mixtes existent</b> — un animal peut être à la fois cétosique et hyperosmolaire.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 deshydratation -->
+<details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Fluides · estimation</span><h3>Déshydratation — l'estimer, la chiffrer, la corriger</h3><span class="sub">grille clinique · déficit · débit · ins and outs</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <p><b>Le déficit ne se devine pas et ne se déduit pas de l'anamnèse : il s'estime à l'examen, sur une grille fixe.</b></p>
+    <div class="tablewrap"><table class="doses">
+      <thead><tr><th>Signes</th><th>Déshydratation</th></tr></thead>
+      <tbody>
+        <tr><td>Rien de détectable</td><td class="d">&lt; 5 %</td></tr>
+        <tr><td>Muqueuses à peine collantes, pli très discret</td><td class="d">5 %</td></tr>
+        <tr><td><b>Pli net et persistant, muqueuses sèches, globes légèrement enfoncés</b></td><td class="d">6–8 %</td></tr>
+        <tr><td>Pli très persistant, globes enfoncés, TRC allongé</td><td class="d">8–10 %</td></tr>
+        <tr><td>+ tachycardie, pouls faible, choc</td><td class="d">10–12 %</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box key"><b>Déficit (mL) = % de déshydratation × poids (kg) × 10.</b> Parce qu'un kilo d'eau perdue vaut un litre. <i>7 % sur 24 kg = 1 680 mL.</i></div>
+    <div class="box proto"><b>Le débit affiché additionne trois étages.</b><br><b>Déficit</b> — en insuffisance rénale aiguë, l'hypovolémie se corrige en 1–2 h et le déficit interstitiel <b>sur 6 h</b> (registre IRIS) ; <b>12–24 h</b> est le rythme de la déshydratation simple non rénale. <i>1 680 mL / 6 h = 280 mL/h.</i><br><b>Entretien</b> — 2 mL/kg/h. <i>48 mL/h.</i><br><b>Pertes en cours</b> — vomissements, diarrhée, drainage, réestimés.<br><i>Total ≈ 330 mL/h, puis on recalcule.</i></div>
+    <div class="box trap"><b>Après réhydratation, la règle change : « ins and outs ».</b> Le débit n'est plus une formule mais <b>la diurèse mesurée + les pertes insensibles (≈ 20–22 mL/kg/j, soit ≈ 1 mL/kg/h) + les pertes en cours</b>. C'est la seule façon de ne pas noyer un rein qui ne filtre plus.</div>
+    <div class="box note"><b>Diurèse — les seuils.</b> Normale <b>1–2 mL/kg/h</b>. <b>Oligurie &lt; 0,5 mL/kg/h</b> — mais chez un patient <b>déjà réhydraté</b>, <b>moins de 1 mL/kg/h est déjà pathologique</b> (oligurie relative), et &lt; 0,3 mL/kg/h sur 6 h = oligo-anurie. <b>Sur un oligo-anurique, peser l'alèse ne suffit pas</b> : sonde urinaire à demeure et système de recueil clos, poche graduée relevée toutes les heures.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 feuille-hospit -->
+<details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Garde · livrable</span><h3>La feuille d'hospitalisation de nuit</h3><span class="sub">six blocs, dans l'ordre, exécutables par l'ASV</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <p><b>Une feuille d'hospitalisation tient en six blocs, toujours les mêmes.</b> On les descend dans l'ordre et rien ne s'oublie. Chaque ligne doit être exécutable telle quelle : l'ASV applique littéralement, elle n'interprète pas.</p>
+    <div class="box proto"><b>1 — FLUIDES.</b> Le soluté, le <b>débit en mL/h</b> à la pompe, et l'heure jusqu'à laquelle il tient. Puis la règle qui prend le relais (recalcul, ou bascule en ins and outs).<br><b>2 — MÉDICAMENTS.</b> Une ligne par molécule : nom, dose, <b>volume</b>, voie, heure de la première administration, fréquence. Les prélèvements à faire <b>avant</b> la première dose. Les interdits explicites (« aucun AINS »).<br><b>3 — MESURES, avec leur fréquence.</b> Diurèse horaire, poids q6h à la même balance, BRU q4h, ECG continu si indiqué, TFAST q6h, constantes q4h.<br><b>4 — CRITÈRES D'APPEL, chiffrés.</b> Jamais « si ça se dégrade » : un seuil et un sens. <i>« Diurèse &lt; 12 mL/h sur deux heures consécutives », « prise de poids &gt; 0,5 kg entre deux pesées », « K⁺ &gt; 6,5 ».</i><br><b>5 — SOINS ET PRÉCAUTIONS.</b> Isolement et protection si zoonose, à jeun ou non, décubitus alterné, soins oculaires si sédaté.<br><b>6 — TRANSMISSION.</b> Une ligne pour l'équipe du matin : <b>ce qui reste à décider.</b></div>
+    <div class="box trap"><b>« Surveillance des urines » n'est pas une consigne.</b> Une consigne porte un geste, une fréquence, une unité et un seuil. Sans les quatre, elle ne sera pas exécutée — et son absence ne se verra qu'au matin.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 appel-chir -->
+<details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Garde · communication</span><h3>Appeler le chirurgien à 3 h du matin</h3><span class="sub">six lignes, trente secondes, dans cet ordre</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <p><b>On appelle une seule fois, quand l'opération est décidée ET consentie.</b> Il n'existe pas de pré-appel d'information : un « je te préviens, ça se profile » ne fait pas gagner de délai d'astreinte. L'ordre valide est <b>stabilisation → consentement du propriétaire → appel</b>.</p>
+    <div class="box proto"><b>Le gabarit.</b><br><b>1.</b> Qui tu es.<br><b>2.</b> <b>La demande d'abord</b> — « j'ai une césarienne ». Il a besoin de savoir en trois secondes s'il se lève.<br><b>3.</b> Le patient en une ligne : race, âge, poids, motif.<br><b>4.</b> <b>Pourquoi maintenant</b> — le chiffre qui a fait basculer.<br><b>5.</b> <b>La mère est-elle anesthésiable</b> — température, hématocrite, lactate, voie posée. C'est sa vraie question.<br><b>6.</b> <b>Le consentement est obtenu</b>, puis : « tu es là dans combien de temps ? » — ce délai commande tout ce que tu fais ensuite.</div>
+    <div class="box trap"><b>Ne jamais embellir ce qui a été fait.</b> Dire « on a essayé le traitement médical » quand on ne l'a pas tenté est un mensonge qui se lit sur la feuille vingt minutes plus tard. La transmission est la seule chose que les collègues ne peuvent pas vérifier eux-mêmes. <b>« Je n'ai pas tenté le médical, la FCF ne me le permettait pas »</b> est plus court et plus fort.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 reanim-neonat -->
+<details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Césarienne · néonat</span><h3>Accueillir les chiots d'une césarienne de nuit</h3><span class="sub">le chirurgien opère la mère, les nouveau-nés sont pour l'équipe</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <div class="box key"><b>Le délai d'astreinte n'est pas un temps d'attente, c'est le temps de préparation.</b> Le chirurgien ouvre et, en trois minutes, pose quatre nouveau-nés sur la table. <b>Une personne assignée par chiot, nommément, avant l'incision</b> — « les ASV vont préparer le bloc » n'est pas un ordre.</div>
+    <div class="box proto"><b>Sur la mère, avant l'induction.</b> <b>Préoxygénation au masque au moins 5 minutes</b> — une chienne à terme a une capacité résiduelle effondrée et désature en quelques secondes. <b>Tonte et première préparation chirurgicale sur animal vigile</b> : chaque minute entre l'induction et l'extraction est de la dépression néonatale. Vessie vidée, table et patiente réchauffées.</div>
+    <div class="box proto"><b>Anesthésie — ce qui est proscrit et ce qui est retenu.</b> <b>Acépromazine et alpha-2 agonistes proscrits</b> : vasodilatation, hypoperfusion placentaire, mortalité fœtale accrue. Induction <b>propofol 4–6 mg/kg</b> ou <b>alfaxalone 2–3 mg/kg IV</b> (meilleurs scores néonataux), entretien <b>isoflurane ou sévoflurane</b>, <b>pas de TIVA</b>. <b>Les opioïdes ne se diffèrent pas par principe</b> : opioïde µ pur en prémédication à dose minimale efficace, <b>naloxone 0,1 mg/kg IV prête pour les chiots</b>.<br><b>Antibioprophylaxie non systématique</b> sur une césarienne propre — indiquée si mort fœtale, infection utérine suspectée ou rupture d'asepsie : <b>céfazoline 20–22 mg/kg IV à l'induction, avant l'incision</b>, répétée q90 min. Jamais « après clampage des cordons ».</div>
+    <div class="box trap"><b>Le balancement du chiot est contre-indiqué</b> — traumatisme crânio-cervical. <b>Le doxapram est abandonné</b> : inefficace sur un cerveau hypoxique, et il augmente la consommation d'oxygène.</div>
+    <div class="box note"><b>La séquence par chiot</b> : aspiration douce des voies aériennes, séchage et friction vigoureuse, réchauffement immédiat, cordon clampé puis ombilic désinfecté. <b>Un chiot qui refroidit ne tète pas et ne digère pas</b> — l'hypothermie néonatale tue après coup, quand tout le monde pense que c'est gagné. Le <b>score d'Apgar canin est validé</b> et corrélé au lactate ombilical et à la survie.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+<!-- BLOC: mod6 fiches-importees -->
+<details class="card c-repere"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Sources · vigilance</span><h3>Ce que les fiches importées portent de faux</h3><span class="sub">erreurs relevées et corrigées, avec la valeur juste</span></span><span class="chev">▸</span></summary>
+  <div class="body">
+    <p><b>Une fiche de révision extérieure n'est pas une source primaire.</b> Les erreurs relevées ci-dessous proviennent d'un corpus par ailleurs utile — l'organisation pratique et les présentations françaises ne se trouvent pas ailleurs. La règle : <b>aucune fiche importée n'entre dans le kit de garde sans vérification des chiffres qu'elle porte.</b></p>
+    <div class="tablewrap"><table class="doses">
+      <thead><tr><th>Ce qui est écrit</th><th>Ce qui est juste</th></tr></thead>
+      <tbody>
+        <tr><td>Na corrigée = Na mesurée <b>−</b> 1,6 × (…)</td><td class="d">La correction <b>ajoute</b> : Na mesurée <b>+</b> 1,6 × (Glu mg/dL − 100)/100. L'erreur va toujours dans le sens rassurant.</td></tr>
+        <tr><td>« On initie l'insuline une fois que le pH &gt; 7,2 »</td><td class="d">Le pH ne conditionne pas le départ. Les deux verrous sont le <b>volume</b> et <b>K ≥ 3,5 mmol/L</b>.</td></tr>
+        <tr><td>Insuline CRI « 2,2 UI/kg, mêmes doses CN et CT »</td><td class="d"><b>2,2 UI/kg chien · 1,1 UI/kg chat.</b> Facteur 2 sur une insuline.</td></tr>
+        <tr><td>Œdème cérébral, « complication fréquente »</td><td class="d">Cas isolés seulement chez le chien et le chat ; extrapolation de la pédiatrie humaine.</td></tr>
+        <tr><td>État hyperosmolaire « &gt; 330 mOsm/kg »</td><td class="d"><b>&gt; 350 chez le chat</b>, &gt; 325 chez le chien. Normale féline 290–330.</td></tr>
+        <tr><td>Descente glycémique « 1–2 mmol/L/h »</td><td class="d"><b>≤ 50–100 mg/dL/h</b> (cible 50–75), et la cible n'est pas la normoglycémie mais 150–300 mg/dL sur 24–48 h.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="box trap"><b>Deux réflexes de lecture.</b> Une fiche qui <b>se contredit d'une ligne à l'autre</b> (« la natrémie est sous-estimée » puis une soustraction) tranche seule : la contradiction interne est une preuve. Et <b>toute posologie doit être lue en cherchant l'espèce</b> : « mêmes doses chien et chat » est une affirmation, pas une évidence.</div>
+  </div>
+</details>
+<!-- /BLOC -->
+  </section>
+
   <!-- ============ CONSTANTES & BRU ============ -->
   <section class="view c-repere" id="constantes">
     <div class="view-head">
@@ -2754,6 +3003,19 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
       <tr><td>Doxycycline</td><td>Chlamydiose féline — conjonctivite</td><td class="d">10 mg/kg q24h · 7–21 j pour les signes, <b>28 j</b> pour éliminer le germe</td><td class="c">—</td><td>PO</td><td><span class="catchip">Ophtalmologie</span></td><td class="s">ProgressVet 2021</td></tr>
       <tr><td>PFC</td><td>Hypoalbuminémie — volume nécessaire (≠ dose de facteurs)</td><td class="d">45 mL/kg pour monter l'albumine de 10 g/L</td><td class="c">—</td><td>IV</td><td><span class="catchip">Fluides</span></td><td class="s">Merck Vet Manual</td></tr>
       <tr><td>Don de sang — donneur</td><td>Volume prélevable</td><td class="d">Chien 15–20 mL/kg tous les 2–3 mois · chat 10 mL/kg maximum · jeûne 4–6 h si sédation</td><td class="c">—</td><td>Prélèvement jugulaire</td><td><span class="catchip">Fluides</span></td><td class="s">ProgressVet 2021</td></tr>
+      <tr><td>Doxycycline</td><td>Leptospirose canine — première ligne y compris en phase aiguë, IV si vomissements</td><td class="d">5 mg/kg q12h, 14 jours</td><td class="c">—</td><td>PO / IV</td><td><span class="catchip">Infectieux</span></td><td class="s">ACVIM 2023</td></tr>
+      <tr><td>Ampicilline ou amoxicilline</td><td>Leptospirose — seulement si la doxycycline est impossible</td><td class="d">20–30 mg/kg q6–8h</td><td class="c">—</td><td>IV</td><td><span class="catchip">Infectieux</span></td><td class="s">ACVIM 2023</td></tr>
+      <tr><td>Imidocarbe (Carbesia®)</td><td>Babésiose canine — traitement · RCP français, ≠ Imizol® US 120 mg/mL</td><td class="d">0,25 mL/10 kg, injection unique · jamais IV</td><td class="c">85 mg/mL</td><td>IM / SC</td><td><span class="catchip">Parasitaire</span></td><td class="s">RCP ANSES</td></tr>
+      <tr><td>Imidocarbe (Carbesia®)</td><td>Babésiose canine — prophylaxie</td><td class="d">0,5 mL/10 kg</td><td class="c">85 mg/mL</td><td>IM / SC</td><td><span class="catchip">Parasitaire</span></td><td class="s">RCP ANSES</td></tr>
+      <tr><td>Atropine</td><td>Prémédication avant imidocarbe — effets cholinergiques</td><td class="d">0,05 mg/kg · aucun délai documenté avant l'injection</td><td class="c">1 mg/mL</td><td>SC</td><td><span class="catchip">Parasympatholytique</span></td><td class="s">Vet Parasitol 2018</td></tr>
+      <tr><td>Ocytocine</td><td>Inertie utérine — dose de pratique, titrée, JAMAIS en UI/kg</td><td class="d">0,5–2 UI/chien q30–60 min, cumul max ~4 UI · littérature large 2–5 UI q20–30 min, 3 doses</td><td class="c">10 UI/mL</td><td>IM / SC</td><td><span class="catchip">Reproduction</span></td><td class="s">Clinician's Brief / Merck</td></tr>
+      <tr><td>Céfazoline</td><td>Césarienne — prophylaxie non systématique, à l'induction AVANT l'incision</td><td class="d">20–22 mg/kg, répétée q90 min</td><td class="c">—</td><td>IV</td><td><span class="catchip">Infectieux</span></td><td class="s">Vetfolio</td></tr>
+      <tr><td>Alfaxalone</td><td>Induction de césarienne — meilleurs scores néonataux</td><td class="d">2–3 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Anesthésie</span></td><td class="s">Clinician's Brief</td></tr>
+      <tr><td>Propofol</td><td>Induction de césarienne</td><td class="d">4–6 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Anesthésie</span></td><td class="s">Clinician's Brief</td></tr>
+      <tr><td>Naloxone</td><td>Chiot déprimé après opioïde administré à la mère</td><td class="d">0,1 mg/kg</td><td class="c">0,4 mg/mL</td><td>IV</td><td><span class="catchip">Antidote</span></td><td class="s">Clinician's Brief</td></tr>
+      <tr><td>Furosémide (IRA oligurique)</td><td>Oligurie persistante après euvolémie — convertit sans améliorer la survie</td><td class="d">charge 2 mg/kg puis CRI 0,66–1 mg/kg/h</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Rénal</span></td><td class="s">Today's Vet Practice</td></tr>
+      <tr><td>Mannitol 20 % (IRA oligurique)</td><td>Oligurie persistante après euvolémie</td><td class="d">0,5–1 g/kg sur 10–20 min</td><td class="c">200 mg/mL</td><td>IV</td><td><span class="catchip">Rénal</span></td><td class="s">Today's Vet Practice</td></tr>
+      <tr><td>Insuline ordinaire (CRI acidocétose)</td><td>Acidocétose diabétique — doses DISTINCTES chien et chat, dans 250 mL NaCl 0,9 %</td><td class="d">2,2 UI/kg chien · 1,1 UI/kg chat (≈ 0,05–0,1 UI/kg/h)</td><td class="c">100 UI/mL</td><td>IV (CRI)</td><td><span class="catchip">Endocrinien</span></td><td class="s">Merck / Macintire</td></tr>
 </tbody>
     </table></div>
     <p class="empty" id="doseEmpty">Aucune dose ne correspond à la recherche.</p>
@@ -4122,7 +4384,7 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
     <!-- BLOC: sp-repro medical -->
     <details class="card c-proto"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Dystocie</span><h3>Calcium puis ocytocine — dans cet ordre</h3><span class="sub">Le médical résout 30 % des cas, pas plus</span></span><span class="chev">▸</span></summary>
       <div class="body">
-        <p><b>Le calcium augmente la force des contractions, l'ocytocine leur fréquence.</b> Le calcium se donne <b>en premier</b>, l'ocytocine <b>15 minutes après</b> : l'effet de l'ocytocine est amplifié par l'apport préalable de calcium. Le calcium reste utile <b>même à calcémie normale</b>, ce qui suggère un effet cellulaire direct.</p>
+        <p><b>Le calcium augmente la force des contractions, l'ocytocine leur fréquence.</b> Le calcium se donne <b>en premier</b>, l'ocytocine <b>10 minutes après</b> : l'effet de l'ocytocine est amplifié par l'apport préalable de calcium. Le calcium reste utile <b>même à calcémie normale</b>, ce qui suggère un effet cellulaire direct.</p>
         <div class="tablewrap"><table class="doses">
           <thead><tr><th>Poids</th><th>Ocytocine — dose par animal</th></tr></thead>
           <tbody>
@@ -4293,6 +4555,8 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
           <li><b>CRASH PLAN</b> — Cardiovascular · Respiratory · Abdomen · Spine · Head · Pelvis · Limb · Arteries · Nerves. Et il se <b>refait pendant 24 h</b> : sur 30 chiens d'AVP, 29 ont fait une ectopie ventriculaire et <b>4 seulement étaient détectables à l'admission</b>.</li>
           <li><b>Prise en charge horizontale</b> : plusieurs opérateurs agissent en même temps sur le même patient, et <b>une seule personne décide</b>. Toute l'information remonte au leader, lui seul donne les ordres médicaux.</li>
           <li><b>Un FAST négatif ne clôt rien</b> : ~20 % se positivent au contrôle. On recontrôle à 30 et 60 min, puis 12, 24 et 48 h, ou jusqu'à deux examens négatifs consécutifs.</li>
+        
+          <li>Un critère sans direction n'est pas un critère : <b>un seuil et un sens</b>, jamais « si ça se dégrade ».</li>
         </ul>
       </div>
     </details>
@@ -4311,6 +4575,10 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
           <li><b>Hémoabdomen splénique — l'Htc de départ va descendre.</b> 27 % avant tout fluide chez un chien qui saigne depuis une heure n'est pas rassurant : la rate qui saigne ne peut pas se contracter pour compenser, et les fluides diluent. Le seuil transfusionnel (&lt; 20 % avec signes d'hypoxie) se franchit <b>pendant</b> la réanimation, pas avant.</li>
           <li><b>ECG avant induction sur tout hémoabdomen splénique</b> : 40–50 % d'arythmies ventriculaires, majoritairement au moment de la réanimation. C'est le paramètre qui dit si le chien peut être induit tel quel.</li>
           <li><b>L'autotransfusion est interdite dès qu'une néoplasie est suspectée</b> (masse splénique = risque de dissémination), en plus des CI classiques : coagulopathie de fond, sang stagnant &gt; 4–6 h, hémolyse visible, contamination septique. Le litre de sang disponible dans l'abdomen est le piège, pas l'indication.</li>
+        
+          <li>Hyperthermie n'est pas fièvre : sur un coup de chaleur, <b>aucun antipyrétique</b> — inutile par mécanisme, délétère sur un rein et un tube digestif ischémiés.</li>
+          <li>Le refroidissement actif <b>s'arrête à 39,4 °C</b>, et c'est l'action n° 1, avant la voie veineuse. Eau tiède et ventilation, jamais de glace.</li>
+          <li><b>On ne sédate pas le halètement</b> d'un coup de chaleur : c'est son seul mécanisme de refroidissement.</li>
         </ul>
       </div>
     </details>
@@ -4420,6 +4688,10 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
         
           <li><b>Cross-match obligatoire dès la deuxième transfusion</b>, même si la première était compatible : 25 % des chats transfusés avec du sang A/B compatible développent des anticorps contre leur donneur.</li>
           <li><b>Le Schirmer se fait avant toute instillation.</b> Anesthésique et mydriatique le rendent ininterprétable — et sur un chien, une conjonctivite qui traîne est une insuffisance lacrymale jusqu'à preuve du contraire.</li>
+        
+          <li>Bandelette « sang » positive <b>sans hématie au culot</b> = hémoglobinurie ou myoglobinurie. Le plasma du tube à microhématocrite tranche : rosé = hémolyse, clair = myoglobine.</li>
+          <li>La correction de la natrémie sur hyperglycémie <b>AJOUTE</b>. Toute formule qui retranche fait rater un état hyperosmolaire.</li>
+          <li>Le pH dit <b>qui gagne</b>, les autres lignes disent <b>qui compense</b>. Un pH &lt; 7,35 est une acidémie, quoi que fasse la pCO₂.</li>
         </ul>
       </div>
     </details>
@@ -4436,6 +4708,10 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
           <li><b>Uroabdomen</b> : créatinine de l'épanchement <b>≥ 2 ×</b> le sang · potassium <b>≥ 1,4 ×</b> (chien) / <b>≥ 1,9 ×</b> (chat). Toujours épanchement <b>supérieur</b> au sang.</li>
           <li><b>Un uroabdomen hyperkaliémique ne part pas au bloc</b> : drainage, NaCl 0,9 %, correction du potassium — l'anesthésie est le danger. Beaucoup de ruptures vésicales cicatrisent sous dérivation urinaire.</li>
           <li><b>Drainer un uroabdomen, c'est traiter</b> — on évacue la charge potassique.</li>
+        
+          <li>Sur un oligo-anurique, la diurèse se mesure <b>à l'heure</b>, sonde à demeure et système clos. Peser l'alèse ne suffit pas.</li>
+          <li>Après réhydratation, le débit n'est plus une formule : <b>diurèse mesurée + 1 mL/kg/h d'insensibles + pertes en cours</b>.</li>
+          <li>Chez un patient déjà réhydraté, <b>moins de 1 mL/kg/h est déjà pathologique</b> — le seuil 0,5 fait manquer l'oligurie relative.</li>
         </ul>
       </div>
     </details>
@@ -4482,9 +4758,14 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
           <li><b>Le NaCl hypertonique a deux doses</b> : chien 4 mL/kg (3–5), <b>chat 2 mL/kg (2–4)</b>, sur 10–15 min, débit max 1 mL/kg/min. Et la concentration de la poche varie (7 / 7,2 / 7,5 %) : <b>lire l'étiquette avant de calculer</b>.</li>
           <li><b>Sur une solution concentrée, c'est le débit qui tue, pas le volume.</b> Gluconate de calcium 0,5–1,5 mL/kg <b>sur 10–30 min sous ECG</b> ; mannitol en bolus sur 15–20 min avec filtre en ligne ; G50 jamais pur, dilué ≥ 1:2.</li>
         
-          <li><b>L'ocytocine se prescrit en UI par animal, jamais en UI/kg</b> : 0,25 à 5 UI selon le format, IM ou SC, toutes les 30 minutes, <b>trois doses au maximum</b>. Le calcium se donne 15 minutes avant, et amplifie son effet.</li>
+          <li><b>L'ocytocine se prescrit en UI par animal, jamais en UI/kg</b> : 0,25 à 5 UI selon le format, IM ou SC, toutes les 30 minutes, <b>trois doses au maximum</b>. Le calcium se donne 10 minutes avant, et amplifie son effet.</li>
           <li><b>Jamais de corticoïde topique sur un œil sans avis spécialisé</b>, même fluorescéine négative — et <b>jamais d'atropine</b> sur une PIO élevée ou une luxation du cristallin.</li>
           <li><b>On ne prémédique pas une césarienne.</b> α2-agonistes, phénothiazines, benzodiazépines et kétamine sont tous proscrits ; induction au propofol ou à l'alfaxalone, à effet, dose usuelle réduite de 30 à 60 %.</li>
+        
+          <li><b>Le potassium passe avant l'insuline</b> : on retient l'insuline tant que K &lt; 3,5 mmol/L.</li>
+          <li><b>L'ocytocine se titre par animal, jamais au poids</b> : 0,5–2 UI par chien, quel que soit le format.</li>
+          <li>Un essai médical n'est un plan que s'il porte sa <b>fin</b> : combien de doses, et à quelle heure on arrête d'essayer.</li>
+          <li>Une posologie se lit <b>en cherchant l'espèce</b> : « mêmes doses chien et chat » est une affirmation, pas une évidence.</li>
         </ul>
       </div>
     </details>
@@ -4497,6 +4778,9 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
           <li><b>Une question se répond, même par un refus.</b> La règle du service se dit, elle ne s'esquive pas — une esquive coûte plus de confiance qu'un refus expliqué.</li>
           <li><b>Annonce de décès : dire « il est mort »</b>, jamais « il nous a quitté ».</li>
           <li><b>Ordre d'appel du chirurgien : stabilisation → consentement → puis appel.</b> Le chirurgien ne se déplace pas sur une chirurgie non confirmée.</li>
+        
+          <li>On appelle le chirurgien <b>une seule fois</b>, après consentement — et jamais pour dire qu'on a fait ce qu'on n'a pas fait.</li>
+          <li>La demande passe <b>en premier</b> au téléphone : il a besoin de savoir en trois secondes s'il se lève.</li>
         </ul>
       </div>
     </details>
