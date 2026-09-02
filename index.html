@@ -205,6 +205,9 @@ mark{background:color-mix(in srgb,var(--c-repere) 48%,transparent);color:inherit
   margin:24px 0 11px;padding-bottom:6px;border-bottom:1px solid var(--line);text-transform:uppercase}
 .res-src:first-child{margin-top:2px}
 #resCards .card,#resDoses .tablewrap{margin-bottom:13px}
+/* apercu de recherche : la phrase qui porte le mot, pas la carte entiere */
+.res-snip{display:block;margin-top:7px;font-size:13.5px;line-height:1.55;color:var(--ink)}
+.res-more{font-size:11px;color:var(--ink-soft);white-space:nowrap;font-weight:600}
 
 footer{border-top:1px solid var(--line);margin-top:20px;padding:22px 40px;color:var(--ink-soft);font-size:12px;text-align:center}
 
@@ -4895,6 +4898,39 @@ function fold(str){
   }
   return o;
 }
+/* L'apercu : la phrase du corps de carte qui porte le mot cherche.
+   Les balises deviennent des espaces (sinon « (OAP).Plan » se recolle),
+   bornes de phrase sinon coupe au mot, et un extrait trop court est repris
+   avec les seules bornes fortes (. ! ?). */
+function cardText(card){
+  const src=card.querySelector('.body')||card;
+  const t=document.createElement('div');
+  t.innerHTML=src.innerHTML.replace(/<[^>]+>/g,' ');
+  /* une balise devenue espace laissait « mortelle . » : on recolle la ponctuation faible */
+  return t.textContent.replace(/\s+/g,' ').replace(/ +([.,)])/g,'$1').trim();
+}
+function cutAt(txt,i,term,fort){
+  const MAX=fort?170:110;
+  const bound=k=>{const c=txt[k];
+    return (c==='.'||c==='!'||c==='?'||(!fort&&(c===';'||c==='\u00b7'||c==='\u2022'||c==='\u2014')))
+      &&(k+1>=txt.length||txt[k+1]===' ');};
+  let s=i; while(s>0&&i-s<MAX&&!bound(s-1))s--;
+  const cutL=s>0&&!bound(s-1);
+  if(cutL){while(s<i&&txt[s]!==' ')s++;}
+  let e=i+term.length; while(e<txt.length&&e-i<MAX&&!bound(e))e++;
+  const cutR=e<txt.length&&!bound(e);
+  if(cutR){let b=e; while(b>i+term.length&&txt[b]!==' ')b--; if(b>i+term.length)e=b;}
+  else if(e<txt.length)e++;
+  return (cutL?'\u2026 ':'')+txt.slice(s,e).trim()+(cutR?' \u2026':'');
+}
+function snipAround(card,term){
+  const txt=cardText(card), low=fold(txt), i=low.indexOf(term);
+  if(i<0)return null;
+  let out=cutAt(txt,i,term,false);
+  if(out.replace(/\u2026/g,'').trim().length<45)out=cutAt(txt,i,term,true);
+  let occ=0,pos=0; while((pos=low.indexOf(term,pos))>=0){occ++;pos+=term.length;}
+  return {txt:out,occ:occ};
+}
 function highlight(node,term){
   const walk=document.createTreeWalker(node,NodeFilter.SHOW_TEXT);
   const tx=[];let n;while(n=walk.nextNode())tx.push(n);
@@ -4921,7 +4957,8 @@ function enterSearch(term){
     if(!fold(card.textContent).includes(term))return;
     const view=card.closest('.view'),label=viewLabel[view.id]||'';
     if(label!==lastLabel){const h=document.createElement('div');h.className='res-src';h.textContent=label;resCards.appendChild(h);lastLabel=label;}
-    const clone=card.cloneNode(true);clone.classList.add('in');clone.open=true;
+    /* repliee : on ne montre que le titre et l'apercu, la carte s'ouvre au clic */
+    const clone=card.cloneNode(true);clone.classList.add('in');clone.open=false;
     clone.removeAttribute('data-cas');
     /* pas de doublon d'identifiant : sinon les calculateurs d'origine
        et leurs clones se disputent les memes id */
@@ -4930,9 +4967,21 @@ function enterSearch(term){
       const b=clone.querySelector('.body');
       if(b)b.innerHTML='<div class="box note">Outil interactif — ouvre <b>'+label+'</b> dans le menu pour t\'en servir.</div>';
     }
+    const sn=snipAround(card,term), ht=clone.querySelector('.head-txt');
+    if(sn&&ht){
+      const sp=document.createElement('span');sp.className='res-snip';sp.textContent=sn.txt;
+      if(sn.occ>1){
+        const m=document.createElement('span');m.className='res-more';
+        m.textContent=' +'+(sn.occ-1)+' autre'+(sn.occ>2?'s':'')+' mention'+(sn.occ>2?'s':'');
+        sp.appendChild(m);
+      }
+      ht.appendChild(sp);
+    }
     resCards.appendChild(clone);
-    /* un canvas clone est vide : on le redessine */
-    clone.querySelectorAll('canvas.ecg').forEach(c=>{if(window.__ecgDraw)window.__ecgDraw(c);});
+    /* un canvas clone est vide, et il ne se dessine pas replie : on attend l'ouverture */
+    if(clone.querySelector('canvas.ecg'))
+      clone.addEventListener('toggle',()=>{if(clone.open)
+        clone.querySelectorAll('canvas.ecg').forEach(c=>{if(window.__ecgDraw)window.__ecgDraw(c);});});
     highlight(clone,term);count++;
   });
   const rows=[...document.querySelectorAll('#doseTable tbody tr')].filter(tr=>fold(tr.textContent).includes(term));
@@ -4945,7 +4994,7 @@ function enterSearch(term){
     tbl.appendChild(tb);wrap.appendChild(tbl);resDoses.appendChild(wrap);highlight(tb,term);count+=rows.length;
   }
   resTitle.textContent='« '+q.value.trim()+' »';
-  resCount.textContent=count?(count+' résultat'+(count>1?'s':'')+' dans tout le carnet.'):'Aucun résultat — essaie un autre mot.';
+  resCount.textContent=count?(count+' résultat'+(count>1?'s':'')+' dans tout le carnet · clique une carte pour l\u2019ouvrir.'):'Aucun résultat — essaie un autre mot.';
   window.scrollTo(0,0);
 }
 q.addEventListener('input',()=>{
