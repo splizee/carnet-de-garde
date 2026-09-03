@@ -32,7 +32,7 @@
   --shadow-sm:0 2px 8px rgba(60,44,28,.06);
   --shadow-md:0 10px 30px rgba(60,44,28,.12);
   --shadow-lg:0 24px 60px rgba(40,28,16,.20);
-  --c-repere:#b58a2e; --c-cas:#c06a38; --c-dose:#2f7d6b;
+  --c-repere:#b58a2e; --c-cas:#c06a38; --c-dose:#2f7d6b; --fregis:#c0281f;
   --c-proto:#4a6b9c; --c-piege:#c0433f; --c-comm:#8a6bb0;
   --accent:#c06a38;
   --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
@@ -44,7 +44,7 @@
   --ink:#efe7db; --ink-soft:#a99d8f; --line:#352c22;
   --shadow-sm:0 2px 8px rgba(0,0,0,.30); --shadow-md:0 10px 32px rgba(0,0,0,.45);
   --shadow-lg:0 24px 64px rgba(0,0,0,.60);
-  --c-repere:#d7ab54; --c-cas:#e08a56; --c-dose:#54b39c;
+  --c-repere:#d7ab54; --c-cas:#e08a56; --c-dose:#54b39c; --fregis:#ff7a70;
   --c-proto:#7ea0d4; --c-piege:#e56b66; --c-comm:#b394d8;
 }}
 :root[data-theme="dark"]{
@@ -52,7 +52,7 @@
   --ink:#efe7db; --ink-soft:#a99d8f; --line:#352c22;
   --shadow-sm:0 2px 8px rgba(0,0,0,.30); --shadow-md:0 10px 32px rgba(0,0,0,.45);
   --shadow-lg:0 24px 64px rgba(0,0,0,.60);
-  --c-repere:#d7ab54; --c-cas:#e08a56; --c-dose:#54b39c;
+  --c-repere:#d7ab54; --c-cas:#e08a56; --c-dose:#54b39c; --fregis:#ff7a70;
   --c-proto:#7ea0d4; --c-piege:#e56b66; --c-comm:#b394d8;
 }
 :root[data-theme="light"]{
@@ -60,7 +60,7 @@
   --ink:#2a2521; --ink-soft:#7c726a; --line:#e7ddcd;
   --shadow-sm:0 2px 8px rgba(60,44,28,.06); --shadow-md:0 10px 30px rgba(60,44,28,.12);
   --shadow-lg:0 24px 60px rgba(40,28,16,.20);
-  --c-repere:#b58a2e; --c-cas:#c06a38; --c-dose:#2f7d6b;
+  --c-repere:#b58a2e; --c-cas:#c06a38; --c-dose:#2f7d6b; --fregis:#c0281f;
   --c-proto:#4a6b9c; --c-piege:#c0433f; --c-comm:#8a6bb0;
 }
 *{box-sizing:border-box}
@@ -197,6 +197,7 @@ table.doses tbody tr:last-child td{border-bottom:none}
 table.doses tbody tr:hover td{background:var(--surface2)}
 table.doses td.d{font-family:var(--mono);font-weight:600;white-space:nowrap}
 table.doses td.s{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+table.doses td.s .fregis{color:var(--fregis);font-weight:700;letter-spacing:.2px}
 .catchip{font-size:10.5px;padding:1px 8px;border-radius:14px;background:color-mix(in srgb,var(--c-dose) 15%,transparent);
   color:var(--c-dose);font-weight:700}
 mark{background:color-mix(in srgb,var(--c-repere) 48%,transparent);color:inherit;border-radius:3px;padding:0 2px}
@@ -410,6 +411,7 @@ body.garde-open{overflow:hidden}
 .gcat{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);
   border:1px solid var(--line);border-radius:999px;padding:2px 8px}
 .gdose .gi{color:var(--ink-soft);font-size:13.5px;margin-top:3px;line-height:1.4}
+.gdose .fregis{color:#ff7a70;font-weight:700;letter-spacing:.2px}
 .gres{font-family:var(--mono);font-size:27px;font-weight:700;letter-spacing:-.6px;
   color:var(--accent);margin:9px 0 3px;line-height:1.15}
 .gres .v{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-soft);margin-left:7px}
@@ -2828,17 +2830,17 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
     <div class="tablewrap tallwrap"><table class="doses" id="doseTable">
       <thead><tr><th data-c="0">Molécule</th><th data-c="1">Indication</th><th data-c="2">Dose (verbatim)</th><th data-c="3">Concentration</th><th data-c="4">Voie</th><th data-c="5">Catégorie</th><th data-c="6">Source</th></tr></thead>
       <tbody>
-      <tr><td>Adrénaline</td><td>Arrêt (asystolie/AESP/choquable)</td><td class="d">0,01 mg/kg — /2 cycles</td><td class="c">1 mg/mL (1:1000)</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">Frégis · §3</td></tr>
-      <tr><td>Atropine</td><td>Arrêt vagal — dose unique</td><td class="d">0,04 mg/kg</td><td class="c">1 mg/mL</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">Frégis · §3</td></tr>
+      <tr><td>Adrénaline</td><td>Arrêt (asystolie/AESP/choquable)</td><td class="d">0,01 mg/kg — /2 cycles</td><td class="c">1 mg/mL (1:1000)</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s"><span class="fregis">Frégis</span> · §3</td></tr>
+      <tr><td>Atropine</td><td>Arrêt vagal — dose unique</td><td class="d">0,04 mg/kg</td><td class="c">1 mg/mL</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s"><span class="fregis">Frégis</span> · §3</td></tr>
       <tr><td>Vasopressine</td><td>Choquable réfractaire</td><td class="d">0,8 U/kg /3–5 min</td><td class="c">—</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">§3</td></tr>
       <tr><td>Esmolol</td><td>FV/TV choquable réfractaire · TV avec pouls du chat (β-bloquant titrable, IV court)</td><td class="d">0,5 mg/kg puis CRI 50 µg/kg/min</td><td class="c">—</td><td>IV/IO</td><td><span class="catchip">Cardio</span></td><td class="s">§3/§16.5</td></tr>
-      <tr><td>Lidocaïne (chien)</td><td>TV avec pouls · FV/TV réfractaire en RCP — <b>chien seulement</b></td><td class="d"><b>2 mg/kg</b> IV lent → 8 mg/kg max · CRI 25–75 µg/kg/min</td><td class="c">20 mg/mL (2 %)</td><td>IV/IO</td><td><span class="catchip">Cardio</span></td><td class="s">Frégis · §16.3/§16.5</td></tr>
-      <tr><td>Lidocaïne (chien) <b>— bolus de charge</b></td><td>Charge avant CRI de lidocaïne (cocktail <b>MLK / FLK</b>) — <b>chien seulement</b>, jamais le chat en routine (cardiotoxicité, seuil convulsivant bas)</td><td class="d"><b>1 mg/kg</b> IV lent puis CRI 25–50 µg/kg/min</td><td class="c">20 mg/mL (2 %)</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis</td></tr>
+      <tr><td>Lidocaïne (chien)</td><td>TV avec pouls · FV/TV réfractaire en RCP — <b>chien seulement</b></td><td class="d"><b>2 mg/kg</b> IV lent → 8 mg/kg max · CRI 25–75 µg/kg/min</td><td class="c">20 mg/mL (2 %)</td><td>IV/IO</td><td><span class="catchip">Cardio</span></td><td class="s"><span class="fregis">Frégis</span> · §16.3/§16.5</td></tr>
+      <tr><td>Lidocaïne (chien) <b>— bolus de charge</b></td><td>Charge avant CRI de lidocaïne (cocktail <b>MLK / FLK</b>) — <b>chien seulement</b>, jamais le chat en routine (cardiotoxicité, seuil convulsivant bas)</td><td class="d"><b>1 mg/kg</b> IV lent puis CRI 25–50 µg/kg/min</td><td class="c">20 mg/mL (2 %)</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
       <tr><td>Amiodarone (chat)</td><td>FV/TV réfractaire</td><td class="d">5 mg/kg</td><td class="c">—</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">§16.3</td></tr>
       <tr><td>Défibrillation</td><td>FV / TV sans pouls</td><td class="d">2 J/kg puis 4 J/kg</td><td class="c">—</td><td>—</td><td><span class="catchip">RCP</span></td><td class="s">§3</td></tr>
       <tr><td>Noradrénaline</td><td>Post-ROSC · hypotension peranesthésique</td><td class="d">CRI 0,05–1 µg/kg/min</td><td class="c">1 mg/mL</td><td>IV (CRI)</td><td><span class="catchip">RCP</span></td><td class="s">§3 · S11 J1</td></tr>
-      <tr><td>Glycopyrrolate</td><td>Anticholinergique (alt. atropine)</td><td class="d">0,01 mg/kg = 0,05 mL/kg</td><td class="c">0,2 mg/mL</td><td>IV/IM</td><td><span class="catchip">RCP</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Adrénaline intra-trachéale</td><td>RCP — voie IT (×10 la dose IV)</td><td class="d">0,1 mg/kg = 0,1 mL/kg</td><td class="c">1 mg/mL (1:1000)</td><td>IT</td><td><span class="catchip">RCP</span></td><td class="s">Frégis</td></tr>
+      <tr><td>Glycopyrrolate</td><td>Anticholinergique (alt. atropine)</td><td class="d">0,01 mg/kg = 0,05 mL/kg</td><td class="c">0,2 mg/mL</td><td>IV/IM</td><td><span class="catchip">RCP</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Adrénaline intra-trachéale</td><td>RCP — voie IT (×10 la dose IV)</td><td class="d">0,1 mg/kg = 0,1 mL/kg</td><td class="c">1 mg/mL (1:1000)</td><td>IT</td><td><span class="catchip">RCP</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
       <tr><td>Adrénaline — <b>petit format</b></td><td>Arrêt &lt; 1 kg — dilution en série</td><td class="d">0,01 mg/kg · si volume &lt; 0,1 mL → <b>diluer au 1/100</b> (0,01 mg/mL) dans NaCl 0,9 % · ex. 480 g = 0,0048 mg = <b>0,48 mL</b> · flush 2 mL</td><td class="c">1 mg/mL (1:1000)</td><td>IV/IO</td><td><span class="catchip">RCP</span></td><td class="s">26/07</td></tr>
       <tr><td>Aiguille IO néonat</td><td>Voie d'abord &lt; 1 kg — <b>d'emblée</b></td><td class="d">hypodermique <b>20–22 G</b> (os tendre) · humérus prox. / fosse trochantérique / crête tibiale · <b>flush 2–5 mL NaCl</b> après chaque drogue</td><td class="c">—</td><td>IO</td><td><span class="catchip">RCP</span></td><td class="s">26/07</td></tr>
       <tr><td>NaCl 7,5 %</td><td>TC / HTIC</td><td class="d">4 mL/kg chien · 2–4 chat</td><td class="c">75 mg/mL (7,5 %)</td><td>IV</td><td><span class="catchip">Fluides</span></td><td class="s">§19.1</td></tr>
@@ -2852,51 +2854,51 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
       <tr><td>Pimobendan</td><td>ICC — fond</td><td class="d">0,25 mg/kg BID</td><td class="c">—</td><td>PO</td><td><span class="catchip">Cardio</span></td><td class="s">§13.22</td></tr>
       <tr><td>Clopidogrel</td><td>ATE — antiagrégant (à vie)</td><td class="d">18,75 mg/chat SID</td><td class="c">—</td><td>PO</td><td><span class="catchip">Cardio</span></td><td class="s">§13.23</td></tr>
       <tr><td>Terbutaline</td><td>Asthme félin (β2)</td><td class="d">0,01 mg/kg</td><td class="c">—</td><td>IM/SC</td><td><span class="catchip">Respi</span></td><td class="s">§13.17</td></tr>
-      <tr><td>Dexaméthasone</td><td>Asthme / anaphylaxie · <b>crise addisonienne</b> — la seule qui <b>n'interfère pas avec le dosage du cortisol</b> (test ACTH préservé) : prélever le <b>cortisol basal AVANT</b></td><td class="d">0,1 mg/kg (0,1–0,2)</td><td class="c">2 mg/mL</td><td>IV</td><td><span class="catchip">Corticoïde</span></td><td class="s">Frégis · §13.17/§13.32</td></tr>
+      <tr><td>Dexaméthasone</td><td>Asthme / anaphylaxie · <b>crise addisonienne</b> — la seule qui <b>n'interfère pas avec le dosage du cortisol</b> (test ACTH préservé) : prélever le <b>cortisol basal AVANT</b></td><td class="d">0,1 mg/kg (0,1–0,2)</td><td class="c">2 mg/mL</td><td>IV</td><td><span class="catchip">Corticoïde</span></td><td class="s"><span class="fregis">Frégis</span> · §13.17/§13.32</td></tr>
       <tr><td>O₂ flow-by</td><td>1ʳᵉ ligne</td><td class="d">5–10 L/min</td><td class="c">—</td><td>—</td><td><span class="catchip">Respi</span></td><td class="s">§2</td></tr>
       <tr><td>Thoracocentèse chat</td><td>Volumes</td><td class="d">30–80 mL/côté (max 100)</td><td class="c">—</td><td>—</td><td><span class="catchip">Respi</span></td><td class="s">§11.16</td></tr>
       <tr><td>Gluconate de calcium 10 %</td><td>HyperK — stabilise le myocarde · éclampsie puerpérale / hypocalcémie symptomatique</td><td class="d">0,5–1 mL/kg IV lent sur 10–20 min, <b>ECG continu</b></td><td class="c">100 mg/mL (10 %)</td><td>IV</td><td><span class="catchip">HyperK</span></td><td class="s">§9.5/§13.43</td></tr>
       <tr><td>Insuline rapide</td><td>HyperK (conflit)</td><td class="d">0,1–0,25 UI/kg · 0,25–0,5</td><td class="c">100 UI/mL</td><td>IV</td><td><span class="catchip">HyperK</span></td><td class="s">§13.3/§8</td></tr>
       <tr><td>Glucose 50 %</td><td>Couverture insuline (conflit)</td><td class="d">1 mL/kg · 1–2 mL/kg</td><td class="c">500 mg/mL (G50)</td><td>IV</td><td><span class="catchip">HyperK</span></td><td class="s">§13.3/§8</td></tr>
       <tr><td>Bicarbonate</td><td>HyperK K&gt;8 / acidose</td><td class="d">1–2 mEq/kg IV lent</td><td class="c">—</td><td>IV</td><td><span class="catchip">HyperK</span></td><td class="s">§10.4</td></tr>
-      <tr><td>Diazépam (Valium)</td><td>Status épileptique · prémed</td><td class="d">0,5 mg/kg IV (1–2 IR) · <b>prémed 0,2 mg/kg</b></td><td class="c">5 mg/mL</td><td>IV/IR</td><td><span class="catchip">Neuro</span></td><td class="s">Frégis · §10</td></tr>
+      <tr><td>Diazépam (Valium)</td><td>Status épileptique · prémed</td><td class="d">0,5 mg/kg IV (1–2 IR) · <b>prémed 0,2 mg/kg</b></td><td class="c">5 mg/mL</td><td>IV/IR</td><td><span class="catchip">Neuro</span></td><td class="s"><span class="fregis">Frégis</span> · §10</td></tr>
       <tr><td>Phénobarbital</td><td>Status</td><td class="d">4 mg/kg, jusqu'à 16</td><td class="c">—</td><td>IV</td><td><span class="catchip">Neuro</span></td><td class="s">§10</td></tr>
       <tr><td>Kétamine</td><td>Status réfractaire</td><td class="d">1–2 mg/kg + CRI 2–5 mg/kg/h</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Neuro</span></td><td class="s">§10</td></tr>
       <tr><td>Propofol</td><td>Status (CRI)</td><td class="d">0,1–0,6 mg/kg/min</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Neuro</span></td><td class="s">§10</td></tr>
-      <tr><td>Fentanyl</td><td><b>Registre analgésie</b> — patient vigile instable · ATE félin · péritonite</td><td class="d"><b>2 µg/kg</b> (Frégis) · rang 2–5 µg/kg IV lent · <b>0,5–1 si PAM &lt; 80</b> · puis <b>CRI 2–5 µg/kg/h</b> (jusqu'à 10). <b>La dose de charge EST le bolus</b> — bolus seul = 20 min</td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis · §11.5/§13.23/§13.27/§13.28</td></tr>
-      <tr><td>Méthadone</td><td>Analgésie · douleur viscérale aiguë — <b>mu complet</b></td><td class="d">0,2 mg/kg</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis · §9/§11.5</td></tr>
-      <tr><td>Butorphanol</td><td>Sédation légère cardio-épargnante — péricardiocentèse (chien) · <b>chat dyspnéique à drainer</b> : effet 2–5 min, reste éveillé</td><td class="d"><b>0,2 mg/kg</b> (Frégis) · jusqu'à <b>0,4 mg/kg</b> chez le chat · 32 kg → 0,64 mL</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis · §11.5/§13.24 · 13/08</td></tr>
-      <tr><td>Midazolam <b>— flacon 1 mg/mL</b></td><td>Sédation / anxiolyse — <b>jamais seul</b> · <b>N'EST PAS un analgésique</b> (benzodiazépine ; seule chez le chat → dysphorie) · sédation cardio-épargnante · crise convulsive sans voie IV · ⚠ <b>lire le flacon avant de tirer</b> : les deux concentrations coexistent chez Frégis</td><td class="d">0,2 mg/kg = <b>0,2 mL/kg</b> — chat de 5 kg → <b>1 mL</b></td><td class="c">1 mg/mL</td><td>IV/IM · intranasal (atomiseur) ou IR si pas de voie</td><td><span class="catchip">Sédation</span></td><td class="s">Frégis · §13.13/§13.23/§21.1 · S11 J1</td></tr>
-      <tr><td>Midazolam <b>— flacon 5 mg/mL</b></td><td>Sédation / anxiolyse — <b>jamais seul</b> · <b>N'EST PAS un analgésique</b> (benzodiazépine ; seule chez le chat → dysphorie) · sédation cardio-épargnante · crise convulsive sans voie IV · ⚠ <b>lire le flacon avant de tirer</b> : les deux concentrations coexistent chez Frégis</td><td class="d">0,2 mg/kg = <b>0,04 mL/kg</b> — chat de 5 kg → <b>0,2 mL</b></td><td class="c">5 mg/mL</td><td>IV/IM · intranasal (atomiseur) ou IR si pas de voie</td><td><span class="catchip">Sédation</span></td><td class="s">Frégis · §13.13/§13.23/§21.1 · S11 J1</td></tr>
+      <tr><td>Fentanyl</td><td><b>Registre analgésie</b> — patient vigile instable · ATE félin · péritonite</td><td class="d"><b>2 µg/kg</b> (Frégis) · rang 2–5 µg/kg IV lent · <b>0,5–1 si PAM &lt; 80</b> · puis <b>CRI 2–5 µg/kg/h</b> (jusqu'à 10). <b>La dose de charge EST le bolus</b> — bolus seul = 20 min</td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span> · §11.5/§13.23/§13.27/§13.28</td></tr>
+      <tr><td>Méthadone</td><td>Analgésie · douleur viscérale aiguë — <b>mu complet</b></td><td class="d">0,2 mg/kg</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span> · §9/§11.5</td></tr>
+      <tr><td>Butorphanol</td><td>Sédation légère cardio-épargnante — péricardiocentèse (chien) · <b>chat dyspnéique à drainer</b> : effet 2–5 min, reste éveillé</td><td class="d"><b>0,2 mg/kg</b> (Frégis) · jusqu'à <b>0,4 mg/kg</b> chez le chat · 32 kg → 0,64 mL</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span> · §11.5/§13.24 · 13/08</td></tr>
+      <tr><td>Midazolam <b>— flacon 1 mg/mL</b></td><td>Sédation / anxiolyse — <b>jamais seul</b> · <b>N'EST PAS un analgésique</b> (benzodiazépine ; seule chez le chat → dysphorie) · sédation cardio-épargnante · crise convulsive sans voie IV · ⚠ <b>lire le flacon avant de tirer</b> : les deux concentrations coexistent chez Frégis</td><td class="d">0,2 mg/kg = <b>0,2 mL/kg</b> — chat de 5 kg → <b>1 mL</b></td><td class="c">1 mg/mL</td><td>IV/IM · intranasal (atomiseur) ou IR si pas de voie</td><td><span class="catchip">Sédation</span></td><td class="s"><span class="fregis">Frégis</span> · §13.13/§13.23/§21.1 · S11 J1</td></tr>
+      <tr><td>Midazolam <b>— flacon 5 mg/mL</b></td><td>Sédation / anxiolyse — <b>jamais seul</b> · <b>N'EST PAS un analgésique</b> (benzodiazépine ; seule chez le chat → dysphorie) · sédation cardio-épargnante · crise convulsive sans voie IV · ⚠ <b>lire le flacon avant de tirer</b> : les deux concentrations coexistent chez Frégis</td><td class="d">0,2 mg/kg = <b>0,04 mL/kg</b> — chat de 5 kg → <b>0,2 mL</b></td><td class="c">5 mg/mL</td><td>IV/IM · intranasal (atomiseur) ou IR si pas de voie</td><td><span class="catchip">Sédation</span></td><td class="s"><span class="fregis">Frégis</span> · §13.13/§13.23/§21.1 · S11 J1</td></tr>
       <tr><td>Lidocaïne locale</td><td>Avant geste intercostal</td><td class="d">2–4 mg/kg</td><td class="c">20 mg/mL (2 %)</td><td>infiltr.</td><td><span class="catchip">Analg.</span></td><td class="s">§11.16</td></tr>
-      <tr><td>Buprénorphine</td><td>Prémed / analgésie · ⚠ <b>agoniste partiel mu</b> : pic IV 15–30 min et <b>bloque le mu complet donné ensuite</b> — insuffisante sur douleur viscérale, à éviter quand un geste est immédiat</td><td class="d">0,02 mg/kg (→ 4,8 kg = <b>0,32 mL</b>)</td><td class="c">0,3 mg/mL</td><td>IV/IM/OTM</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis · §11.5/§13.28/§13.33</td></tr>
-      <tr><td>Morphine</td><td>Prémed / analgésie — <b>IV lente</b> (histaminolibération)</td><td class="d">0,2 mg/kg</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Prémed</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Médétomidine</td><td>Prémed — sédation α2</td><td class="d">10 µg/kg</td><td class="c">1 mg/mL</td><td>IM/IV</td><td><span class="catchip">Prémed</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Dexmédétomidine</td><td>Prémed — sédation α2 · <b>émétique du chat</b> (récepteurs α de la CRTZ) — l'apomorphine est inefficace dans l'espèce</td><td class="d"><b>5 µg/kg</b> (Frégis) · <b>5–10 µg/kg</b> pour faire vomir un chat</td><td class="c">0,5 mg/mL (500 µg/mL)</td><td>IM/IV/SC</td><td><span class="catchip">Prémed</span></td><td class="s">Frégis · Merck Vet Manual</td></tr>
-      <tr><td>Acépromazine (ACP)</td><td>Prémed — sédation</td><td class="d">5 µg/kg</td><td class="c">5 mg/mL</td><td>IM/IV</td><td><span class="catchip">Prémed</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Kétamine</td><td>Induction anesthésique</td><td class="d">5 mg/kg</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Kétamine</td><td>Bolus de charge (analgésie)</td><td class="d">0,5 mg/kg</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Propofol</td><td>Induction anesthésique — titrée à effet, par quarts toutes les 30 s chez le traumatisé crânien</td><td class="d"><b>2 mg/kg</b> (Frégis) · rang 1–4 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s">Frégis · S11 J1</td></tr>
-      <tr><td>Alfaxalone (Alfaxan)</td><td>Induction anesthésique</td><td class="d">2 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s">Frégis</td></tr>
-      <tr><td>Étomidate</td><td>Induction — cardio-stable, patient à pression instable · toujours avec une benzodiazépine</td><td class="d"><b>2 mg/kg</b> (Frégis) · rang 0,5–2 mg/kg</td><td class="c">2 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s">Frégis · S11 J1</td></tr>
-      <tr><td>Méloxicam (Metacam)</td><td>AINS</td><td class="d">0,1 mg/kg</td><td class="c">5 mg/mL</td><td>IV/SC</td><td><span class="catchip">Analg.</span></td><td class="s">Frégis</td></tr>
+      <tr><td>Buprénorphine</td><td>Prémed / analgésie · ⚠ <b>agoniste partiel mu</b> : pic IV 15–30 min et <b>bloque le mu complet donné ensuite</b> — insuffisante sur douleur viscérale, à éviter quand un geste est immédiat</td><td class="d">0,02 mg/kg (→ 4,8 kg = <b>0,32 mL</b>)</td><td class="c">0,3 mg/mL</td><td>IV/IM/OTM</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span> · §11.5/§13.28/§13.33</td></tr>
+      <tr><td>Morphine</td><td>Prémed / analgésie — <b>IV lente</b> (histaminolibération)</td><td class="d">0,2 mg/kg</td><td class="c">10 mg/mL</td><td>IV/IM</td><td><span class="catchip">Prémed</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Médétomidine</td><td>Prémed — sédation α2</td><td class="d">10 µg/kg</td><td class="c">1 mg/mL</td><td>IM/IV</td><td><span class="catchip">Prémed</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Dexmédétomidine</td><td>Prémed — sédation α2 · <b>émétique du chat</b> (récepteurs α de la CRTZ) — l'apomorphine est inefficace dans l'espèce</td><td class="d"><b>5 µg/kg</b> (Frégis) · <b>5–10 µg/kg</b> pour faire vomir un chat</td><td class="c">0,5 mg/mL (500 µg/mL)</td><td>IM/IV/SC</td><td><span class="catchip">Prémed</span></td><td class="s"><span class="fregis">Frégis</span> · Merck Vet Manual</td></tr>
+      <tr><td>Acépromazine (ACP)</td><td>Prémed — sédation</td><td class="d">5 µg/kg</td><td class="c">5 mg/mL</td><td>IM/IV</td><td><span class="catchip">Prémed</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Kétamine</td><td>Induction anesthésique</td><td class="d">5 mg/kg</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Kétamine</td><td>Bolus de charge (analgésie)</td><td class="d">0,5 mg/kg</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Propofol</td><td>Induction anesthésique — titrée à effet, par quarts toutes les 30 s chez le traumatisé crânien</td><td class="d"><b>2 mg/kg</b> (Frégis) · rang 1–4 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s"><span class="fregis">Frégis</span> · S11 J1</td></tr>
+      <tr><td>Alfaxalone (Alfaxan)</td><td>Induction anesthésique</td><td class="d">2 mg/kg</td><td class="c">10 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
+      <tr><td>Étomidate</td><td>Induction — cardio-stable, patient à pression instable · toujours avec une benzodiazépine</td><td class="d"><b>2 mg/kg</b> (Frégis) · rang 0,5–2 mg/kg</td><td class="c">2 mg/mL</td><td>IV</td><td><span class="catchip">Induction</span></td><td class="s"><span class="fregis">Frégis</span> · S11 J1</td></tr>
+      <tr><td>Méloxicam (Metacam)</td><td>AINS</td><td class="d">0,1 mg/kg</td><td class="c">5 mg/mL</td><td>IV/SC</td><td><span class="catchip">Analg.</span></td><td class="s"><span class="fregis">Frégis</span></td></tr>
       <tr><td>Adrénaline</td><td>Anaphylaxie</td><td class="d">0,01 mg/kg</td><td class="c">1 mg/mL (1:1000)</td><td><b>IM si pouls</b> · IV = arrêt seulement</td><td><span class="catchip">Anaphy.</span></td><td class="s">§6 · §13.25</td></tr>
       <tr><td>Diphenhydramine</td><td>Anaphylaxie</td><td class="d">1–2 mg/kg</td><td class="c">—</td><td>IM seul</td><td><span class="catchip">Anaphy.</span></td><td class="s">§6</td></tr>
       <tr><td>Vit K1 (Konakion)</td><td>Intoxication AVK</td><td class="d">2,5–5 mg/kg/j → PO 3–4 sem</td><td class="c">—</td><td>SC/PO</td><td><span class="catchip">Toxico</span></td><td class="s">§18.2</td></tr>
       <tr><td>PFC</td><td>AVK — facteurs immédiats</td><td class="d">10–15 mL/kg</td><td class="c">—</td><td>IV</td><td><span class="catchip">Toxico</span></td><td class="s">§18.2</td></tr>
-      <tr><td>Ampicilline-sulbactam <b>(Unacim)</b></td><td>Sepsis — 1ʳᵉ dose dans la 1ʳᵉ heure · péritonite septique · pyomètre · pyélonéphrite (culture prélevée avant, <b>durée 4–6 semaines</b>)</td><td class="d"><b>20 mg/kg</b> sur 30 min · entretien 20–30 mg/kg q6–8h</td><td class="c">50 mg/mL</td><td>IV puis relais</td><td><span class="catchip">Antibio</span></td><td class="s">Frégis · §17.4/§13.27 · 13/08</td></tr>
+      <tr><td>Ampicilline-sulbactam <b>(Unacim)</b></td><td>Sepsis — 1ʳᵉ dose dans la 1ʳᵉ heure · péritonite septique · pyomètre · pyélonéphrite (culture prélevée avant, <b>durée 4–6 semaines</b>)</td><td class="d"><b>20 mg/kg</b> sur 30 min · entretien 20–30 mg/kg q6–8h</td><td class="c">50 mg/mL</td><td>IV puis relais</td><td><span class="catchip">Antibio</span></td><td class="s"><span class="fregis">Frégis</span> · §17.4/§13.27 · 13/08</td></tr>
       <tr><td>Thoracocentèse (chat)</td><td>Épanchement pleural — geste, pas une drogue</td><td class="d">7ᵉ–9ᵉ EIC · <b>bord crânial de la côte</b> · 21–23 G · liquide = tiers ventral</td><td class="c">—</td><td>—</td><td><span class="catchip">Geste</span></td><td class="s">13/08</td></tr>
       <tr><td>Pneumonie septique</td><td>Bithérapie ISCAID</td><td class="d">FQ + ampi/clinda</td><td class="c">—</td><td>IV</td><td><span class="catchip">Sepsis</span></td><td class="s">§13.21</td></tr>
-      <tr><td>Céfazoline</td><td>ATB péri-op / 1ʳᵉ ligne · césarienne : à l'induction <b>AVANT l'incision</b>, répétée q90 min</td><td class="d">20 mg/kg (20–22)</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Sepsis</span></td><td class="s">Frégis · Vetfolio</td></tr>
+      <tr><td>Céfazoline</td><td>ATB péri-op / 1ʳᵉ ligne · césarienne : à l'induction <b>AVANT l'incision</b>, répétée q90 min</td><td class="d">20 mg/kg (20–22)</td><td class="c">100 mg/mL</td><td>IV</td><td><span class="catchip">Sepsis</span></td><td class="s"><span class="fregis">Frégis</span> · Vetfolio</td></tr>
       <tr><td>Fentanyl — CRI diluée</td><td>Analgésie continue · <b>500 µg dans 500 mL NaCl 0,9 % = 1 µg/mL</b></td><td class="d">bolus 2 µg/kg puis <b>3 µg/kg/h</b> → 84 mL/h pour 28 kg</td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Analgésie</span></td><td class="s">§13.34</td></tr>
       <tr><td>Ovariohystérectomie</td><td>Pyomètre — <b>retrait de la source</b>, seul traitement</td><td class="d">urgence · mortalité 3–10 % (17–20 % si sepsis)</td><td class="c">—</td><td>Chir</td><td><span class="catchip">Sepsis</span></td><td class="s">§13.34</td></tr>
       <tr><td>Enrofloxacine (chat)</td><td>Gram− — <b>plafond félin</b></td><td class="d"><b>5 mg/kg/j max</b> (rétinotoxicité) — IV lent dilué</td><td class="c">—</td><td>IV</td><td><span class="catchip">Antibio</span></td><td class="s">§13.27</td></tr>
-      <tr><td>Fentanyl</td><td><b>Registre anesthésie</b> — co-induction</td><td class="d">5–10 µg/kg (jusqu'à <b>20 µg/kg = 0,02 mg/kg</b> en balancée) — <b>apnée : voies aériennes contrôlées</b></td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Anesth.</span></td><td class="s">Frégis · §13.28</td></tr>
+      <tr><td>Fentanyl</td><td><b>Registre anesthésie</b> — co-induction</td><td class="d">5–10 µg/kg (jusqu'à <b>20 µg/kg = 0,02 mg/kg</b> en balancée) — <b>apnée : voies aériennes contrôlées</b></td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Anesth.</span></td><td class="s"><span class="fregis">Frégis</span> · §13.28</td></tr>
       <tr><td>Fentanyl</td><td>Registre peropératoire — CRI</td><td class="d">10–20 µg/kg/h</td><td class="c">50 µg/mL</td><td>IV</td><td><span class="catchip">Anesth.</span></td><td class="s">§13.28</td></tr>
       <tr><td>Ondansétron</td><td>Antiémétique (anti-5-HT3) — ⚠ <b>PAS un antiacide</b> : ne protège pas l'estomac, ne traite pas l'ulcère</td><td class="d">0,5 mg/kg q8–12h</td><td class="c">—</td><td>IV</td><td><span class="catchip">Digestif</span></td><td class="s">§13.28/§13.33</td></tr>
       <tr><td>Glucose 2,5 % (entretien)</td><td>Hypoglycémie sans signe neuro</td><td class="d"><b>50 mL de G50 dans 1 L</b> de cristalloïde — pas de bolus si Glu &gt; 60</td><td class="c">25 mg/mL (2,5 %)</td><td>IV</td><td><span class="catchip">Métab.</span></td><td class="s">§13.28</td></tr>
       <tr><td>Lopéramide</td><td><b>CONTRE-INDIQUÉ</b> — diarrhée hémorragique</td><td class="d">ne pas prescrire : ralentit un intestin à évacuer et masque les pertes</td><td class="c">—</td><td>—</td><td><span class="catchip">Digestif</span></td><td class="s">§13.28</td></tr>
-      <tr><td>Amoxicilline-clavulanate <b>(Augmentin)</b></td><td>Antibiothérapie de 1ʳᵉ ligne · <i>même ligne que l'Unacim au tableau Frégis, même dose</i> · ⚠ <b>inutile dans la SDHA non septique</b> : aucun bénéfice (Unterer 2011, RCT), le réserver aux critères de sepsis</td><td class="d"><b>20 mg/kg</b> · entretien q8h</td><td class="c">50 mg/mL</td><td>IV</td><td><span class="catchip">Antibio</span></td><td class="s">Frégis · §13.28</td></tr>
+      <tr><td>Amoxicilline-clavulanate <b>(Augmentin)</b></td><td>Antibiothérapie de 1ʳᵉ ligne · <i>même ligne que l'Unacim au tableau Frégis, même dose</i> · ⚠ <b>inutile dans la SDHA non septique</b> : aucun bénéfice (Unterer 2011, RCT), le réserver aux critères de sepsis</td><td class="d"><b>20 mg/kg</b> · entretien q8h</td><td class="c">50 mg/mL</td><td>IV</td><td><span class="catchip">Antibio</span></td><td class="s"><span class="fregis">Frégis</span> · §13.28</td></tr>
       <tr><td>Seuils TP / albumine</td><td>Pression oncotique</td><td class="d">TP &lt; 4,0 → plasma/colloïde · Alb &lt; 2,0 → 3ᵉ secteur · Alb &lt; 1,5 → PFC</td><td class="c">—</td><td>—</td><td><span class="catchip">Cibles</span></td><td class="s">§13.28</td></tr>
       <tr><td>Cibles PAM/PAS</td><td>Réa choc</td><td class="d">PAM ≥ 65 · PAS ≥ 90</td><td class="c">—</td><td>—</td><td><span class="catchip">Cibles</span></td><td class="s">§2/§4</td></tr>
       <tr><td>PAM post-ROSC</td><td>Post-arrêt</td><td class="d">&gt; 80 mmHg</td><td class="c">—</td><td>—</td><td><span class="catchip">Cibles</span></td><td class="s">§14.2</td></tr>
@@ -5746,7 +5748,7 @@ document.addEventListener('click',function(e){
       d.toks.forEach(function(tok,i){ c.appendChild(tokBlock(d,i)); });
     }
     var vb=el('div','gverb');
-    vb.innerHTML='<b>'+esc(d.dose)+'</b> \u00b7 '+esc(d.conc)+' \u00b7 '+esc(d.voie)+' \u00b7 '+esc(d.src);
+    vb.innerHTML='<b>'+esc(d.dose)+'</b> \u00b7 '+esc(d.conc)+' \u00b7 '+esc(d.voie)+' \u00b7 '+srcHtml(d.src);
     c.appendChild(vb);
     if(espFlag){
       var e=el('div','gflag soft');
@@ -5838,6 +5840,9 @@ document.addEventListener('click',function(e){
            (d.c?', concentration '+d.conc:'')+' \u2192 '+r.head+
            (d.voie&&d.voie!=='\u2014'?' '+d.voie:'');
   }
+  /* la source : « Fregis » en rouge, c'est la dose du tableau mural de l'hopital */
+  function srcHtml(s){var t=esc(s);
+    return t.replace(/^Fr\u00e9gis/,'<span class="fregis">Fr\u00e9gis</span>');}
   function esc(s){var e=el('span'); e.textContent=s||''; return e.innerHTML;}
 
   /* ----------------------------------------------------------- panneau gestes */
