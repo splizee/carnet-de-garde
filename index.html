@@ -346,6 +346,28 @@ aside{padding-top:calc(22px + env(safe-area-inset-top))}
 #appUpd button{border:none;background:var(--accent);color:#fff;border-radius:9px;
   padding:7px 13px;font-weight:650;cursor:pointer;font-size:13.5px;white-space:nowrap}
 
+/* ===== mode paysage =====
+   Le manifeste ne verrouille plus l'orientation. Deux situations a tenir :
+   la tablette tournee, qui repasse au-dessus de 900 px et retrouve donc la
+   mise en page de bureau (barre laterale fixe), et le telephone tourne :
+   large, mais avec 390 px de plafond seulement. */
+
+/* les encoches passent sur les cotes */
+@media(orientation:landscape){
+  aside{padding-left:env(safe-area-inset-left)}
+}
+
+/* telephone tourne : mise en page mobile, gouttieres qui evitent l'encoche,
+   en-tetes tasses pour laisser de la place au texte */
+@media(orientation:landscape) and (max-width:900px){
+  .wrap{--gut:max(16px,env(safe-area-inset-left),env(safe-area-inset-right));
+        padding-left:var(--gut);padding-right:var(--gut)}
+  .view-head{margin-left:calc(0px - var(--gut));margin-right:calc(0px - var(--gut));
+             padding:20px var(--gut) 18px;margin-bottom:18px}
+  .topbar{padding-top:calc(7px + env(safe-area-inset-top));padding-bottom:7px}
+  .tallwrap{max-height:78vh}
+}
+
 /* ===== mode garde ===== */
 #gardeFab{position:fixed;z-index:150;right:calc(14px + env(safe-area-inset-right));
   bottom:calc(16px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;
@@ -471,6 +493,13 @@ body.garde-open{overflow:hidden}
 /* --- trace --- */
 .gtrace{font-family:var(--mono);font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;
   border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:12px;min-height:90px}
+
+/* mode garde tourne : le plein ecran garde une colonne de lecture */
+@media(orientation:landscape) and (min-width:901px){
+  #gHead,#gPat,#gTabs,#gBody{padding-left:max(13px,env(safe-area-inset-left));
+                             padding-right:max(13px,env(safe-area-inset-right))}
+  #gBody > .gpanel{max-width:900px;margin-inline:auto}
+}
 
 </style>
 
@@ -5538,6 +5567,18 @@ document.addEventListener('click',function(e){
       },0);
     });
   }catch(e){}
+
+  /* rotation : le tiroir de gauche n'existe qu'en dessous de 900 px. Passer en
+     paysage le fige « ouvert » derriere une barre laterale devenue fixe, et il
+     ressurgit tel quel au retour en portrait. On le referme au passage. */
+  function fermerTiroirSiLarge(){
+    if(window.innerWidth <= 900) return;
+    var side = document.getElementById('side'), scrim = document.getElementById('scrim');
+    if(side) side.classList.remove('open');
+    if(scrim) scrim.classList.remove('show');
+  }
+  window.addEventListener('resize', fermerTiroirSiLarge);
+  window.addEventListener('orientationchange', function(){ setTimeout(fermerTiroirSiLarge, 300); });
 
   /* rouvrir sur la derniere semaine consultee */
   try{
