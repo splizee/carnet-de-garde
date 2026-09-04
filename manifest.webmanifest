@@ -4,7 +4,7 @@
   "description": "Aide-mémoire personnel : cas, doses, protocoles et pièges des urgences canines et félines.",
   "start_url": "./index.html",
   "scope": "./",
-  "display": "standalone",
+  "display": "fullscreen",
   "orientation": "any",
   "background_color": "#f7f3ec",
   "theme_color": "#c06a38",
