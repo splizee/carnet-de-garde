@@ -11,6 +11,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Carnet de garde — Urgences vétérinaires</title>
+<script>document.documentElement.classList.add('verrou');</script>
 
 <!-- ===== couche application (generee par build_app.py, ne pas editer ici) ===== -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -502,6 +503,25 @@ body.garde-open{overflow:hidden}
                              padding-right:max(13px,env(safe-area-inset-right))}
   #gBody > .gpanel{max-width:900px;margin-inline:auto}
 }
+
+/* ===== verrou + doses Plumb's ===== */
+html.verrou body>*:not(#verrou){visibility:hidden}
+#verrou{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;
+  background:var(--bg);padding:24px calc(16px + env(safe-area-inset-right)) 24px calc(16px + env(safe-area-inset-left))}
+#verrou .vb{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--line);
+  border-radius:18px;padding:26px 22px;box-shadow:var(--shadow-md);text-align:center}
+#verrou h2{font-family:var(--serif);font-weight:600;margin:0 0 6px;font-size:22px}
+#verrou p{margin:0 0 16px;color:var(--ink-soft);font-size:14px;line-height:1.45}
+#verrou input{width:100%;font-size:18px;padding:12px;border:1px solid var(--line);border-radius:12px;
+  background:var(--bg);color:var(--ink);text-align:center;letter-spacing:2px;font-family:var(--mono)}
+#verrou button{margin-top:12px;width:100%;padding:12px;border:0;border-radius:12px;
+  background:var(--accent);color:#fff;font-weight:700;font-size:16px;font-family:var(--sans);cursor:pointer}
+#verrou button:disabled{opacity:.55}
+#verrou .err{color:var(--fregis);min-height:20px;margin-top:10px;font-size:14px}
+table.doses tr.pl td.d{white-space:normal;min-width:240px}
+table.doses tr.pl td:nth-child(2){min-width:170px}
+#plLock{margin-top:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
+  border-radius:10px;padding:6px 11px;font-size:12.5px;cursor:pointer;font-family:var(--sans)}
 
 </style>
 
@@ -6392,5 +6412,103 @@ document.addEventListener('click',function(e){
 
   /* raccourci d'ecran d'accueil : index.html?garde=1 ouvre directement */
   if(/[?&]garde=1/.test(location.search) || location.hash==='#garde') setTimeout(open,0);
+})();
+</script>
+
+<script>
+/* ===== verrou + doses Plumb's (genere par build_app.py) =====
+   plumbs.enc.json : {salt, iv, iter, ct} en base64 ; parametres alignes sur
+   carnet/chiffrer_plumbs.py. Une fois le code juste, la cle derivee (pas le
+   code) reste dans ce navigateur ; elle ne vaut que pour ce sel-la. */
+(function(){
+  var D=document, H=D.documentElement, LSK='carnet.plumbs.cle', ENC=null;
+  function lever(){ H.classList.remove('verrou'); var v=D.getElementById('verrou'); if(v) v.remove(); }
+  function b64(s){ var b=atob(s), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
+  function enB64(buf){ var u=new Uint8Array(buf), s=''; for(var i=0;i<u.length;i++) s+=String.fromCharCode(u[i]); return btoa(s); }
+  function lsGet(){ try{ return JSON.parse(localStorage.getItem(LSK)||'null'); }catch(e){ return null; } }
+  function lsSet(v){ try{ localStorage.setItem(LSK, JSON.stringify(v)); }catch(e){} }
+  function lsDel(){ try{ localStorage.removeItem(LSK); }catch(e){} }
+  if(!(window.crypto && crypto.subtle && window.fetch)){ lever(); return; }
+
+  function deriver(code){
+    return crypto.subtle.importKey('raw', new TextEncoder().encode(code), 'PBKDF2', false, ['deriveKey'])
+      .then(function(k){ return crypto.subtle.deriveKey(
+        {name:'PBKDF2', salt:b64(ENC.salt), iterations:ENC.iter, hash:'SHA-256'},
+        k, {name:'AES-GCM', length:256}, true, ['decrypt']); });
+  }
+  function dechiffrer(cle){
+    return crypto.subtle.decrypt({name:'AES-GCM', iv:b64(ENC.iv)}, cle, b64(ENC.ct))
+      .then(function(buf){ return JSON.parse(new TextDecoder().decode(buf)); });
+  }
+
+  function td(txt, cls){ var e=D.createElement('td'); if(cls) e.className=cls; e.textContent=txt; return e; }
+  function injecter(data){
+    var tb=D.querySelector('#doseTable tbody'); if(!tb) return;
+    if(tb.querySelector('tr.pl')) return;
+    var frag=D.createDocumentFragment();
+    data.rows.forEach(function(r){
+      /* r = [molecule, espece, indication, dose, voie, categorie, page] */
+      var tr=D.createElement('tr'); tr.className='pl';
+      tr.appendChild(td(r[0]+' ('+r[1].toLowerCase()+')'));
+      tr.appendChild(td(r[2]));
+      tr.appendChild(td(r[3], 'd'));
+      tr.appendChild(td('—', 'c'));
+      tr.appendChild(td(r[4]));
+      var c=D.createElement('td'), chip=D.createElement('span'); chip.className='catchip'; chip.textContent=r[5]; c.appendChild(chip); tr.appendChild(c);
+      var s=D.createElement('td'); s.className='s';
+      var sp=D.createElement('span'); sp.className='plumbs'; sp.textContent='Plumb’s';
+      s.appendChild(sp); s.appendChild(D.createTextNode(' 10ᵉ éd. · p.'+r[6]));
+      tr.appendChild(s); frag.appendChild(tr);
+    });
+    tb.appendChild(frag);
+    var head=D.querySelector('#doses .view-head');
+    if(head && !D.getElementById('plLock')){
+      var b=D.createElement('button'); b.id='plLock'; b.type='button';
+      b.textContent='🔒 Verrouiller l’app sur cet appareil';
+      b.addEventListener('click', function(){ lsDel(); location.reload(); });
+      head.appendChild(b);
+    }
+    D.dispatchEvent(new CustomEvent('plumbs-pret'));
+  }
+
+  function ecran(){
+    var v=D.createElement('div'); v.id='verrou';
+    v.innerHTML='<form class="vb" autocomplete="off"><h2>Carnet de garde</h2>'+
+      '<p>Code d’accès — demandé une seule fois sur cet appareil.</p>'+
+      '<input type="password" id="vCode" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Code d’accès">'+
+      '<button type="submit" id="vOk">Ouvrir</button><div class="err" id="vErr" role="alert"></div></form>';
+    D.body.appendChild(v);
+    var f=v.querySelector('form'), inp=v.querySelector('#vCode'), ok=v.querySelector('#vOk'), err=v.querySelector('#vErr');
+    setTimeout(function(){ inp.focus(); }, 50);
+    inp.addEventListener('keydown', function(e){
+      if(e.key==='Enter' || e.keyCode===13){ e.preventDefault(); if(!ok.disabled) ok.click(); }
+    });
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var code=inp.value; if(!code) return;
+      ok.disabled=true; err.textContent=''; ok.textContent='Vérification…';
+      var cle;
+      deriver(code).then(function(k){ cle=k; return dechiffrer(k); }).then(function(data){
+        return crypto.subtle.exportKey('raw', cle).then(function(raw){
+          lsSet({salt:ENC.salt, k:enB64(raw)}); injecter(data); lever();
+        });
+      }).catch(function(){
+        ok.disabled=false; ok.textContent='Ouvrir'; err.textContent='Code incorrect.'; inp.select();
+      });
+    });
+  }
+
+  fetch('plumbs.enc.json', {cache:'no-cache'}).then(function(r){
+    if(!r.ok) throw new Error('absent'); return r.json();
+  }).then(function(enc){
+    ENC=enc;
+    var m=lsGet();
+    if(m && m.salt===ENC.salt && m.k){
+      return crypto.subtle.importKey('raw', b64(m.k), {name:'AES-GCM'}, false, ['decrypt'])
+        .then(dechiffrer).then(function(data){ injecter(data); lever(); })
+        .catch(function(){ lsDel(); ecran(); });
+    }
+    ecran();
+  }).catch(function(){ lever(); });
 })();
 </script>
