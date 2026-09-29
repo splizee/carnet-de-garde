@@ -5291,6 +5291,10 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
   const perMlToDisp=(v,u)=>u==='mg/mL'?v/1000:v; // base µg/mL → unité conc affichée
   const qUnit=u=>u==='mg/mL'?'mg':u==='µg/mL'?'µg':'U';  // unité de la quantité totale
   const soft=t=>'<span style="color:var(--ink-soft);font-size:.9em">'+t+'</span>';
+  const ml2=x=>String(Math.round(x*100)/100).replace('.',',');
+  /* 5 — ce qu'on prélève, en gros : les deux seuls chiffres qu'on lit seringue en main */
+  const big=(n,t)=>'<div style="margin-top:10px"><b style="display:block;font-family:var(--mono);font-size:2em;line-height:1.1;white-space:nowrap">'+n+' mL</b><span style="font-size:1em">'+t+'</span></div>';
+  const step5=rows=>'<div style="margin:12px 0 8px;padding:12px 14px;border-radius:12px;border:2px solid var(--c-dose);background:color-mix(in srgb,var(--c-dose) 12%,transparent)"><b>5 · À prélever</b>'+rows+'</div>';
   // Une durée s'écrit « 6 h 40 », pas « 6,67 h ».
   const fmtDuree=(h)=>{if(!isFinite(h)||h<=0)return '—';const H=Math.floor(h),M=Math.round((h-H)*60);
     return M===60?(H+1)+' h':(H?H+' h'+(M?' '+String(M).padStart(2,'0'):''):M+' min');};
@@ -5318,11 +5322,15 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
             soft('(soit '+String(Math.round((V-Vp)*100)/100).replace('.',',')+' mL de diluant → '+fmt(perMlToDisp(workPerMl,cU.value))+' '+cU.value+')')+
             (V>=100?'<br>'+soft('Poche : <b>retirer '+fmt(Vp)+' mL</b> avant d\'injecter la drogue, pour rester à '+fmt(V)+' mL.'):'')+
             '<br><b>4 · Débit pompe</b> = '+fmt(V)+' mL ÷ '+fmt(T)+' h = <b style="font-size:1.15em">'+fmt(mlh)+' mL/h</b> pendant '+fmtDuree(T);
+      html+=step5(big(fmt(Vp),'de '+dName)+
+        (V>=100?big(fmt(Vp),'à <b>retirer</b> de la poche de '+fmt(V)+' mL, avant d\'injecter la drogue')
+               :big(ml2(V-Vp),'de NaCl 0,9 % <span style="color:var(--ink-soft);font-size:.9em">(q.s.p. '+fmt(V)+' mL)</span>')));
       if(Vp>V/2)html+='<br>⚠ le produit occupe plus de la moitié du volume final : ce n\'est presque plus une dilution. Monte le volume final.';
     }else{
       mlh=Vp/T; workPerMl=nativePerMl;
       html+='<br><b>Drogue pure</b> (pas de volume final) : '+fmt(Vp)+' mL ÷ '+fmt(T)+' h = <b style="font-size:1.15em">'+fmt(mlh)+' mL/h</b>'+
             ' '+soft('(entre un volume final pour diluer)');
+      html+=step5(big(fmt(Vp),'de '+dName+' pur')+big('0','de diluant <span style="color:var(--ink-soft);font-size:.9em">(drogue pure)</span>'));
     }
     const back=baseToD(mlh*workPerMl/w,dU.value);
     html+='<br>'+soft('Contrôle : '+fmt(mlh)+' mL/h × '+fmt(perMlToDisp(workPerMl,cU.value))+' '+cU.value+' ÷ '+fmt(w)+' kg = '+fmt(back)+' '+dU.value+' ✓');
