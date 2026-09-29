@@ -2952,13 +2952,13 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
     <!-- BLOC: cri combo -->
     <details class="card c-dose"><summary><span class="bar"></span><span class="head-txt"><span class="cat">Calculateur · combinaison</span><h3>CRI combinée en poche</h3><span class="sub">Plusieurs drogues dans une poche → mL de chaque</span></span><span class="chev">▸</span></summary>
       <div class="body">
-        <p><b>L'entrée, c'est le débit de fluide dont le patient a besoin</b> — l'entretien, ou le débit de réhydratation en cours. Les drogues s'y calent : le calcul donne les mL de chaque drogue à mettre dans la poche pour que ce débit-là délivre la dose voulue. Les mL à ajouter sont <b>indépendants du poids</b> (la poche est dosée par mL/kg/h) ; le poids ne sert qu'à afficher le réglage réel de la pompe et l'autonomie de la poche.</p>
+        <p><b>Même méthode qu'à la seringue, en 4 temps</b> : pour chaque drogue, quantité = dose × poids × durée, puis volume = quantité ÷ concentration du flacon ; la poche est complétée <b>q.s.p.</b> (on retire de la poche le volume des drogues) et <b>débit = volume de la poche ÷ durée</b>. Une nuance : en poche, ce débit est aussi le <b>débit de fluide</b> du patient. Choisir la durée, c'est choisir sa fluidothérapie : le calculateur l'affiche en mL/kg/h pour que tu le compares à ce que tu veux lui passer.</p>
         <div class="box key" style="padding:15px">
           <div style="display:grid;gap:11px">
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               <span style="min-width:130px">Poids</span>
               <input id="crc-w" type="number" inputmode="decimal" placeholder="kg" style="width:100px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
-              <span style="font-size:.85em;color:var(--ink-soft)">kg — pour le mL/h de la pompe et l'autonomie</span>
+              <span style="font-size:.85em;color:var(--ink-soft)">kg</span>
             </div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
               <span style="min-width:130px">Volume de la poche</span>
@@ -2969,9 +2969,10 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
               </select>
             </div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-              <span style="min-width:130px">Débit de la perf</span>
-              <input id="crc-rate" type="number" inputmode="decimal" placeholder="mL/kg/h" value="2" style="width:100px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
-              <span style="font-size:.85em;color:var(--ink-soft)">mL/kg/h — entretien <b>chat ≈ 2</b>, <b>chien ≈ 2–3</b></span>
+              <span style="min-width:130px">Durée</span>
+              <input id="crc-dur" type="number" inputmode="decimal" placeholder="h" style="width:100px;padding:6px 9px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono)">
+              <span style="font-size:.85em;color:var(--ink-soft)">h — c'est toi qui la choisis</span>
+              <span style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="crc-chip" data-t="6" style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:.85em;cursor:pointer">6</button><button type="button" class="crc-chip" data-t="8" style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:.85em;cursor:pointer">8</button><button type="button" class="crc-chip" data-t="12" style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:.85em;cursor:pointer">12</button><button type="button" class="crc-chip" data-t="24" style="padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--mono);font-size:.85em;cursor:pointer">24</button></span>
             </div>
             <div style="border-top:1px solid var(--line);margin:4px 0 2px"></div>
             <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -2991,9 +2992,9 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
             </div>
             <div><button id="crc-mlk" type="button" style="padding:6px 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-size:.85em">Préremplir MLK (chien)</button></div>
           </div>
-          <div class="box note" id="crc-out" style="margin-top:14px">Règle le débit, choisis les drogues et leurs doses.</div>
+          <div class="box note" id="crc-out" style="margin-top:14px">Entre le poids et la durée, choisis les drogues et leurs doses.</div>
         </div>
-        <div class="box key"><b>Le repère à graver : 500 µg dans 500 mL = 1 µg/mL — et alors mL/h = µg/h.</b> La conversion disparaît. C'est celui que tout le monde utilise à 3 h du matin, et il se pose en trois lignes : <b>(1)</b> débit voulu = entretien (25 kg × 3 mL/kg/h = <b>75 mL/h</b>) · <b>(2)</b> dose voulue = <b>75 µg/h</b> · <b>(3)</b> concentration nécessaire = 75 ÷ 75 = <b>1 µg/mL</b> → 500 µg (10 mL de fentanyl) dans 490 mL de RL. La poche tient 6 h 40 : <i>c'est un résultat, pas une consigne.</i></div>
+        <div class="box key"><b>Exemple</b> — fentanyl 3 µg/kg/h, chien de 25 kg, poche de 500 mL sur 8 h.<br><b>1.</b> 3 × 25 × 8 = <b>600 µg</b> · <b>2.</b> 600 µg ÷ 50 µg/mL = <b>12 mL</b> de fentanyl · <b>3.</b> retirer 12 mL de la poche, injecter les 12 mL de fentanyl (q.s.p. 500 mL → 1,2 µg/mL) · <b>4.</b> 500 mL ÷ 8 h = <b>62,5 mL/h</b>, soit 2,5 mL/kg/h.<br><b>Contrôle</b> : 62,5 mL/h × 1,2 µg/mL = 75 µg/h = 3 µg/kg/h × 25 kg ✓</div>
         <div class="box trap"><b>Une drogue dans la poche de fluides est esclave du débit de fluides.</b> Si le patient se déshydrate et qu'on passe de 75 à 150 mL/h, <b>l'analgésie double</b> sans qu'on y pense ; si on descend, elle se coupe. D'où la règle : <b>dès que c'est possible, l'analgésique part sur une seringue électrique dédiée</b>, et la poche ne porte que ce qui peut suivre le débit. Le calculateur ci-dessus reste juste — c'est la ligne veineuse qui est le compromis.</div>
         <div class="box trap"><b>MLK — attention à ta fiche source.</b> Sa recette (morphine 60 mg / 500 mL à 10 mL/kg/h) délivre <b>1,2 mg/kg/h de morphine, pas 0,2</b> (6× trop). Lido (150 mg → 50 µg/kg/min) et kétamine (60 mg → 20 µg/kg/min) sont correctes. Le préréglage ci-dessus recalcule la morphine à la bonne quantité pour la dose cible. <span class="src">écart signalé 17/07/2026</span></div>
       </div>
@@ -5347,7 +5348,7 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
   [dU,cU].forEach(el=>el.addEventListener('change',renderSimple));
 
   // ----- calculateur combiné (poche) -----
-  const bag=document.getElementById('crc-bag'),rate=document.getElementById('crc-rate'),crcOut=document.getElementById('crc-out'),
+  const bag=document.getElementById('crc-bag'),crcOut=document.getElementById('crc-out'),
         crcW=document.getElementById('crc-w');
   const cDrugs=[...document.querySelectorAll('.crc-drug')],cDoses=[...document.querySelectorAll('.crc-dose')],cUnitsSpan=[...document.querySelectorAll('.crc-unit')];
   cDrugs.forEach((s,i)=>{
@@ -5355,39 +5356,42 @@ document.querySelectorAll('.conv-in').forEach(inp=>{
     Object.keys(D).forEach(k=>s.appendChild(opt(k,D[k].label)));
     s.addEventListener('change',()=>{const k=s.value;if(k){cDoses[i].value=D[k].d;cUnitsSpan[i].textContent=D[k].dU;}else{cUnitsSpan[i].textContent='';}renderCombo();});
   });
+  /* Méthode des 4 temps, drogue par drogue : on CHOISIT la durée et la poche,
+     le débit en sort (V ÷ durée) — et c'est aussi le débit de fluide du patient. */
+  const crcDur=document.getElementById('crc-dur');
   function renderCombo(){
-    const V=parseFloat(bag.value),r=num(rate),w=num(crcW);
-    if(r===null||r<=0){crcOut.innerHTML='Entre le débit de fluide voulu (mL/kg/h) — c\'est lui l\'entrée du calcul.';return;}
-    let lines=[],any=false,totAdd=0;
+    const V=parseFloat(bag.value),T=num(crcDur),w=num(crcW);
+    if(w===null||w<=0||T===null||T<=0){crcOut.innerHTML='Entre le <b>poids</b> et la <b>durée</b> de la poche, puis choisis les drogues.';return;}
+    const rows=[];
     cDrugs.forEach((s,i)=>{
-      const k=s.value;if(!k)return;const dose=num(cDoses[i]);if(dose===null)return;any=true;
-      const g=D[k];
-      // mL à ajouter (indépendant du poids) = dose(µg/kg/h) × Vpoche ÷ débit(mL/kg/h) ÷ conc_native(µg/mL)
-      const mlAdd=(dToBase(dose,g.dU)*V)/r/cPerMl(g.conc,g.cU);
-      totAdd+=mlAdd;
-      const parMl=dToBase(dose,g.dU)/r; // concentration obtenue dans la poche
-      lines.push('<b>'+g.label+'</b> : '+fmt(mlAdd)+' mL &nbsp;<span style="color:var(--ink-soft);font-size:.9em">('+fmt(dose)+' '+g.dU+' → '+fmt(parMl)+' '+(g.cU==='U/mL'?'U/mL':'µg/mL')+' dans la poche)</span>');
+      const k=s.value;if(!k)return;const dose=num(cDoses[i]);if(dose===null||dose<=0)return;
+      const g=D[k],np=cPerMl(g.conc,g.cU),Q=dToBase(dose,g.dU)*w*T;
+      rows.push({g:g,dose:dose,Q:Q,Vp:Q/np,qu:qUnit(g.cU),Qd:perMlToDisp(Q,g.cU)});
     });
-    if(!any){crcOut.innerHTML='Choisis au moins une drogue et sa dose.';return;}
-    let html='<b>Dans une poche de '+V+' mL, à '+fmt(r)+' mL/kg/h :</b><br>'+lines.join('<br>');
-    // Le poids ne change aucun des volumes ci-dessus. Il donne le seul chiffre
-    // qu'on tape réellement sur la pompe, et l'autonomie de la poche.
-    if(w!==null&&w>0){
-      const mlh=r*w;
-      html+='<br><br><b>Pompe = '+fmt(mlh)+' mL/h</b> <span style="color:var(--ink-soft);font-size:.9em">('+fmt(r)+' mL/kg/h × '+fmt(w)+' kg — un débit se règle en mL/h)</span>'+
-            '<br><b>La poche tient '+fmtDuree(V/mlh)+'</b> <span style="color:var(--ink-soft);font-size:.9em">('+V+' mL ÷ '+fmt(mlh)+' mL/h) — c\'est un résultat, pas une durée choisie</span>';
-      if(V/mlh>24)html+='<br>⚠ plus de 24 h d\'autonomie → <b>poche trop grande</b> : une poche entamée se change à 24 h. Descends à 250 mL (ou 50 mL à la seringue chez le chat).';
-    }else{
-      html+='<br><span style="color:var(--ink-soft);font-size:.9em">Entre le poids pour obtenir le réglage de pompe en mL/h et l\'autonomie de la poche.</span>';
-    }
-    html+='<br><span style="color:var(--ink-soft);font-size:.9em">Total additifs ≈ '+fmt(totAdd)+' mL — retirer ce volume de la poche pour rester iso-volume.</span>';
+    if(!rows.length){crcOut.innerHTML='Choisis au moins une drogue et sa dose.';return;}
+    const tot=rows.reduce((a,r)=>a+r.Vp,0),mlh=V/T;
+    let html='<b>1 · Quantités</b> (dose × '+fmt(w)+' kg × '+fmt(T)+' h)';
+    rows.forEach(r=>{html+='<br>· '+r.g.label+' : '+fmt(r.dose)+' '+r.g.dU+' → <b>'+fmt(r.Qd)+' '+r.qu+'</b>';});
+    html+='<br><b>2 · Volumes de produit</b> (÷ concentration du flacon)';
+    rows.forEach(r=>{html+='<br>· '+r.g.label+' : '+fmt(r.Qd)+' '+r.qu+' ÷ '+fmt(r.g.conc)+' '+r.g.cU+' = <b>'+fmt(r.Vp)+' mL</b>';});
+    if(tot>V){crcOut.innerHTML=html+'<br>⚠ <b>'+fmt(tot)+' mL</b> de drogues dépassent la poche ('+V+' mL) : raccourcis la durée ou prends une poche plus grande.';return;}
+    html+='<br><b>3 · Poche q.s.p. '+V+' mL</b> : retirer '+fmt(tot)+' mL de fluide, injecter les drogues '+
+          soft('(→ '+rows.map(r=>r.g.label+' '+fmt(perMlToDisp(r.Q/V,r.g.cU))+' '+r.g.cU).join(' · ')+')');
+    html+='<br><b>4 · Débit pompe</b> = '+V+' mL ÷ '+fmt(T)+' h = <b style="font-size:1.15em">'+fmt(mlh)+' mL/h</b> pendant '+fmtDuree(T)+
+          '<br>'+soft('soit <b>'+fmt(mlh/w)+' mL/kg/h</b> de fluide : vérifie que c\'est le débit de perfusion voulu pour ce patient.');
+    html+=step5(rows.map(r=>big(fmt(r.Vp),'de '+r.g.label)).join('')+
+                big(fmt(tot),'à <b>retirer</b> de la poche de '+V+' mL, avant d\'injecter les drogues'));
+    rows.forEach(r=>{html+=soft('Contrôle '+r.g.label+' : '+fmt(mlh)+' mL/h × '+fmt(perMlToDisp(r.Q/V,r.g.cU))+' '+r.g.cU+' ÷ '+fmt(w)+' kg = '+fmt(baseToD(mlh*(r.Q/V)/w,r.g.dU))+' '+r.g.dU+' ✓')+'<br>';});
+    if(T>24)html+='⚠ plus de <b>24 h</b> : une poche entamée se change à 24 h. Raccourcis la durée ou prends une poche plus petite.<br>';
+    if(tot>V/2)html+='⚠ les drogues occupent plus de la moitié de la poche : ce n\'est presque plus une dilution.<br>';
+    html+=soft('Concentrations du flacon : celles de la table du carnet. C\'est l\'étiquette qui fait foi.');
     crcOut.innerHTML=html;
   }
   bag.addEventListener('change',renderCombo);
-  [rate,crcW].forEach(el=>el.addEventListener('input',renderCombo));
+  [crcDur,crcW].forEach(el=>el.addEventListener('input',renderCombo));
   cDoses.forEach(el=>el.addEventListener('input',renderCombo));
+  document.querySelectorAll('.crc-chip').forEach(b=>b.addEventListener('click',()=>{crcDur.value=b.dataset.t;renderCombo();}));
   document.getElementById('crc-mlk').addEventListener('click',()=>{
-    bag.value='500';rate.value='10';
     const set=(i,k,dose)=>{cDrugs[i].value=k;cUnitsSpan[i].textContent=D[k].dU;cDoses[i].value=dose;};
     set(0,'morphine',0.2);set(1,'lidocaine',50);set(2,'ketamine',20);renderCombo();
   });
