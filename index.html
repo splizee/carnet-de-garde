@@ -199,8 +199,8 @@ table.doses tbody tr:hover td{background:var(--surface2)}
 table.doses td.d{font-family:var(--mono);font-weight:600;white-space:nowrap}
 table.doses td.s{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
 table.doses td.s .fregis{color:var(--fregis);font-weight:700;letter-spacing:.2px}
-table.doses td.s .plumbs{color:var(--plumbs);font-weight:700;letter-spacing:.2px}
-.plumbs-t{color:var(--plumbs)}
+table.doses td.s .plumbs{color:var(--plumbs);font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+.plumbs-t{color:var(--plumbs);text-transform:uppercase}
 .catchip{font-size:10.5px;padding:1px 8px;border-radius:14px;background:color-mix(in srgb,var(--c-dose) 15%,transparent);
   color:var(--c-dose);font-weight:700}
 mark{background:color-mix(in srgb,var(--c-repere) 48%,transparent);color:inherit;border-radius:3px;padding:0 2px}
@@ -429,39 +429,66 @@ body.garde-open{overflow:hidden}
 .gwarn{border:1px solid #c0433f;background:color-mix(in srgb,#c0433f 20%,transparent);
   border-radius:12px;padding:11px 13px;font-size:14px;line-height:1.5;margin-bottom:12px}
 
-/* --- une dose, convertie pour le patient --- */
-.gdose{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:12px 13px;margin-bottom:10px}
-.gdose .gh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-.gdose .gh b{font-size:16.5px}
+/* --- une molecule : entete repliable, un seul calculateur, ses indications --- */
+.gcount{font-size:12px;color:var(--ink-soft);margin:0 2px 8px}
+.gmol{border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:8px}
+.gmol.open{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.gmh{display:grid;grid-template-columns:1fr auto;align-items:center;gap:5px 10px;width:100%;
+  text-align:left;border:0;background:transparent;color:var(--ink);padding:11px 13px;cursor:pointer;border-radius:14px}
+.gmh .n{font-size:16.5px;font-weight:700;line-height:1.25}
+.gmh .m{grid-column:1/-1;display:flex;align-items:center;flex-wrap:wrap;gap:4px 9px;font-size:12px;color:var(--ink-soft)}
+.gmh .chev{font-size:22px;line-height:1;color:var(--ink-soft);transition:transform .15s}
+.gmol.open .gmh .chev{transform:rotate(90deg)}
+.gmb{padding:0 11px 11px}
 .gcat{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);
   border:1px solid var(--line);border-radius:999px;padding:2px 8px}
-.gdose .gi{color:var(--ink-soft);font-size:13.5px;margin-top:3px;line-height:1.4}
-.gdose .fregis{color:#ff7a70;font-weight:700;letter-spacing:.2px}
-.gres{font-family:var(--mono);font-size:27px;font-weight:700;letter-spacing:-.6px;
-  color:var(--accent);margin:9px 0 3px;line-height:1.15}
-.gres .v{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-soft);margin-left:7px}
-.gcalc{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);line-height:1.55}
-.gverb{font-size:12.5px;color:var(--ink-soft);line-height:1.5;margin-top:7px;padding-top:7px;
-  border-top:1px dashed var(--line)}
-.gflag{margin-top:9px;border-radius:10px;padding:9px 11px;font-size:13.2px;line-height:1.5;
-  border:1px solid color-mix(in srgb,#c0433f 55%,transparent);
-  background:color-mix(in srgb,#c0433f 17%,transparent)}
-.gflag.soft{border-color:color-mix(in srgb,var(--c-repere) 45%,transparent);
-  background:color-mix(in srgb,var(--c-repere) 14%,transparent)}
-.gdose .gact{display:flex;gap:8px;margin-top:10px}
+#garde .fregis{color:#ff7a70;font-weight:700;letter-spacing:.2px}
+#garde .plumbs{color:#8fb0f5;font-weight:800;letter-spacing:.6px}
 
-/* --- ajusteur de dose : une fourchette 2-5 ug/kg ne calcule rien pour 4 --- */
-.gtok+.gtok{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
-.gadj{display:flex;align-items:center;gap:6px;margin-top:10px}
-.gadj input{width:76px;padding:8px 6px;font-size:17px;font-weight:700;text-align:center;
-  font-family:var(--mono);border:1px solid var(--line);border-radius:10px;
-  background:var(--surface2);color:var(--ink)}
-.gadj .u{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft)}
-.gstep{border:1px solid var(--line);background:var(--surface2);color:var(--ink);
-  border-radius:10px;width:38px;height:38px;font-size:18px;line-height:1;cursor:pointer;flex:none}
-.gstep:active{background:var(--surface)}
-.gstep.undo{margin-left:auto;font-size:15px;color:var(--ink-soft)}
+/* le calculateur reste en haut de l'ecran pendant qu'on parcourt les indications */
+.gcalcbox{position:sticky;top:-12px;z-index:2;background:var(--surface2);border:1px solid var(--line);
+  border-radius:12px;padding:10px 11px 11px;margin-bottom:6px;box-shadow:0 8px 16px -8px rgba(0,0,0,.55)}
+.gcalcbox .for{font-size:12.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gcalcbox .for b{color:var(--ink);font-weight:600}
+.gadj,.gconc{display:flex;align-items:center;gap:6px;margin-top:8px}
+.gadj input,.gconc input{width:74px;padding:7px 6px;font-size:17px;font-weight:700;text-align:center;
+  font-family:var(--mono);border:1px solid var(--line);border-radius:10px;background:var(--bg2);color:var(--ink)}
+.gconc input{font-size:15px}
+.gconc input:placeholder-shown{border-style:dashed}
+.gadj select,.gconc select{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);background:transparent;
+  border:0;padding:4px 0;max-width:84px}
+.gconc{flex-wrap:wrap}
+.gconc .l{font-size:12px;color:var(--ink-soft);width:36px;flex:none}
+.gconc .tag{font-size:11px;color:var(--ink-soft)}
+.gconc .tag.perso{color:var(--c-dose);font-weight:700}
+.gconc .tag.hint{color:var(--ink);border:1px dashed var(--line);border-radius:8px;padding:4px 7px;cursor:pointer;white-space:nowrap}
+.gstep{border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  border-radius:10px;width:36px;height:36px;font-size:18px;line-height:1;cursor:pointer;flex:none}
+.gstep:active{background:var(--surface2)}
+.gstep.undo{margin-left:auto;font-size:14px;color:var(--ink-soft)}
+.gres{font-family:var(--mono);font-size:26px;font-weight:700;letter-spacing:-.6px;
+  color:var(--accent);margin:9px 0 2px;line-height:1.15}
 .gres.cust{color:var(--c-dose)}
+.gres .v{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink-soft);margin-left:7px;letter-spacing:0}
+.gcalc{font-family:var(--mono);font-size:12px;color:var(--ink-soft);line-height:1.5}
+.gnl{font-size:12.5px;color:var(--ink-soft);line-height:1.45;margin-top:4px}
+.gnl.warn{color:var(--c-repere);font-weight:600}
+.gnl.alert{color:#ff7a70;font-weight:700}
+.gcalcbox .gact{display:flex;gap:8px;margin-top:9px}
+
+/* une indication : touchable ; ses doses soulignees se chargent dans le calculateur */
+.gline{padding:10px 8px;border-top:1px dashed var(--line);cursor:pointer;border-radius:10px}
+.gline:first-child{border-top:0}
+.gline.sel{background:color-mix(in srgb,var(--accent) 11%,transparent);border-top-color:transparent}
+.gline.sel+.gline{border-top-color:transparent}
+.gline .lbl{display:block;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px}
+.gline .ind{font-size:14.5px;font-weight:600;line-height:1.4}
+.gline .dz{font-size:14px;line-height:1.7;margin-top:3px;color:var(--ink)}
+.gtk{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;
+  background:color-mix(in srgb,var(--accent) 10%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);border-radius:7px;padding:1px 5px}
+.gtk.on{background:var(--accent);border-color:var(--accent);color:#1a1410}
+.gline .meta{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.45}
 
 /* --- gestes --- */
 .gtiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
@@ -5708,52 +5735,60 @@ document.addEventListener('click',function(e){
   }
   function stepOf(t){ return niceStep(t.hi==null ? t.lo/10 : (t.hi-t.lo)/6); }
 
-  /* concentration : premiere occurrence « nombre unite/mL » */
+  /* concentration : premiere occurrence « nombre unite/mL », a defaut « n % » */
+  var PCT_RE=/([0-9]+(?:[.,][0-9]+)?)\s*%/;
+  function nu(u){ return ({'ug':'µg','mcg':'µg','ui':'UI','U':'UI','meq':'mEq','ml':'mL'})[u]||u; }
+  function mkConc(v,u){
+    if(!(v>0)) return null;
+    if(u==='%') return {v:v,u:'%',fam:'m',base:v*1e4};   /* 1 % = 10 mg/mL */
+    var x=U[u]; return x?{v:v,u:nu(u),fam:x[0],base:v*x[1]}:null;
+  }
+  function cLabel(c){ return c.u==='%'?fmt(c.v)+' % ('+fmt(c.v*10)+' mg/mL)':fmt(c.v)+' '+c.u+'/mL'; }
   function parseConc(txt){
     var m=CONC_RE.exec(txt||'');
-    if(!m||!U[m[2]]) return null;
-    return {v:nb(m[1]),u:m[2],fam:U[m[2]][0],base:nb(m[1])*U[m[2]][1]};
+    if(m&&U[m[2]]) return mkConc(nb(m[1]),m[2]);
+    m=PCT_RE.exec(txt||'');
+    return m?mkConc(nb(m[1]),'%'):null;
   }
-  /* doses : toutes les occurrences « nombre[-nombre] unite/kg[/min|/h] » */
+  /* doses : toutes les occurrences « nombre[-nombre] unite/kg[/min|/h] », avec
+     leur position dans le texte : chacune devient touchable dans la carte. */
   function parseDoses(txt){
     var out=[],m,re=doseRe();
     while((m=re.exec(txt||''))!==null){
       if(!U[m[3]]) continue;
-      out.push({lo:nb(m[1]),hi:m[2]?nb(m[2]):null,u:m[3],fam:U[m[3]][0],k:U[m[3]][1],rate:m[4]||null,raw:m[0]});
-      if(out.length>3) break;
+      out.push({lo:nb(m[1]),hi:m[2]?nb(m[2]):null,u:nu(m[3]),fam:U[m[3]][0],k:U[m[3]][1],
+                rate:m[4]||null,raw:m[0],at:m.index,len:m[0].length});
+      if(out.length>11) break;
     }
     return out;
   }
 
   /* ------------------------------------------------- calcul pour le patient */
+  /* r.notes : une ligne courte chacune ('alert' rouge, 'warn' ambre, '' gris).
+     Plus d'encadre : le resultat doit se lire d'un coup d'oeil. */
   function compute(t,kg,c){
-    var r={tok:t,lines:[],flags:[],head:null,vol:null};
+    var r={tok:t,lines:[],notes:[],head:null,vol:null};
     var lo=t.lo*kg, hi=t.hi==null?null:t.hi*kg;
     var per=t.rate?('/'+t.rate):'';
 
     if(t.fam==='v'){                       /* mL/kg : deja un volume */
-      r.head=rng(lo,hi,'mL'+(t.rate?'/'+t.rate:''));
-      r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+rng(lo,hi,'mL'+per));
+      r.head=rng(lo,hi,'mL'+per);
+      r.lines.push(t.raw+' × '+fmt(kg)+' kg = '+rng(lo,hi,'mL'+per));
       r.vol=hi==null?lo:null;
       return r;
     }
     if(t.fam==='j'){                       /* J/kg : energie de defibrillation */
       r.head=rng(lo,hi,'J');
-      r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+rng(lo,hi,'J'));
+      r.lines.push(t.raw+' × '+fmt(kg)+' kg = '+rng(lo,hi,'J'));
       return r;
     }
     var masse=rng(lo,hi,t.u+per);
-    r.lines.push(t.raw+' \u00d7 '+fmt(kg)+' kg = '+masse);
+    r.lines.push(t.raw+' × '+fmt(kg)+' kg = '+masse);
 
-    if(!c){                                /* pas de concentration : on s'arrete la */
-      r.head=masse;
-      r.flags.push(['soft','Concentration inconnue \u2014 le carnet ne devine pas de mL. '+
-        'Lis la concentration sur le flacon, le volume c\u2019est masse \u00f7 concentration.']);
-      return r;
-    }
+    if(!c){ r.head=masse; return r; }      /* pas de concentration : la masse suffit */
     if(c.fam!==t.fam){                     /* mg vs UI/mL : on refuse de convertir */
       r.head=masse;
-      r.flags.push(['soft','Dose en '+t.u+', concentration en '+c.u+'/mL \u2014 unit\u00e9s incompatibles, pas de volume calcul\u00e9.']);
+      r.notes.push(['','Dose en '+t.u+', concentration en '+c.u+'/mL : unités incompatibles, pas de volume.']);
       return r;
     }
     var vlo=lo*t.k/c.base, vhi=hi==null?null:hi*t.k/c.base;
@@ -5761,46 +5796,82 @@ document.addEventListener('click',function(e){
       var mult=t.rate==='min'?60:1;
       var hlo=vlo*mult, hhi=vhi==null?null:vhi*mult;
       r.head=rng(hlo,hhi,'mL/h');
-      r.lines.push(masse+(t.rate==='min'?' \u00d7 60 = '+rng(lo*60,hi==null?null:hi*60,t.u+'/h'):'')+
-                   ' \u00f7 '+fmt(c.v)+' '+c.u+'/mL = '+rng(hlo,hhi,'mL/h'));
-      r.flags.push(['soft','D\u00e9bit \u00e0 la seringue, <b>produit pur</b>. Dilu\u00e9 en poche, passe par le calculateur CRI \u2014 et un d\u00e9bit se r\u00e8gle toujours en mL/h.']);
+      r.lines.push(masse+(t.rate==='min'?' × 60 = '+rng(lo*60,hi==null?null:hi*60,t.u+'/h'):'')+
+                   ' ÷ '+cLabel(c)+' = '+rng(hlo,hhi,'mL/h'));
+      r.notes.push(['','Débit seringue, produit pur. Dilué en poche : calculateur CRI.']);
       return r;
     }
     r.head=rng(vlo,vhi,'mL');
-    r.lines.push(masse+' \u00f7 '+fmt(c.v)+' '+c.u+'/mL = '+rng(vlo,vhi,'mL'));
-    r.vol=vhi==null?vlo:vlo;
+    r.lines.push(masse+' ÷ '+cLabel(c)+' = '+rng(vlo,vhi,'mL'));
+    r.vol=vlo;
     return r;
   }
 
-  /* garde-fous purement arithmetiques (aucune regle clinique invent\u00e9e ici) */
+  /* garde-fous purement arithmetiques (aucune regle clinique inventee ici) */
   function safety(r){
     var v=r.vol;
     if(v==null||!isFinite(v)) return;
     if(v<0.1){
-      var d=v<0.01?100:10, dl=v<0.01?'Deux dilutions au 1/10':'Une dilution au 1/10';
-      r.flags.push(['','<b>Volume plancher \u2014 '+fmt(v)+' mL ne se pr\u00e9l\u00e8ve pas.</b> '+
-        'Sous 0,1 mL on dilue : \u00e0 ~0,05 mL dans une seringue de 1 mL on est dans le bruit de mesure, '+
-        'et un chiffre exact devient une dose fausse. '+dl+' dans du <b>NaCl 0,9&nbsp;%</b> (jamais du RL) \u2192 '+
-        fmt(v*d)+' mL mesurables. Jette ou \u00e9tiquette la seringue interm\u00e9diaire.']);
+      var d=v<0.01?100:10;
+      r.notes.push(['alert','Moins de 0,1 mL : dilue '+(d===100?'deux fois ':'')+'au 1/10 dans du NaCl 0,9 % (jamais du RL) → '+fmt(v*d)+' mL.']);
     }
-    if(v>60) r.flags.push(['soft','<b>'+fmt(v)+' mL</b> \u2014 ce n\u2019est plus une seringue. Recompte l\u2019ordre de grandeur avant de pr\u00e9lever.']);
+    if(v>60) r.notes.push(['alert',fmt(v)+' mL : recompte l’ordre de grandeur.']);
   }
 
   /* ------------------------------------------------ lecture du corpus fiche */
-  var DOSES=[], TILES=[];
+  /* Une ligne du tableau = une dose (DOSES). Les lignes d'une meme molecule
+     (fiche, Fregis, Plumb's) sont regroupees dans MOLS : une carte, un calculateur. */
+  var DOSES=[], TILES=[], MOLS=[], MOLIX={};
+  /* meme molecule, nom different entre la fiche et le Plumb's */
+  var ALIAS={'pimobendane':'pimobendan','bicarbonate de sodium':'bicarbonate',
+    'chlorure de potassium':'kcl','vit k1':'vitamine k1','sulfate de mg':'sulfate de magnesium',
+    'amoxicilline-clavulanate':'amoxicilline-acide clavulanique','charbon actif':'charbon active',
+    'insuline ordinaire':'insuline rapide','nitroprussiate de sodium':'nitroprussiate'};
+  function molGroup(name){
+    var k=norm(name).replace(/\([^)]*\)/g,' ').replace(/\s[—–-]\s.*$/,'')
+      .replace(/\s+(chien|chat)\s*$/,'').replace(/\s+[0-9]+(?:[.,][0-9]+)?\s*%\s*$/,'')
+      .replace(/\s+iv\s*$/,'').replace(/\s+/g,' ').trim();
+    return ALIAS[k]||k;
+  }
+  function molName(name){
+    return name.replace(/\s*\((chien|chat)\)/gi,'').replace(/\s[—–]\s.*$/,'')
+               .replace(/\s+(chien|chat)$/i,'').trim();
+  }
+  /* espece d'une ligne : null = les deux, ou non precisee (toujours affichee).
+     Fiche : seulement le nom (« (chien) », « Furosemide chat ») ou une indication
+     explicite (« chien seulement », « — chat ») ; jamais le texte de la dose. */
+  function rowEsp(tr,mol,ind){
+    var e=norm(tr.getAttribute('data-esp')||'');
+    if(e) return e==='chien'||e==='chat'?e:null;
+    var m=norm(mol), c=/\bchien\b/.test(m), t=/\bchat\b/.test(m);
+    if(c!==t) return c?'chien':'chat';
+    if(c) return null;
+    var i=norm(ind);
+    c=/chien (seulement|uniquement)|[—–]\s*chien\b/.test(i);
+    t=/chat (seulement|uniquement)|[—–]\s*chat\b/.test(i);
+    return c!==t?(c?'chien':'chat'):null;
+  }
+  function espOk(d){ return !d.esp || d.esp===P.esp; }
   function readCorpus(){
+    MOLS.length=0; MOLIX={};
     $$('#doseTable tbody tr').forEach(function(tr){
       var td=tr.children; if(td.length<7) return;
       var d={mol:td[0].textContent.trim(), ind:td[1].textContent.trim(),
              dose:td[2].textContent.trim(), conc:td[3].textContent.trim(),
              voie:td[4].textContent.trim(), cat:td[5].textContent.trim(),
              src:td[6].textContent.trim()};
+      if(tr.classList.contains('pl')) d.mol=d.mol.replace(/\s*\((chien|chat|chien\/chat)\)$/i,'');
+      d.esp=rowEsp(tr,d.mol,d.ind);
       d.c=parseConc(d.conc);
       d.toks=parseDoses(d.dose);
       d.key=norm(d.mol+' '+d.ind+' '+d.cat+' '+d.dose);
       d.molKey=norm(d.mol.replace(/\(.*/,'')).trim();
       d.idx=DOSES.length;
       DOSES.push(d);
+      var gk=molGroup(d.mol)||d.molKey, g=MOLIX[gk];
+      if(!g){ g=MOLIX[gk]={key:gk,name:molName(d.mol)||d.mol,rows:[],cats:[]}; MOLS.push(g); }
+      g.rows.push(d);
+      if(d.cat && g.cats.indexOf(d.cat)<0) g.cats.push(d.cat);
     });
     /* ce qu'on ouvre en premier a 3 h du matin, puis l'ordre du document */
     var ordre=['non choquable','rythme choquable','post-ros','anaphyl','hyperk','ouf',
@@ -5820,17 +5891,48 @@ document.addEventListener('click',function(e){
     TILES.sort(function(a,b){ return a.grp-b.grp || a.r-b.r || a.i-b.i; });
   }
 
-  /* ---------------------------------------------------- dose choisie a la main */
-  /* La fiche donne des fourchettes (fenta 2\u20135 \u00b5g/kg) : sans ce reglage,
-     impossible de calculer le volume pour la valeur qu'on retient vraiment.
-     Cle = rang de la ligne dans le tableau + rang du token. Videe au patient suivant. */
-  var CUSTOM={};
-  function ckey(d,i){ return d.idx+'#'+i; }
-  function effTok(d,i){
-    var t=d.toks[i], v=CUSTOM[ckey(d,i)];
-    if(v==null||!isFinite(v)) return t;
-    return {lo:v, hi:null, u:t.u, fam:t.fam, k:t.k, rate:t.rate,
-            raw:fmt(v)+' '+t.u+'/kg'+(t.rate?'/'+t.rate:'')};
+  /* --------------------------------------------- calculateur d'une molecule */
+  /* SEL : la dose chargee (ligne + dose touchee). CUSTOM : la valeur ajustee a la
+     main et son unite. Tous deux vides au patient suivant. CONC : la concentration
+     saisie, gardee sur l'appareil (le flacon de l'hopital ne change pas). */
+  var SEL={}, CUSTOM={}, OPEN={}, CONC={};
+  try{ CONC=JSON.parse(get('conc','{}'))||{}; }catch(e){ CONC={}; }
+  function saveConc(){ set('conc',JSON.stringify(CONC)); }
+  function unitKey(t){ return t.u+'|'+(t.rate||''); }
+  function mkTok(v,uk){
+    var p=uk.split('|'), x=U[p[0]]; if(!x) return null;
+    return {lo:v,hi:null,u:p[0],fam:x[0],k:x[1],rate:p[1]||null,
+            raw:fmt(v)+' '+p[0]+'/kg'+(p[1]?'/'+p[1]:'')};
+  }
+  function molRows(g){ return g.rows.filter(espOk); }
+  function selOf(g){
+    var s=SEL[g.key];
+    if(s && espOk(s.d)) return s;
+    var rows=molRows(g);
+    for(var j=0;j<rows.length;j++) if(rows[j].toks.length) return {d:rows[j],i:0};
+    return {d:rows[0]||g.rows[0],i:-1};
+  }
+  function baseTok(s){ return s.i>=0?s.d.toks[s.i]:null; }
+  function effTok(g,s){
+    var b=baseTok(s), cu=CUSTOM[g.key];
+    if(!cu) return b;
+    if(cu.v!=null) return mkTok(cu.v, cu.u||(b?unitKey(b):'mg|'));
+    return b && (!cu.u || cu.u===unitKey(b)) ? b : null;
+  }
+  /* concentration : ta saisie > celle de la ligne. Jamais reportee d'une ligne a
+     l'autre (injectable vs PO, topique...) : celle de la fiche est seulement
+     proposee (hint), un tap l'applique. Une ligne qui nomme son flacon garde sa cle. */
+  function cId(c){ return c.fam+':'+c.base; }
+  function concKey(g,d){ return g.key+(d&&d.c?'|'+cId(d.c):''); }
+  function concFor(g,d){
+    var s=CONC[concKey(g,d)];
+    if(s){ var c=mkConc(s.v,s.u); if(c) return {c:c,src:'perso'}; }
+    if(d && d.c) return {c:d.c,src:'fiche'};
+    var seen={}, only=null, n=0;
+    g.rows.forEach(function(r){
+      if(r.c && !seen[cId(r.c)]){ seen[cId(r.c)]=1; only=r.c; n++; }
+    });
+    return {c:null,src:null,hint:n===1?only:null};
   }
 
   /* ------------------------------------------------------------ etat patient */
@@ -5908,7 +6010,7 @@ document.addEventListener('click',function(e){
   function newPatient(){
     if(!confirm('Nouveau patient : poids, minuteurs et trace sont effac\u00e9s. Continuer ?')) return;
     P.kg=null; set('kg','');
-    CUSTOM={};
+    CUSTOM={}; SEL={};
     TRACE=[]; saveTrace(); TIMERS=[]; saveTimers(); rcpReset();
     paintPat(); render(); show('doses');
     body.scrollTop=0;
@@ -5931,144 +6033,250 @@ document.addEventListener('click',function(e){
     if(!$('#gQ',p)){
       p.innerHTML='';
       var w=el('div','gwarn'); w.id='gNoKg';
-      w.innerHTML='<b>Entre le poids.</b> Sans poids, le carnet reste un tableau : '+
-        'il affiche les doses verbatim mais ne calcule rien.';
+      w.innerHTML='<b>Entre le poids.</b> Sans poids, les doses s’affichent mais rien n’est calculé.';
       p.appendChild(w);
       var q=el('input'); q.id='gQ'; q.type='search'; q.value=qDose;
-      q.placeholder='Mol\u00e9cule, indication, cat\u00e9gorie\u2026';
+      q.placeholder='Molécule, indication, catégorie…';
       q.addEventListener('input',function(){ qDose=q.value; paintDoses(); });
       p.appendChild(q);
       p.appendChild(el('div',null)).id='gDoseList';
       var f=el('p','gnote');
-      f.innerHTML='\u26a0\ufe0e Aide-m\u00e9moire personnel, non valid\u00e9 \u2014 le volume affich\u00e9 <b>v\u00e9rifie ton calcul</b>, '+
-        'il ne le remplace pas. Concentration \u00e0 relire sur le flacon avant toute injection.';
+      f.innerHTML='⚠︎ Aide-mémoire personnel, non validé : le volume affiché <b>vérifie ton calcul</b>, '+
+        'il ne le remplace pas. Concentration à relire sur le flacon.';
       p.appendChild(f);
     }
     paintDoses();
+  }
+  function molHit(g,nq){
+    var rows=molRows(g); if(!rows.length) return false;
+    if(!nq || g.key.indexOf(nq)>=0 || norm(g.name).indexOf(nq)>=0) return true;
+    for(var j=0;j<rows.length;j++) if(rows[j].key.indexOf(nq)>=0) return true;
+    return false;
   }
   function paintDoses(){
     var nk=$('#gNoKg',G); if(nk) nk.style.display=kgOk()?'none':'block';
     var l=$('#gDoseList',G); if(!l) return;
     l.innerHTML='';
-    var nq=norm(qDose), n=0;
-    DOSES.forEach(function(d){
-      if(nq && d.key.indexOf(nq)<0) return;
-      n++; l.appendChild(doseCard(d));
-    });
-    if(!n) l.appendChild(el('p','gnote','Aucune dose ne correspond.'));
+    var nq=norm(qDose).trim();
+    var hits=MOLS.filter(function(g){ return molHit(g,nq); });
+    if(nq){                               /* le nom d'abord, les mentions ensuite */
+      var byName=function(g){ return g.key.indexOf(nq)>=0 || norm(g.name).indexOf(nq)>=0 ? 0 : 1; };
+      hits=hits.map(function(g,i){ return [byName(g),i,g]; })
+               .sort(function(a,b){ return a[0]-b[0] || a[1]-b[1]; }).map(function(x){ return x[2]; });
+    }
+    l.appendChild(el('div','gcount',hits.length+' molécule'+(hits.length>1?'s':'')+' · '+P.esp));
+    hits.forEach(function(g){ l.appendChild(molCard(g,hits.length===1)); });
+    if(!hits.length) l.appendChild(el('p','gnote','Aucune dose ne correspond.'));
   }
 
-  function doseCard(d){
-    var c=el('article','gdose');
-    var h=el('div','gh'); h.appendChild(el('b',null,d.mol));
-    if(d.cat) h.appendChild(el('span','gcat',d.cat));
-    c.appendChild(h);
-    c.appendChild(el('div','gi',d.ind));
-
-    var espFlag=null;
-    var t=norm(d.dose+' '+d.ind+' '+d.mol);
-    if(P.esp==='chat' && /\bchien\b/.test(t) && !/\bchat\b/.test(t)) espFlag='chien';
-    if(P.esp==='chien' && /\bchat\b/.test(t) && !/\bchien\b/.test(t)) espFlag='chat';
-
-    if(kgOk() && d.toks.length){
-      d.toks.forEach(function(tok,i){ c.appendChild(tokBlock(d,i)); });
-    }
-    var vb=el('div','gverb');
-    vb.innerHTML='<b>'+esc(d.dose)+'</b> \u00b7 '+esc(d.conc)+' \u00b7 '+esc(d.voie)+' \u00b7 '+srcHtml(d.src);
-    c.appendChild(vb);
-    if(espFlag){
-      var e=el('div','gflag soft');
-      e.innerHTML='Cette ligne parle du <b>'+espFlag+'</b> \u2014 patient '+P.esp+'. V\u00e9rifie l\u2019esp\u00e8ce avant d\u2019appliquer.';
-      c.appendChild(e);
-    }
-    if(kgOk() && d.toks.length){
-      var act=el('div','gact');
-      var b=el('button','gbtn sm','Poser dans la trace');
-      b.addEventListener('click',function(){ traceDose(d); b.textContent='Pos\u00e9 \u2713'; setTimeout(function(){b.textContent='Poser dans la trace';},1400); });
-      act.appendChild(b);
-      var b2=el('button','gbtn sm','Copier la prescription');
-      b2.addEventListener('click',function(){ copy(presc(d)); b2.textContent='Copi\u00e9 \u2713'; setTimeout(function(){b2.textContent='Copier la prescription';},1400); });
-      act.appendChild(b2);
-      c.appendChild(act);
-    }
+  /* une molecule : entete repliee (nom, categorie, sources), ouverte au tap */
+  function molCard(g,force){
+    var c=el('article','gmol'), rows=molRows(g);
+    var fr=rows.some(function(d){ return /^Frégis/.test(d.src); });
+    var pl=rows.some(function(d){ return /plumb/i.test(d.src); });
+    var h=el('button','gmh'); h.type='button';
+    h.innerHTML='<span class="n">'+esc(g.name)+'</span><span class="chev">›</span>'+
+      '<span class="m">'+(g.cats[0]?'<span class="gcat">'+esc(g.cats[0])+'</span>':'')+
+      (fr?'<span class="fregis">Frégis</span>':'')+
+      (pl?'<span class="plumbs">PLUMB\'S</span>':'')+
+      '<span>'+rows.length+' indication'+(rows.length>1?'s':'')+'</span></span>';
+    var b=el('div','gmb');
+    c.appendChild(h); c.appendChild(b);
+    function fill(){ b.innerHTML=''; if(c.classList.contains('open')) molBody(g,b); }
+    h.addEventListener('click',function(){
+      var o=!c.classList.contains('open');
+      c.classList.toggle('open',o); OPEN[g.key]=o; fill();
+    });
+    if(force || OPEN[g.key]) c.classList.add('open');
+    fill();
     return c;
   }
 
-  /* un token de dose : son ajusteur, son resultat, son detail de calcul.
-     Le bloc se repeint seul \u2014 pas de rebuild de la liste, le clavier reste ouvert. */
-  function tokBlock(d,i){
-    var base=d.toks[i], box=el('div','gtok'), out=el('div');
-
-    var adj=el('div','gadj');
-    var minus=el('button','gstep','\u2212'); minus.type='button'; minus.title='Baisser la dose';
-    var inp=el('input'); inp.type='text'; inp.inputMode='decimal';
-    inp.placeholder=base.hi==null?fmt(base.lo):fmt(base.lo)+'\u2013'+fmt(base.hi);
-    inp.setAttribute('aria-label','Dose choisie en '+base.u+'/kg');
-    var cv0=CUSTOM[ckey(d,i)]; if(cv0!=null) inp.value=fmt(cv0);
-    var plus=el('button','gstep','+'); plus.type='button'; plus.title='Monter la dose';
-    var unit=el('span','u',base.u+'/kg'+(base.rate?'/'+base.rate:''));
-    var undo=el('button','gstep undo','\u21ba'); undo.type='button';
-    undo.title='Revenir \u00e0 la dose de la fiche';
-    adj.appendChild(minus); adj.appendChild(inp); adj.appendChild(unit);
-    adj.appendChild(plus); adj.appendChild(undo);
-    box.appendChild(adj); box.appendChild(out);
-
-    function paint(){
-      out.innerHTML='';
-      var t=effTok(d,i), custom=CUSTOM[ckey(d,i)]!=null;
-      var r=compute(t,P.kg,d.c); safety(r);
-      var res=el('div','gres'+(custom?' cust':'')); res.textContent=r.head;
-      if(d.voie && d.voie!=='\u2014') res.appendChild(el('span','v',d.voie));
-      out.appendChild(res);
-      var calc=el('div','gcalc'); calc.textContent=r.lines.join('  \u2192  ');
-      out.appendChild(calc);
-      /* rappel purement arithmetique : on compare la valeur saisie a la fiche */
-      if(custom && base.hi!=null && (t.lo<base.lo||t.lo>base.hi))
-        r.flags.push(['soft','<b>'+fmt(t.lo)+' '+base.u+'/kg</b> est <b>hors de la fourchette</b> de la fiche ('+
-          rng(base.lo,base.hi,base.u+'/kg')+').']);
-      if(custom && base.hi==null && t.lo!==base.lo)
-        r.flags.push(['soft','La fiche donne <b>'+esc(base.raw)+'</b>, le calcul tourne sur '+
-          fmt(t.lo)+' '+base.u+'/kg.']);
-      r.flags.forEach(function(f){
-        var b=el('div','gflag'+(f[0]?' '+f[0]:'')); b.innerHTML=f[1]; out.appendChild(b);
+  /* le corps : le calculateur unique, puis chaque indication avec ses doses.
+     Toucher une dose soulignee (ou la ligne) la charge dans le calculateur. */
+  function molBody(g,b){
+    var box=el('div','gcalcbox'), list=el('div','gind'), lines=[];
+    b.appendChild(box); b.appendChild(list);
+    molRows(g).forEach(function(d){
+      var r=el('div','gline');
+      if(d.mol!==g.name) r.appendChild(el('span','lbl',d.mol));
+      r.appendChild(el('div','ind',d.ind));
+      var dz=el('div','dz'), txt=d.dose, last=0;
+      d.toks.forEach(function(t,i){
+        dz.appendChild(D.createTextNode(txt.slice(last,t.at)));
+        var k=el('button','gtk',txt.substr(t.at,t.len)); k.type='button';
+        k.addEventListener('click',function(ev){ ev.stopPropagation(); pick(d,i); });
+        dz.appendChild(k); last=t.at+t.len;
       });
-      undo.style.visibility=custom?'visible':'hidden';
+      dz.appendChild(D.createTextNode(txt.slice(last)));
+      r.appendChild(dz);
+      var meta=el('div','meta');
+      meta.innerHTML=[d.voie&&d.voie!=='—'?esc(d.voie):'',
+                      d.conc&&d.conc!=='—'?esc(d.conc):'', srcHtml(d.src)]
+        .filter(Boolean).join(' · ');
+      r.appendChild(meta);
+      r.addEventListener('click',function(){ if(d.toks.length) pick(d,0); });
+      lines.push({d:d,el:r});
+      list.appendChild(r);
+    });
+    var calc=calcBox(g,box);
+    function pick(d,i){ SEL[g.key]={d:d,i:i}; delete CUSTOM[g.key]; calc.sync(); mark(); }
+    function mark(){
+      var s=selOf(g);
+      lines.forEach(function(x){
+        x.el.classList.toggle('sel',x.d===s.d);
+        $$('.gtk',x.el).forEach(function(k,i){ k.classList.toggle('on',x.d===s.d && i===s.i); });
+      });
     }
-    function setv(v){
-      if(v==null||!isFinite(v)||v<=0) delete CUSTOM[ckey(d,i)];
-      else CUSTOM[ckey(d,i)]=v;
+    mark();
+  }
+
+  var UNITS=['mg|','µg|','g|','UI|','mEq|','mmol|','mL|','J|',
+             'mg|h','mg|min','µg|min','µg|h','UI|h','mL|h'];
+  var CUNITS=['mg','µg','g','UI','mEq','mmol','%'];
+  function uLabel(uk){ var p=uk.split('|'); return p[0]+'/kg'+(p[1]?'/'+p[1]:''); }
+  function cuLabel(u){ return u==='%'?'%':u+'/mL'; }
+  function defCU(uk){
+    var f=(U[uk.split('|')[0]]||[])[0];
+    return f==='ui'?'UI':f==='eq'?'mEq':f==='mol'?'mmol':'mg';
+  }
+  function mkSel(opts,lab){
+    var s=el('select');
+    opts.forEach(function(o){ var x=el('option',null,lab(o)); x.value=o; s.appendChild(x); });
+    return s;
+  }
+  function setSel(s,v,lab){
+    if(![].some.call(s.options,function(o){ return o.value===v; })){
+      var x=el('option',null,lab(v)); x.value=v; s.appendChild(x);
+    }
+    s.value=v;
+  }
+  function flash(b,t){ var o=b.textContent; b.textContent=t; setTimeout(function(){ b.textContent=o; },1400); }
+
+  /* Les champs ne sont jamais reconstruits pendant la frappe (clavier iOS) :
+     sync() les remet sur la selection, paint() ne repeint que le resultat. */
+  function calcBox(g,box){
+    var forL=el('div','for'); box.appendChild(forL);
+    var adj=el('div','gadj');
+    var minus=el('button','gstep','−'); minus.type='button'; minus.title='Baisser la dose';
+    var inp=el('input'); inp.type='text'; inp.inputMode='decimal'; inp.setAttribute('aria-label','Dose');
+    var us=mkSel(UNITS,uLabel); us.setAttribute('aria-label','Unité de dose');
+    var plus=el('button','gstep','+'); plus.type='button'; plus.title='Monter la dose';
+    var undo=el('button','gstep undo','↺'); undo.type='button'; undo.title='Revenir à la dose de la ligne';
+    [minus,inp,us,plus,undo].forEach(function(x){ adj.appendChild(x); });
+    box.appendChild(adj);
+    var cr=el('div','gconc');
+    cr.appendChild(el('span','l','Conc.'));
+    var ci=el('input'); ci.type='text'; ci.inputMode='decimal'; ci.placeholder='flacon';
+    ci.setAttribute('aria-label','Concentration du flacon');
+    var cs=mkSel(CUNITS,cuLabel); cs.setAttribute('aria-label','Unité de concentration');
+    var ctag=el('span','tag');
+    var cx=el('button','gstep undo','✕'); cx.type='button'; cx.title='Effacer ta concentration';
+    [ci,cs,ctag,cx].forEach(function(x){ cr.appendChild(x); });
+    box.appendChild(cr);
+    var out=el('div'); box.appendChild(out);
+    var act=el('div','gact');
+    var b1=el('button','gbtn sm','Poser dans la trace'), b2=el('button','gbtn sm','Copier');
+    b1.addEventListener('click',function(){ trace(presc(g)); flash(b1,'Posé ✓'); });
+    b2.addEventListener('click',function(){ copy(presc(g)); flash(b2,'Copié ✓'); });
+    act.appendChild(b1); act.appendChild(b2); box.appendChild(act);
+
+    function cur(){ var s=selOf(g); return {s:s,b:baseTok(s),t:effTok(g,s),cc:concFor(g,s.d)}; }
+    function syncConc(){
+      var x=cur();
+      ci.value=x.cc.c?fmt(x.cc.c.v):'';
+      setSel(cs,x.cc.c?x.cc.c.u:defCU(us.value),cuLabel);
+    }
+    function sync(){
+      var x=cur(), cu=CUSTOM[g.key]||{};
+      forL.innerHTML=x.b?'↳ <b>'+esc(x.s.d.ind)+'</b>'
+                        :'Touche une dose soulignée, ou tape la tienne.';
+      inp.placeholder=x.b?(x.b.hi==null?fmt(x.b.lo):fmt(x.b.lo)+'–'+fmt(x.b.hi)):'dose';
+      inp.value=cu.v!=null?fmt(cu.v):'';
+      setSel(us,cu.u||(x.b?unitKey(x.b):'mg|'),uLabel);
+      syncConc();
       paint();
     }
-    inp.addEventListener('input',function(){
-      var s=inp.value.trim();
-      setv(s===''?null:parseFloat(s.replace(',','.')));
-    });
+    function paint(){
+      var x=cur(), cu=CUSTOM[g.key]||{};
+      var fam=x.t?x.t.fam:(U[us.value.split('|')[0]]||[])[0];
+      cr.style.display=(fam==='v'||fam==='j')?'none':'flex';
+      ctag.textContent=x.cc.src==='perso'?'ta saisie':x.cc.src==='fiche'?'fiche':
+                       x.cc.hint?'fiche\u00a0: '+cLabel(x.cc.hint)+'\u00a0?':'';
+      ctag.className='tag'+(x.cc.src==='perso'?' perso':x.cc.hint?' hint':'');
+      cx.style.display=x.cc.src==='perso'?'':'none';
+      undo.style.visibility=CUSTOM[g.key]?'visible':'hidden';
+      out.innerHTML='';
+      if(!x.t){ out.appendChild(el('div','gnl','Tape une dose en '+uLabel(us.value)+'.')); return; }
+      if(!kgOk()){ out.appendChild(el('div','gnl warn','Entre le poids pour calculer.')); return; }
+      var r=compute(x.t,P.kg,x.cc.c); safety(r);
+      var res=el('div','gres'+(cu.v!=null?' cust':'')); res.textContent=r.head;
+      var v=x.s.d.voie; if(v && v!=='—') res.appendChild(el('span','v',v));
+      out.appendChild(res);
+      out.appendChild(el('div','gcalc',r.lines.join('  →  ')));
+      /* rappel purement arithmetique : la valeur saisie comparee a la ligne */
+      if(cu.v!=null && x.b && (cu.u||unitKey(x.b))===unitKey(x.b)){
+        if(x.b.hi!=null && (cu.v<x.b.lo||cu.v>x.b.hi))
+          r.notes.unshift(['warn','Hors de la fourchette de la ligne ('+rng(x.b.lo,x.b.hi,uLabel(unitKey(x.b)))+').']);
+        if(x.b.hi==null && cu.v!==x.b.lo)
+          r.notes.unshift(['warn','La ligne donne '+esc(x.b.raw)+'.']);
+      }
+      r.notes.forEach(function(n){ var e=el('div','gnl'+(n[0]?' '+n[0]:'')); e.innerHTML=n[1]; out.appendChild(e); });
+    }
+    function setDose(v){
+      var o={v:(v!=null&&isFinite(v)&&v>0)?v:null, u:us.value}, b=baseTok(selOf(g));
+      if(o.v==null && b && o.u===unitKey(b)) delete CUSTOM[g.key]; else CUSTOM[g.key]=o;
+      paint();
+    }
+    function typed(){ var s=inp.value.trim(); return s===''?null:nb(s); }
+    inp.addEventListener('input',function(){ setDose(typed()); });
+    us.addEventListener('change',function(){ setDose(typed()); syncConc(); paint(); });
     function bump(sg){
-      var s=stepOf(base), cur=CUSTOM[ckey(d,i)];
-      if(cur==null) cur=base.hi==null?base.lo:(base.lo+base.hi)/2;
-      var v=Math.max(s, Math.round((cur+sg*s)/s)*s);
+      var x=cur(), cu=CUSTOM[g.key]||{};
+      var same=x.b && (cu.u||unitKey(x.b))===unitKey(x.b);
+      var c0=cu.v!=null?cu.v:(same?(x.b.hi==null?x.b.lo:(x.b.lo+x.b.hi)/2):0);
+      var st=same?stepOf(x.b):niceStep((c0||1)/10);
+      var v=Math.max(st, Math.round((c0+sg*st)/st)*st);
       v=parseFloat(v.toFixed(6));
-      inp.value=fmt(v); setv(v);
+      inp.value=fmt(v); setDose(v);
     }
     minus.addEventListener('click',function(){ bump(-1); });
     plus.addEventListener('click',function(){ bump(1); });
-    undo.addEventListener('click',function(){ inp.value=''; setv(null); });
-    paint();
-    return box;
+    undo.addEventListener('click',function(){ delete CUSTOM[g.key]; sync(); });
+    function setConc(){
+      var k=concKey(g,selOf(g).d), s=ci.value.trim(), v=nb(s);
+      if(s==='') delete CONC[k];
+      else if(isFinite(v)&&v>0) CONC[k]={v:v,u:cs.value};
+      saveConc(); paint();
+    }
+    ci.addEventListener('input',setConc);
+    cs.addEventListener('change',setConc);
+    ci.addEventListener('blur',function(){ if(ci.value.trim()==='') syncConc(); });
+    ctag.addEventListener('click',function(){      /* appliquer la concentration proposee */
+      var x=cur(); if(!x.cc.hint) return;
+      CONC[concKey(g,x.s.d)]={v:x.cc.hint.v,u:x.cc.hint.u}; saveConc(); syncConc(); paint();
+    });
+    cx.addEventListener('click',function(){
+      delete CONC[concKey(g,selOf(g).d)]; saveConc(); syncConc(); paint();
+    });
+    sync();
+    return {sync:sync};
   }
 
   /* la phrase complete : molecule, dose, concentration, volume, voie */
-  function presc(d){
-    if(!d.toks.length||!kgOk()) return d.mol+' '+d.dose;
-    var t=effTok(d,0);
-    var r=compute(t,P.kg,d.c);
-    return d.mol+' \u2014 '+t.raw+' sur '+fmt(P.kg)+' kg'+
-           (d.c?', concentration '+d.conc:'')+' \u2192 '+r.head+
-           (d.voie&&d.voie!=='\u2014'?' '+d.voie:'');
+  function presc(g){
+    var s=selOf(g), t=effTok(g,s), cc=concFor(g,s.d);
+    if(!t||!kgOk()) return g.name+(s.d?' — '+s.d.dose:'');
+    var r=compute(t,P.kg,cc.c);
+    return g.name+' — '+t.raw+' sur '+fmt(P.kg)+' kg'+(cc.c?', '+cLabel(cc.c):'')+' → '+r.head+
+           (s.d.voie&&s.d.voie!=='—'?' '+s.d.voie:'');
   }
-  /* la source : « Fregis » en rouge, c'est la dose du tableau mural de l'hopital */
-  function srcHtml(s){var t=esc(s);
-    return t.replace(/^Fr\u00e9gis/,'<span class="fregis">Fr\u00e9gis</span>');}
+  /* la source : « Fregis » en rouge (tableau mural de l'hopital),
+     « PLUMB'S » en majuscules et en bleu */
+  function srcHtml(s){
+    var t=esc(s).replace(/^Frégis/,'<span class="fregis">Frégis</span>');
+    return t.replace(/Plumb(?:&#39;|['’])s/gi,'<span class="plumbs">PLUMB\'S</span>');
+  }
   function esc(s){var e=el('span'); e.textContent=s||''; return e.innerHTML;}
 
   /* ----------------------------------------------------------- panneau gestes */
@@ -6124,12 +6332,13 @@ document.addEventListener('click',function(e){
     wrap.appendChild(b); p.appendChild(wrap);
 
     /* les doses du corpus dont la molecule est nommee dans ce protocole */
-    var hit=DOSES.filter(function(d){
-      return d.molKey.length>=5 && t.txt.indexOf(d.molKey)>=0 && d.toks.length;
+    var hit=MOLS.filter(function(g){
+      return g.key.length>=5 && t.txt.indexOf(g.key)>=0 &&
+             molRows(g).some(function(d){ return d.toks.length; });
     });
     if(hit.length && kgOk()){
       p.appendChild(el('div','gsec','Doses cit\u00e9es \u2014 pour '+fmt(P.kg)+' kg'));
-      hit.slice(0,12).forEach(function(d){ p.appendChild(doseCard(d)); });
+      hit.slice(0,12).forEach(function(g){ p.appendChild(molCard(g,false)); });
     }
   }
 
@@ -6310,7 +6519,6 @@ document.addEventListener('click',function(e){
   function saveTrace(){ set('trace',JSON.stringify(TRACE.slice(-200))); }
   function hhmm(d){ d=new Date(d); return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
   function trace(txt){ TRACE.push({t:Date.now(),x:txt}); saveTrace(); if(cur==='trace') renderTrace(); }
-  function traceDose(d){ trace(presc(d)); }
 
   function renderTrace(){
     var p=panels.trace; p.innerHTML='';
@@ -6384,7 +6592,7 @@ document.addEventListener('click',function(e){
   }
   D.addEventListener('plumbs-pret', function(){
     if(!G) return;
-    DOSES.length=0; TILES.length=0; CUSTOM={}; readCorpus();
+    DOSES.length=0; TILES.length=0; CUSTOM={}; SEL={}; readCorpus();
     if(G.classList.contains('on')) render();
   });
   function open(){
@@ -6448,7 +6656,7 @@ document.addEventListener('click',function(e){
     var frag=D.createDocumentFragment();
     data.rows.forEach(function(r){
       /* r = [molecule, espece, indication, dose, voie, categorie, page] */
-      var tr=D.createElement('tr'); tr.className='pl';
+      var tr=D.createElement('tr'); tr.className='pl'; tr.setAttribute('data-esp', r[1]);
       tr.appendChild(td(r[0]+' ('+r[1].toLowerCase()+')'));
       tr.appendChild(td(r[2]));
       tr.appendChild(td(r[3], 'd'));
