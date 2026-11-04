@@ -1,8 +1,8 @@
 /* Carnet de garde — service worker (genere par build_app.py) */
-var VERSION = '427ed52669a2';
+var VERSION = '4f5624e5b713';
 var CACHE = 'carnet-' + VERSION;
 var SHELL = ['./', './index.html', './manifest.webmanifest',
-             './apple-touch-icon.png', './icon-192.png', './icon-512.png', './plumbs.enc.json'];
+             './apple-touch-icon.png', './icon-192.png', './icon-512.png', './plumbs.enc.json', './topos/05a2bda54b.json', './topos/1699a04f68.json', './topos/27b70bee2b.json', './topos/410e69e3b7.json', './topos/417908794f.json', './topos/5562f2ae5b.json', './topos/liste.json'];
 
 self.addEventListener('install', function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){

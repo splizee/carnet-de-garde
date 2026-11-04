@@ -550,6 +550,31 @@ table.doses tr.pl td:nth-child(2){min-width:170px}
 #plLock{margin-top:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);
   border-radius:10px;padding:6px 11px;font-size:12.5px;cursor:pointer;font-family:var(--sans)}
 
+/* ===== vue « Mes topos » + lecteur plein ecran ===== */
+.topos-liste{display:grid;gap:10px}
+.topos-vide{color:var(--ink-soft);font-size:14px}
+.topo-it{display:flex;align-items:center;gap:13px;width:100%;text-align:left;cursor:pointer;
+  background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:16px;
+  padding:15px 18px;box-shadow:var(--shadow-sm);font-family:var(--sans);transition:box-shadow .2s,transform .2s}
+.topo-it:hover{box-shadow:var(--shadow-md)}
+.topo-it:active{transform:scale(.985)}
+.topo-it .bar{width:4px;align-self:stretch;border-radius:4px;background:var(--accent);flex:0 0 4px}
+.topo-it .tx{flex:1;min-width:0}
+.topo-it .t{display:block;font-family:var(--serif);font-weight:600;font-size:17.5px;line-height:1.25}
+.topo-it .m{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+.topo-it .go{color:var(--accent);font-size:20px;flex:0 0 auto}
+body.topo-open{overflow:hidden}
+#topoLect{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;background:var(--bg)}
+#topoLect[hidden]{display:none}
+#topoLect .tl-bar{display:flex;align-items:center;gap:12px;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:calc(8px + env(safe-area-inset-top)) calc(12px + env(safe-area-inset-right)) 8px calc(12px + env(safe-area-inset-left))}
+#topoLect .tl-bar button{border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;
+  padding:8px 13px;font-size:15px;font-weight:650;cursor:pointer;font-family:var(--sans);flex:0 0 auto}
+#topoLect .tl-t{flex:1;min-width:0;font-family:var(--serif);font-weight:600;font-size:15px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#topoLect .tl-etat{position:absolute;left:0;right:0;top:45%;text-align:center;color:var(--ink-soft);font-size:14px;padding:0 24px}
+#topoLect iframe{flex:1;width:100%;border:0;display:block}
+
 </style>
 
 <div class="layout">
@@ -584,6 +609,8 @@ table.doses tr.pl td:nth-child(2){min-width:170px}
     <a data-v="doses" class="c-dose"><span class="ic"></span>Doses express</a>
     <a data-v="protocoles" class="c-proto"><span class="ic"></span>Protocoles</a>
     <a data-v="comm" class="c-comm"><span class="ic"></span>Communication</a>
+    <div class="sec">Internat</div>
+    <a data-v="topos" class="c-repere"><span class="ic"></span>Mes topos <small id="navTopos"></small></a>
     <div class="sec sec-fold" id="foldSpecialites"><span>Spécialités — internat</span><span class="fold-ic">▸</span></div>
     <div class="fold-group" data-fold-group="specialites" hidden>
       <a data-v="sp-urgence" class="c-cas"><span class="ic"></span>Urgence &amp; soins intensifs</a>
@@ -5007,6 +5034,16 @@ La <b>péritonite septique</b> part au bloc tout de suite.<br>
   </section>
 
   <!-- ============ RÉSULTATS DE RECHERCHE (global) ============ -->
+  <!-- ============ MES TOPOS (genere par build_app.py) ============ -->
+  <section class="view c-repere" id="topos">
+    <div class="view-head">
+      <p class="eyebrow">Internat · topos et fiches</p>
+      <h1>Mes topos</h1>
+      <p class="lede">Chaque topo du dossier internat/topos, ajouté à la publication suivante du carnet. Lisibles hors ligne.</p>
+    </div>
+    <div id="toposListe" class="topos-liste"><p class="topos-vide">Chargement…</p></div>
+  </section>
+
   <section class="view c-cas" id="results">
     <div class="view-head">
       <p class="eyebrow">Recherche dans tout le carnet</p>
@@ -6639,6 +6676,92 @@ document.addEventListener('click',function(e){
 </script>
 
 <script>
+/* ===== vue « Mes topos » (generee par build_app.py) =====
+   topos/liste.json et topos/<id>.json : {iv, ct}, chiffres avec la cle des
+   doses Plumb's. La cle arrive avec l'evenement plumbs-pret (verrou leve). */
+(function(){
+  var D=document, CLE=null, URLB=null, L=null, N=0;
+  function b64(s){ var b=atob(s), u=new Uint8Array(b.length); for(var i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
+  function ouvrir(chemin){
+    return fetch(chemin, {cache:'no-cache'}).then(function(r){
+      if(!r.ok) throw new Error(chemin); return r.json();
+    }).then(function(e){
+      return crypto.subtle.decrypt({name:'AES-GCM', iv:b64(e.iv)}, CLE, b64(e.ct));
+    }).then(function(buf){ return JSON.parse(new TextDecoder().decode(buf)); });
+  }
+  function el(tag, cls, txt){ var e=D.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
+
+  function lecteur(){
+    if(L) return L;
+    var box=el('div'); box.id='topoLect'; box.hidden=true;
+    var bar=el('div','tl-bar'), fermer=el('button',null,'‹ Carnet'), t=el('span','tl-t');
+    fermer.type='button'; bar.appendChild(fermer); bar.appendChild(t);
+    var etat=el('div','tl-etat');
+    box.appendChild(bar); box.appendChild(etat);
+    D.body.appendChild(box);
+    fermer.addEventListener('click', function(){
+      if(location.hash==='#topo'){ try{ history.back(); return; }catch(e){} }
+      clore();
+    });
+    L={el:box, titre:t, etat:etat, frame:null};
+    return L;
+  }
+  function clore(){
+    if(!L) return;
+    L.el.hidden=true; D.body.classList.remove('topo-open');
+    if(L.frame){ L.frame.remove(); L.frame=null; }
+    if(URLB){ URL.revokeObjectURL(URLB); URLB=null; }
+  }
+  window.addEventListener('popstate', function(){
+    if(L && !L.el.hidden && location.hash!=='#topo') clore();
+  });
+
+  function lire(t){
+    var l=lecteur(), jeton=++N;
+    l.titre.textContent=t.titre; l.etat.textContent='Ouverture…';
+    if(l.frame){ l.frame.remove(); l.frame=null; }
+    l.el.hidden=false; D.body.classList.add('topo-open');
+    try{ if(location.hash!=='#topo') history.pushState({topo:1}, '', '#topo'); }catch(e){}
+    ouvrir('topos/'+t.id+'.json').then(function(o){
+      if(l.el.hidden || jeton!==N) return;
+      if(URLB) URL.revokeObjectURL(URLB);
+      URLB=URL.createObjectURL(new Blob([o.html], {type:'text/html'}));
+      /* iframe neuve a chaque ouverture, src posee AVANT l'insertion : son
+         chargement n'ajoute rien a l'historique, donc « retour » ferme le topo
+         au lieu de vider l'iframe */
+      var fr=el('iframe'); fr.title=t.titre; fr.style.visibility='hidden';
+      fr.onload=function(){ l.etat.textContent=''; fr.style.visibility=''; };
+      fr.src=URLB; l.frame=fr; l.el.appendChild(fr);
+    }).catch(function(){ l.etat.textContent='Impossible d’ouvrir ce topo sur cet appareil.'; });
+  }
+
+  function rendre(liste){
+    var box=D.getElementById('toposListe'); if(!box) return;
+    box.textContent='';
+    if(!liste.length){ box.appendChild(el('p','topos-vide','Aucun topo publié.')); }
+    liste.forEach(function(t){
+      var b=el('button','topo-it'); b.type='button';
+      var tx=el('span','tx');
+      tx.appendChild(el('span','t',t.titre));
+      tx.appendChild(el('span','m',[t.theme, 'mis à jour le '+t.date, t.ko+' Ko'].filter(Boolean).join(' · ')));
+      b.appendChild(el('span','bar')); b.appendChild(tx); b.appendChild(el('span','go','›'));
+      b.addEventListener('click', function(){ lire(t); });
+      box.appendChild(b);
+    });
+    var n=D.getElementById('navTopos'); if(n) n.textContent=liste.length;
+  }
+
+  D.addEventListener('plumbs-pret', function(e){
+    CLE=e.detail && e.detail.cle; if(!CLE) return;
+    ouvrir('topos/liste.json').then(function(d){ rendre(d.topos); }).catch(function(){
+      var box=D.getElementById('toposListe');
+      if(box){ box.textContent=''; box.appendChild(el('p','topos-vide','Liste des topos indisponible.')); }
+    });
+  });
+})();
+</script>
+
+<script>
 /* ===== verrou + doses Plumb's (genere par build_app.py) =====
    plumbs.enc.json : {salt, iv, iter, ct} en base64 ; parametres alignes sur
    carnet/chiffrer_plumbs.py. Une fois le code juste, la cle derivee (pas le
@@ -6665,7 +6788,7 @@ document.addEventListener('click',function(e){
   }
 
   function td(txt, cls){ var e=D.createElement('td'); if(cls) e.className=cls; e.textContent=txt; return e; }
-  function injecter(data){
+  function injecter(data, cle){
     var tb=D.querySelector('#doseTable tbody'); if(!tb) return;
     if(tb.querySelector('tr.pl')) return;
     var frag=D.createDocumentFragment();
@@ -6691,7 +6814,8 @@ document.addEventListener('click',function(e){
       b.addEventListener('click', function(){ lsDel(); location.reload(); });
       head.appendChild(b);
     }
-    D.dispatchEvent(new CustomEvent('plumbs-pret'));
+    /* la cle part avec l'evenement : la vue Topos dechiffre avec elle */
+    D.dispatchEvent(new CustomEvent('plumbs-pret', {detail:{cle:cle}}));
   }
 
   function ecran(){
@@ -6713,7 +6837,7 @@ document.addEventListener('click',function(e){
       var cle;
       deriver(code).then(function(k){ cle=k; return dechiffrer(k); }).then(function(data){
         return crypto.subtle.exportKey('raw', cle).then(function(raw){
-          lsSet({salt:ENC.salt, k:enB64(raw)}); injecter(data); lever();
+          lsSet({salt:ENC.salt, k:enB64(raw)}); injecter(data, cle); lever();
         });
       }).catch(function(){
         ok.disabled=false; ok.textContent='Ouvrir'; err.textContent='Code incorrect.'; inp.select();
@@ -6727,8 +6851,10 @@ document.addEventListener('click',function(e){
     ENC=enc;
     var m=lsGet();
     if(m && m.salt===ENC.salt && m.k){
+      var cle;
       return crypto.subtle.importKey('raw', b64(m.k), {name:'AES-GCM'}, false, ['decrypt'])
-        .then(dechiffrer).then(function(data){ injecter(data); lever(); })
+        .then(function(k){ cle=k; return dechiffrer(k); })
+        .then(function(data){ injecter(data, cle); lever(); })
         .catch(function(){ lsDel(); ecran(); });
     }
     ecran();
