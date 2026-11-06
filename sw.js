@@ -1,8 +1,8 @@
 /* Carnet de garde — service worker (genere par build_app.py) */
-var VERSION = '266c0d0364a6';
+var VERSION = '2a378aad09cc';
 var CACHE = 'carnet-' + VERSION;
 var SHELL = ['./', './index.html', './manifest.webmanifest',
-             './apple-touch-icon.png', './icon-192.png', './icon-512.png', './plumbs.enc.json', './topos/05a2bda54b.json', './topos/06d751cb85.json', './topos/1699a04f68.json', './topos/27b70bee2b.json', './topos/409fcb40af.json', './topos/410e69e3b7.json', './topos/417908794f.json', './topos/5562f2ae5b.json', './topos/a01b8318fa.json', './topos/a7cb2e1738.json', './topos/b986ebd759.json', './topos/liste.json'];
+             './apple-touch-icon.png', './icon-192.png', './icon-512.png', './plumbs.enc.json', './topos/05a2bda54b.json', './topos/06d751cb85.json', './topos/1699a04f68.json', './topos/27b70bee2b.json', './topos/409fcb40af.json', './topos/410e69e3b7.json', './topos/417908794f.json', './topos/5562f2ae5b.json', './topos/9a74da2fae.json', './topos/a01b8318fa.json', './topos/a7cb2e1738.json', './topos/b986ebd759.json', './topos/liste.json'];
 
 self.addEventListener('install', function(e){
   e.waitUntil(caches.open(CACHE).then(function(c){
